@@ -1,11 +1,13 @@
 # docker compose up --build     then open http://localhost:8502
+# Port busy? Pick another host port:  set GRIEVANCE_PORT=8601  (PowerShell: $env:GRIEVANCE_PORT=8601), then docker compose up
 services:
   grievance-desk-ui:
     build: .
+    pull_policy: build             # build locally; never try to pull this image
     image: grievance-desk-ui:latest
     container_name: grievance-desk-ui
     ports:
-      - "127.0.0.1:8502:8501"     # reachable from this computer only
+      - "127.0.0.1:${GRIEVANCE_PORT:-8502}:8501"     # reachable from this computer only
     volumes:
       - reports:/app/reports       # decisions, audit log and test reports survive restarts
     restart: unless-stopped

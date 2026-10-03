@@ -28,6 +28,16 @@ Open **http://localhost:8502**. The container is ready when `docker compose ps` 
 
 This repo uses port 8502 and the livestock repo uses 8501, so both can run at the same time.
 
+**If you see "port is already allocated"**, another program is using port 8502. You can stop it, or choose another port:
+
+```
+set GRIEVANCE_PORT=8601              (Command Prompt)
+$env:GRIEVANCE_PORT=8601             (PowerShell)
+docker compose up
+```
+
+Then open http://localhost:8601.
+
 ## Run without Docker
 
 ```bash
