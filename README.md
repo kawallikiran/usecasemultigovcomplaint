@@ -38,6 +38,8 @@ docker compose up
 
 Then open http://localhost:8601.
 
+**If the browser says it cannot connect:** the "Local URL" and "Network URL" lines in the log come from inside the container, so ignore them. Run `docker compose ps` and open the host port shown on the left of `->8501` in the PORTS column, typed as `http://127.0.0.1:<port>`. If PORTS is empty, the container stopped; check `docker compose logs`.
+
 ## Run without Docker
 
 ```bash

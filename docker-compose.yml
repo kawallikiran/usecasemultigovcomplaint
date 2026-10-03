@@ -7,7 +7,7 @@ services:
     image: grievance-desk-ui:latest
     container_name: grievance-desk-ui
     ports:
-      - "127.0.0.1:${GRIEVANCE_PORT:-8502}:8501"     # reachable from this computer only
+      - "${GRIEVANCE_PORT:-8502}:8501"     # open http://127.0.0.1:8502 (or the port you set)
     volumes:
       - reports:/app/reports       # decisions, audit log and test reports survive restarts
     restart: unless-stopped
