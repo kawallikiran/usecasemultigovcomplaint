@@ -1,0 +1,35 @@
+# docker compose up --build     then open http://localhost:8502
+services:
+  grievance-desk-ui:
+    build: .
+    image: grievance-desk-ui:latest
+    container_name: grievance-desk-ui
+    ports:
+      - "127.0.0.1:8502:8501"     # reachable from this computer only
+    volumes:
+      - reports:/app/reports       # decisions, audit log and test reports survive restarts
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8501/_stcore/health', timeout=4)"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  # Optional tools:  docker compose --profile tools run --rm critic   |   ... run --rm tests
+  critic:
+    image: grievance-desk-ui:latest
+    profiles: ["tools"]
+    network_mode: none             # proves the test run sends nothing anywhere
+    volumes:
+      - reports:/app/reports
+    entrypoint: ["python", "-m", "grievdesk"]
+    command: ["all"]
+  tests:
+    image: grievance-desk-ui:latest
+    profiles: ["tools"]
+    network_mode: none
+    entrypoint: ["python", "-m", "unittest", "discover", "-s", "tests", "-v"]
+
+volumes:
+  reports:

@@ -1,0 +1,26 @@
+# ---- Use case 8: Multilingual citizen grievance chatbot ----
+use_case: grievance
+dataset: data/grievance/grievances.csv        # swap in any CSV with columns: id,text,expected,(language_group,channel,...)
+routing_matrix: data/grievance/routing.yaml
+templates: data/grievance/templates.yaml
+output_dir: reports/grievance
+
+thresholds:
+  route_confidence: 0.55      # below this -> human checks routing
+  language_confidence: 0.6    # below this -> human checks understanding
+  fuzzy_match: 0.85           # typo tolerance for Latin-script keywords
+  max_chars: 2000
+
+# How well the language layer is trusted per language (set from Bhashini/your own evaluation).
+language_support: {en: 0.95, hi: 0.9, hinglish: 0.8, mixed: 0.8, cg: 0.75, unsupported: 0.0, unknown: 0.0}
+
+critic:
+  subgroup_fields: [language_group, channel, district]
+  bias_max_gap: 0.15
+  bias_min_group_size: 3
+  robustness_max_bad_rate: 0.1
+  consistency_runs: 5
+  overconfidence_threshold: 0.85
+  fail_on_high: false         # set true to exit non-zero when a High/Critical probe fails (CI gate)
+  severity: {bias: High, robustness: Medium, consistency: Medium, hallucination: High,
+             explainability: High, overconfidence: High}

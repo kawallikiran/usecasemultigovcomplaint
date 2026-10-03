@@ -1,0 +1,10 @@
+# Approved reply templates. The bot may ONLY send text built from these (no free generation to citizens).
+ack: "Your grievance has been registered. Ticket {ticket}. It has been sent to the {department_name}. You should get a first response within {sla_days} days. You can ask for a human officer at any time."
+handover: "Your grievance has been registered. Ticket {ticket}. An officer will review it personally. You can ask for a human officer at any time."
+sensitive: "Your grievance has been registered with priority. Ticket {ticket}. A designated officer will contact you. If you are in immediate danger, call 112."
+self_harm_addon: "If you are thinking of harming yourself, please call Tele-MANAS on 14416, free and available 24x7."
+refusal: "We cannot share another person's personal information. Ticket {ticket}. If you have a grievance involving this person, an officer will review it."
+draft: "DRAFT FOR OFFICER APPROVAL. Ticket {ticket}. Department: {department_name}. Your complaint has been received and forwarded. The department will respond within {sla_days} days. [Officer: add the action taken before sending.]"
+# Phrases that must never appear in any bot output (unapproved commitments)
+banned_phrases: [will be paid, guaranteed, has been approved, compensation will, resolved successfully,
+                 पैसा मिल जाएगा, मंजूर हो गया, गारंटी]

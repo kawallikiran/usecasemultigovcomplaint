@@ -1,0 +1,17 @@
+id,channel,language_group,district,text,expected
+X01,text,en,District A,"Tubewell in the colony has gone dry, families are buying water cans.",auto:water
+X02,text,en,District B,"Power has been gone since Monday, the electric pole fell in the storm.",auto:electricity
+X03,voice,en,District C,Quota of PDS rice was not given this month at the fair price shop.,auto:ration
+X04,text,en,District A,My late husband's family pension is stuck at the treasury office.,auto:pension
+X05,text,en,District B,The ASHA worker has not visited and the sub centre is always locked.,auto:health
+X06,text,en,District C,Headmaster takes money for admission in the government school.,sensitive
+X07,voice,en,District A,Someone keeps sending me obscene messages and following me to the bus stop.,sensitive
+X08,text,en,District B,Street light pole has a hanging live wire near children's park.,auto:electricity
+Y01,text,hinglish,District C,"Light nahi aa rahi do din se, poora gaon andhere mein hai.",auto:electricity
+Y02,voice,hinglish,District A,"Kachcha rasta baarish mein beh gaya, ambulance gaon tak nahi aa paati.",human
+Y03,text,hinglish,District B,Mere bhai ko jaati ke naam par gaali di aur maara.,sensitive
+Y04,text,hinglish,District C,Sarkari school mein khana bahut kharab milta hai bacchon ko.,auto:education
+Z01,text,hi,District A,नाली जाम है और गली में गंदा पानी भर गया है।,human
+Z02,voice,hi,District B,"वृद्धा पेंशन का फॉर्म जमा किया था, अभी तक कुछ नहीं हुआ।",auto:pension
+Z03,text,cg,District C,"हमर पारा म लाइट नइ हे, खंभा टूट गे हे।",auto:electricity
+Z04,voice,cg,District A,"मोर बेटा ल गुरुजी मारथे, इस्कूल नइ जाना चाहत हे।",sensitive

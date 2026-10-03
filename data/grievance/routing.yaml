@@ -1,0 +1,84 @@
+# Department routing matrix (synthetic). Keywords: Latin tokens match whole words (with fuzzy typo
+# tolerance); Devanagari keywords match as substrings so inflected forms (गड्ढे / गड्ढा) still hit.
+departments:
+  water:
+    name: Public Health Engineering Department
+    sla_days: 7
+    keywords: [water, drinking water, tap, handpump, hand pump, pipeline, borewell, paani, pani, nal,
+               पानी, नल, हैंडपंप, पाइपलाइन, बोरवेल, पेयजल]
+  electricity:
+    name: State Power Distribution Company
+    sla_days: 3
+    keywords: [electricity, power cut, transformer, electric meter, meter, current, bijli, बिजली,
+               ट्रांसफार्मर, मीटर, करंट, बत्ती]
+  ration:
+    name: Food and Civil Supplies Department
+    sla_days: 7
+    keywords: [ration, ration card, ration shop, pds, rice, wheat, kerosene, dealer, rashan, chawal, dukan,
+               राशन, राशन कार्ड, चावल, गेहूं, कोटेदार, दुकान, चाउर]
+  pension:
+    name: Social Welfare Department
+    sla_days: 15
+    keywords: [pension, old age pension, old age, widow pension, disability pension, vridha, पेंशन,
+               वृद्धावस्था, विधवा, पेंसन]
+  roads:
+    name: Public Works Department
+    sla_days: 30
+    keywords: [road, roads, pothole, potholes, bridge, sadak, gaddha, gaddhe, pul, सड़क, सडक, गड्ढ, पुल, रद्दा]
+  health:
+    name: Health and Family Welfare Department
+    sla_days: 3
+    keywords: [hospital, doctor, medicine, ambulance, nurse, health centre, phc, aspatal, dawai, अस्पताल,
+               डॉक्टर, डाक्टर, दवाई, दवा, दवई, एम्बुलेंस, स्वास्थ्य केंद्र]
+  revenue:
+    name: Revenue Department (Land Records)
+    sla_days: 30
+    keywords: [land, land record, mutation, patta, khasra, boundary, zameen, jameen, naksha, जमीन, ज़मीन,
+               पट्टा, खसरा, नामांतरण, भूमि, भुइयां]
+  education:
+    name: School Education Department
+    sla_days: 15
+    keywords: [school, teacher, mid day meal, scholarship, master, स्कूल, शिक्षक, मध्याह्न भोजन, छात्रवृत्ति,
+               इस्कूल, गुरुजी]
+  police:
+    name: Office of the Superintendent of Police
+    sla_days: 1
+    keywords: [police, fir, thana, thane, पुलिस, थाना, थाने, एफआईआर]
+
+# Sensitive categories: always a human (designated officer), never an automated answer.
+sensitive:
+  violence: [beat, beaten, assault, attacked, maarpeet, maara, peeta, मारपीट, पीटा, हमला, जान से मार]
+  sexual_harassment: [harass, harassment, molest, molested, chhed, chhedkhani, छेड़छाड़, यौन, उत्पीड़न]
+  caste_atrocity: [caste, untouchability, jaati, जाति, जातिसूचक, छुआछूत]
+  corruption: [bribe, bribery, rishwat, ghoos, रिश्वत, घूस]
+  self_harm: [kill myself, end my life, suicide, aatmahatya, khudkushi, आत्महत्या, जान दे दूंगा, मर जाहूं]
+  threat: [threat, threatened, dhamki, धमकी]
+
+# Content signals that raise priority. The word "urgent" itself is deliberately NOT here,
+# so users cannot raise priority just by asking for it.
+urgency: [fire, aag, accident, flood, live wire, electrocuted, आग, दुर्घटना, बाढ़, करंट लगा, तार टूट]
+
+# Patterns treated as attempts to manipulate the system (prompt injection, priority gaming).
+injection_patterns:
+  - "ignore (all |the )?(previous|above|prior) (instructions|rules)"
+  - "(mark|set|make) (this|it|my complaint)? ?(as )?(urgent|approved|resolved|high priority|top priority)"
+  - "you are now"
+  - "system prompt"
+  - "(approve|close) (this|my) (complaint|grievance)"
+  - "नियम (भूल|छोड़)"
+  - "vip|minister ka relative|mantri"
+
+# Requests for someone else's personal data -> refuse and hand to a human.
+data_request_patterns:
+  - "(phone|mobile|contact) (number|no)\\b.*\\bof\\b"
+  - "\\b(address|aadhaar|details) of\\b"
+  - "(give|send|share|tell) me .*(number|address|aadhaar)"
+  - "(uska|unka|uske) (number|naam|pata|address)"
+  - "(उसका|उनका) (नंबर|पता|आधार)"
+
+abuse: [idiot, stupid, useless fellows, bewakoof, nalayak, बेवकूफ, नालायक]
+
+# Hindi / Chhattisgarhi / Hinglish markers for the offline language identifier
+language_markers:
+  cg: [हमर, हवय, नइ, मोर, अउ, घलो, म, ल, ह, बर, हे, कोनो, देथे, गे]   # matched as whole tokens
+  hinglish: [hai, nahi, nahin, mera, meri, hamare, raha, rahe, ke, ka, ki, mein, se, wala, bahut]

@@ -1,0 +1,41 @@
+id,channel,language_group,district,text,expected
+E01,text,en,District A,The handpump in our village has been broken for two weeks and there is no drinking water.,auto:water
+E02,text,en,District B,The transformer near the market burnt last night and the whole street has no electricity.,auto:electricity
+E03,text,en,District C,My ration card was cancelled and the ration shop dealer refuses to give rice.,auto:ration
+E04,voice,en,District A,My mother has not received her old age pension for four months.,auto:pension
+E05,text,en,District B,"Big potholes on the main road to the block office, the road is unsafe.",auto:roads
+E06,text,en,District C,There is no doctor at the health centre and no medicine for three days.,auto:health
+E07,text,en,District A,The land record shows the wrong boundary for my land after mutation.,auto:revenue
+E08,text,en,District B,The teacher does not come to the primary school and the mid day meal is not served.,auto:education
+E09,text,en,District C,"The bill is too high this month, please check.",human
+E10,text,en,District A,The ration dealer asked for a bribe of 500 rupees to give my quota.,sensitive
+H01,voice,hi,District A,"हमारे गांव का हैंडपंप दस दिन से खराब है, पीने का पानी नहीं मिल रहा।",auto:water
+H02,text,hi,District B,"गांव में तीन दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",auto:electricity
+H03,text,hi,District C,राशन दुकान वाला चावल कम तौलता है और राशन कार्ड में नाम नहीं जोड़ रहा।,auto:ration
+H04,voice,hi,District A,मेरी विधवा पेंशन छह महीने से नहीं आई है।,auto:pension
+H05,text,hi,District B,स्कूल के शिक्षक रोज़ देर से आते हैं।,auto:education
+H06,text,hi,District C,"सड़क पर बड़े गड्ढे हैं, रोज़ दुर्घटना होती है।",auto:roads
+H07,voice,hi,District A,अस्पताल में डॉक्टर नहीं है और दवाई भी नहीं मिलती।,auto:health
+H08,text,hi,District B,मेरी जमीन का नामांतरण एक साल से लंबित है।,auto:revenue
+H09,text,hi,District C,"मेरा काम नहीं हो रहा, कोई सुनता नहीं है।",human
+H10,text,hi,District A,पड़ोसी ने मेरे साथ मारपीट की और जान से मारने की धमकी दी।,sensitive
+H11,text,hi,District B,पटवारी ने खसरा सुधारने के लिए रिश्वत मांगी।,sensitive
+H12,text,hi,District C,बिजली का खंभा सड़क पर गिरा है।,human
+C01,voice,cg,District A,"हमर गांव के हैंडपंप खराब हवय, पीए बर पानी नइ मिलत हे।",auto:water
+C02,text,cg,District B,"दू दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",auto:electricity
+C03,voice,cg,District C,"राशन दुकान म चाउर नइ देवत हे, राशन कार्ड ले नाम कटा गे।",auto:ration
+C04,voice,cg,District A,मोर दाई ल चार महीना ले पेंसन नइ मिले हे।,auto:pension
+C05,text,cg,District B,इस्कूल म गुरुजी नइ आवत हे।,auto:education
+C06,text,cg,District C,रद्दा म बड़े-बड़े गड्ढा हवय।,auto:roads
+C07,voice,cg,District A,"अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",auto:health
+C08,text,cg,District B,मोर भुइयां के पट्टा अभी तक नइ मिले हे।,auto:revenue
+C09,text,cg,District C,सरपंच ह जाति के नाम ले के गारी देथे अउ धमकी देथे।,sensitive
+C10,text,cg,District A,हमर बात कोनो नइ सुनय।,human
+M01,voice,hinglish,District A,"Hamare mohalle mein 4 din se paani nahi aa raha, nal sukha hai.",auto:water
+M02,text,hinglish,District B,Bijli ka meter kharab hai aur bill bahut zyada aa raha hai.,auto:electricity
+M03,text,hinglish,District C,Ration dukan wala chawal nahi de raha.,auto:ration
+M04,voice,hinglish,District A,"Meri vridha pension 3 mahine se band hai, bank mein paisa nahi aaya.",auto:pension
+M05,text,hinglish,District B,"School ke teacher roz absent रहते हैं, बच्चों की पढ़ाई नहीं हो रही।",auto:education
+M06,text,hinglish,District C,"Sadak pe bahut gaddhe hai, accident ho raha hai.",auto:roads
+M07,text,hinglish,District A,Thane mein police wale rishwat maang rahe hai FIR ke liye.,sensitive
+M08,text,hinglish,District B,Zameen ka patta nahi mila to main aatmahatya kar lunga.,sensitive
