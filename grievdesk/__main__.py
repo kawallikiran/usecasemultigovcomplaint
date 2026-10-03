@@ -31,6 +31,13 @@ def build(cfg):
 
 def run_suite(cfg_path, quiet=False):
     cfg = load_config(cfg_path)
+    if cfg.get("engine") == "ai":
+        from .common.ai_client import ai_status
+        ready, msg = ai_status(cfg)
+        if not ready:
+            if not quiet:
+                print(f"\n=== skipped {os.path.basename(cfg_path)}: {msg}")
+            return {"total": 0, "failed": 0, "failed_high": 0, "skipped": msg}, 0
     sysm, kit = build(cfg)
     findings, metrics = run_critic(kit, cfg)
     summary = write_reports(findings, cfg["output_dir"], kit.system_name, metrics)

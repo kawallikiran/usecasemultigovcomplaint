@@ -10,9 +10,12 @@ from .common.decisions import DecisionStore
 
 UI_DIR = os.path.join(ROOT, "reports", "ui")
 MAIN_CONFIG = os.path.join(ROOT, "config", "grievance.yaml")
+AI_CONFIG = os.path.join(ROOT, "config", "grievance_ai.yaml")
 TEST_SETS = {
     "Main test set (40 grievances)": os.path.join(ROOT, "config", "grievance.yaml"),
     "Held-out phrasing set (16 grievances)": os.path.join(ROOT, "config", "grievance_challenge.yaml"),
+    "AI engine on the main set (20 sampled)": AI_CONFIG,
+    "AI engine on the held-out set (16)": os.path.join(ROOT, "config", "grievance_challenge_ai.yaml"),
 }
 DECISIONS = {"Approve and send reply": "approve", "Send to another department": "reroute",
              "Escalate to senior officer": "escalate"}
@@ -21,10 +24,20 @@ LANG_NAMES = {"en": "English", "hi": "Hindi", "cg": "Chhattisgarhi", "hinglish":
 PLACEHOLDER = "[Officer: add the action taken"
 
 
-def make_router():
+def ai_ready():
+    from .common.ai_client import ai_status
+    return ai_status(load_config(AI_CONFIG))
+
+
+def is_ai_set(cfg_path):
+    return load_config(cfg_path).get("engine") == "ai"
+
+
+def make_router(engine="rules"):
+    """engine 'rules' (offline) or 'ai' (configured AI service; raises AIError if not configured)."""
     from .system import GrievanceRouter
-    cfg = load_config(MAIN_CONFIG)
-    return GrievanceRouter(cfg, AuditLog(os.path.join(UI_DIR, "ai_outputs.jsonl"))), cfg
+    cfg = load_config(AI_CONFIG if engine == "ai" else MAIN_CONFIG)
+    return GrievanceRouter(cfg, AuditLog(os.path.join(UI_DIR, "ai_outputs.jsonl")), engine=engine), cfg
 
 
 def load_samples(cfg):
@@ -47,6 +60,7 @@ def summary_rows(out):
                                  else " (auto-acknowledged; officer approves the reply)")
     return [
         {"Item": "Ticket", "Value": out["ticket"]},
+        {"Item": "Engine", "Value": out.get("engine", "rules")},
         {"Item": "Language", "Value": f'{LANG_NAMES.get(out["language"], out["language"])} '
                                       f'(confidence {out["language_confidence"]})'},
         {"Item": "Department", "Value": f'{out["department_name"] or "Not identified"} '
@@ -96,7 +110,7 @@ def audit_rows(router, store, limit=50):
         sens = "sensitive" if o.get("sensitive_categories") else ("human review" if o.get("human_required") else "auto")
         human = "; ".join(f'{d["decision"]} by {d["officer"]}' + (f' to {d["final_department"]}' if d["decision"] == "reroute" else "")
                           + (f': {d["note"]}' if d.get("note") else "") for d in dec.get(t, []))
-        rows.append({"Time": a["ts"].replace("T", " "), "Ticket": t,
+        rows.append({"Time": a["ts"].replace("T", " "), "Ticket": t, "Engine": o.get("engine", "rules"),
                      "Tool suggested": f'{o.get("department_name") or "No department"}, {sens}',
                      "Complaint (masked)": (o.get("complaint_text") or "")[:90],
                      "Human decision": human or "Waiting for a decision"})

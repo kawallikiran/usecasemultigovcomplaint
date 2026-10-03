@@ -40,6 +40,30 @@ Then open http://localhost:8601.
 
 **If the browser says it cannot connect:** the "Local URL" and "Network URL" lines in the log come from inside the container, so ignore them. Run `docker compose ps` and open the host port shown on the left of `->8501` in the PORTS column, typed as `http://127.0.0.1:<port>`. If PORTS is empty, the container stopped; check `docker compose logs`.
 
+## Optional: use a real AI service
+
+The prototype runs fully offline by default with the rule engine. You can switch on an **AI engine** that uses any well-known service: OpenAI, Anthropic Claude, Google Gemini, any OpenAI-compatible API (Groq, OpenRouter, Together, Azure-style gateways and others), or a local model through Ollama.
+
+1. Copy `.env.example` to `.env` in this folder and fill in **one** service: `AI_PROVIDER`, `AI_MODEL`, `AI_API_KEY` (and `AI_BASE_URL` for non-default endpoints). Any chat model works.
+2. Run `docker compose up -d --force-recreate`.
+3. On the first tab, choose **Engine: AI service**.
+
+**What is sent and what is not.** The complaint text is sent with Aadhaar, phone numbers and emails masked first to the service you chose. Citizen messages still come only from approved templates. The AI writes only the officer's draft, which must be edited before approval. Use synthetic data only.
+
+**How the AI engine is wired in:**
+- **The AI classifies:** language, department, sensitive categories, urgency, manipulation and data requests.
+- **The rule-based safety screen still runs as a backstop.** The AI can add sensitive flags but never remove one the rules found.
+- **Invented departments or categories are discarded.** Low confidence goes to an officer.
+- **If the service fails**, the rule engine is used and the case is sent to an officer with an `ai_service_failure` flag.
+
+**Before and after comparison.** The Test report tab now includes AI test sets (grievance_ai.yaml (20 sampled) and grievance_challenge_ai.yaml (all 16 held-out cases)). Run the same 8 tests on the rules engine and the AI engine, then compare the two reports. A full AI run makes a few hundred calls, takes several minutes and uses API credit.
+
+**Key safety.** `.env` is excluded from git and from the Docker image. The key reaches the container only at runtime and never appears in logs or reports.
+
+**Local Ollama.** `AI_BASE_URL=http://host.docker.internal:11434/v1` lets the container reach Ollama on your computer. No data leaves the machine.
+
+**Testing without a key.** `docker compose --profile tools run --rm tests` checks all three provider formats against a built-in mock server.
+
 ## Run without Docker
 
 ```bash

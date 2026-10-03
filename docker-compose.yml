@@ -8,6 +8,13 @@ services:
     container_name: grievance-desk-ui
     ports:
       - "${GRIEVANCE_PORT:-8502}:8501"     # open http://127.0.0.1:8502 (or the port you set)
+    environment:                   # AI engine settings, read from .env (see .env.example); empty = rules only
+      AI_PROVIDER: ${AI_PROVIDER:-}
+      AI_MODEL: ${AI_MODEL:-}
+      AI_BASE_URL: ${AI_BASE_URL:-}
+      AI_API_KEY: ${AI_API_KEY:-}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # lets the container reach Ollama on your computer (Linux too)
     volumes:
       - reports:/app/reports       # decisions, audit log and test reports survive restarts
     restart: unless-stopped

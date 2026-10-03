@@ -16,12 +16,13 @@ def run_critic(kit, cfg) -> tuple:
     c = cfg.get("critic", {})
     sev = c.get("severity", {})
     findings, metrics = [], {}
-    cases = kit.cases()
+    cases = _limit(kit, kit.cases(), c.get("max_cases"))
     outs = {kit.case_id(k): safe_process(kit.system, k) for k in cases}
 
     # ---- Baseline accuracy -------------------------------------------------
     correct = sum(kit.label(outs[kit.case_id(k)]) == kit.expected_label(k) for k in cases)
     metrics["cases"] = len(cases)
+    metrics["engine"] = getattr(kit.system, "engine_label", "rules")
     metrics["baseline_accuracy"] = f"{correct}/{len(cases)} ({correct / max(len(cases), 1):.0%})"
     confusion = defaultdict(int)
     for k in cases:
@@ -156,6 +157,23 @@ def run_critic(kit, cfg) -> tuple:
         findings.append(Finding(p.test_no, p.name, _desc(p.case), p.expected, str(actual), ok, p.severity))
 
     return findings, metrics
+
+
+def _limit(kit, cases, n):
+    """Optional cap on cases (keeps paid AI runs affordable). Takes cases round-robin across expected
+    labels so every outcome type stays represented. Deterministic: same set every run."""
+    if not n or len(cases) <= int(n):
+        return cases
+    groups = {}
+    for k in cases:
+        groups.setdefault(kit.expected_label(k), []).append(k)
+    picked, i = [], 0
+    while len(picked) < int(n):
+        for g in groups.values():
+            if i < len(g) and len(picked) < int(n):
+                picked.append(g[i])
+        i += 1
+    return picked
 
 
 def _desc(case):

@@ -13,11 +13,12 @@ st.set_page_config(page_title="Citizen grievance desk", layout="wide")
 
 
 @st.cache_resource
-def get_router():
-    return ui.make_router()
+def get_router(engine):
+    return ui.make_router(engine)
 
 
-router, cfg = get_router()
+ai_ok, ai_msg = ui.ai_ready()
+router, cfg = get_router("rules")
 samples = ui.load_samples(cfg)
 store = ui.decision_store()
 
@@ -30,6 +31,15 @@ tab_use, tab_report, tab_results, tab_audit = st.tabs(
 
 # ------------------------------------------------------------------ register a grievance
 with tab_use:
+    engines = ["Rules (offline)"] + ([f"AI service ({ai_msg})"] if ai_ok else [])
+    engine_label = st.radio("Engine", engines, horizontal=True)
+    engine = "ai" if engine_label.startswith("AI") else "rules"
+    if not ai_ok:
+        st.caption(f"AI engine not available: {ai_msg}")
+    if engine == "ai":
+        st.warning("The complaint text is sent to the AI service named above, with Aadhaar, phone numbers and "
+                   "emails masked first. Use synthetic data only.")
+    active = get_router(engine)[0]
     st.write("Write a complaint as a citizen would, in English, Hindi, Chhattisgarhi or a mix.")
     sample_ids = [""] + [r["id"] for r in samples]
     by_id = {r["id"]: r for r in samples}
@@ -46,7 +56,8 @@ with tab_use:
         if not text.strip():
             st.error("Write the complaint first.")
         else:
-            st.session_state["g_result"] = router.process(ui.new_case(text))
+            with st.spinner("Routing the grievance"):
+                st.session_state["g_result"] = active.process(ui.new_case(text))
             st.session_state.pop("g_saved", None)
 
     out = st.session_state.get("g_result")
@@ -99,7 +110,12 @@ def pick_set(key):
 
 with tab_report:
     set_name, cfg_path = pick_set("report_set")
-    if st.button("Run the 8 tests on this set", type="primary"):
+    blocked = ui.is_ai_set(cfg_path) and not ai_ok
+    if blocked:
+        st.warning(f"This set uses the AI engine, which is not configured: {ai_msg}")
+    elif ui.is_ai_set(cfg_path):
+        st.caption("This run makes a few hundred calls to the AI service. It takes several minutes and uses API credit.")
+    if st.button("Run the 8 tests on this set", type="primary", disabled=blocked):
         with st.spinner("Running the tests."):
             ui.run_tests(cfg_path)
         st.success(f"Tests finished for: {set_name}.")

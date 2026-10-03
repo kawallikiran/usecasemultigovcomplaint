@@ -1,0 +1,39 @@
+# ---- Use case 8 with the AI ENGINE (LLM classifies; rule safety screen kept as a backstop) ----
+use_case: grievance
+dataset: data/grievance/grievances.csv        # swap in any CSV with columns: id,text,expected,(language_group,channel,...)
+routing_matrix: data/grievance/routing.yaml
+templates: data/grievance/templates.yaml
+output_dir: reports/grievance_ai
+
+# ---- AI engine ----
+engine: ai
+ai:
+  # Normally set in the .env file instead: AI_PROVIDER, AI_MODEL, AI_API_KEY (and AI_BASE_URL if needed).
+  provider: ""          # openai | anthropic | gemini   (openai = any OpenAI-compatible API, incl. Ollama)
+  model: ""
+  base_url: ""          # leave empty for the provider's default URL
+  timeout: 60
+  max_tokens: 800
+  temperature: 0
+  draft_replies: true   # LLM drafts the officer's reply (templates still used for citizen messages)
+
+thresholds:
+  route_confidence: 0.55      # below this -> human checks routing
+  language_confidence: 0.6    # below this -> human checks understanding
+  fuzzy_match: 0.85           # typo tolerance for Latin-script keywords
+  max_chars: 2000
+
+# How well the language layer is trusted per language (set from Bhashini/your own evaluation).
+language_support: {en: 0.95, hi: 0.9, hinglish: 0.8, mixed: 0.8, cg: 0.75, unsupported: 0.0, unknown: 0.0}
+
+critic:
+  subgroup_fields: [language_group, channel, district]
+  bias_max_gap: 0.15
+  bias_min_group_size: 3
+  robustness_max_bad_rate: 0.1
+  consistency_runs: 3
+  max_cases: 20               # AI runs cost money and time; cases sampled across outcome types
+  overconfidence_threshold: 0.85
+  fail_on_high: false         # set true to exit non-zero when a High/Critical probe fails (CI gate)
+  severity: {bias: High, robustness: Medium, consistency: Medium, hallucination: High,
+             explainability: High, overconfidence: High}
