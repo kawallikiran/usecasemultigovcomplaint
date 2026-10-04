@@ -77,7 +77,9 @@ def aggregate(cfg, items):
         alert = c >= int(rules.get("min_complaints", 20)) and (rise is None or rise >= int(rules.get("min_rise_pct", 50)))
         villages = Counter(x["village"] for x in v["current"])
         langs = Counter(x["detected_language"] for x in v["current"])
-        row = {"issue": issue, "issue_name": ISSUE_NAMES.get(issue, issue), "block": block, "current": c,
+        any_item = (v["current"] or v["previous"])[0]
+        row = {"issue": issue, "issue_name": ISSUE_NAMES.get(issue, issue), "block": block,
+               "district": any_item.get("district", ""), "current": c,
                "previous": p, "change_pct": rise, "villages": len(villages),
                "provisional_pct": round(100 * sum(x["provisional"] for x in v["current"]) / c) if c else 0,
                "voice_pct": round(100 * sum(x["channel"] == "voice" for x in v["current"]) / c) if c else 0,
@@ -104,7 +106,8 @@ def alert_card(a, cfg):
     lang, ln = a["top_language"]
     share = round(100 * ln / a["current"]) if a["current"] else 0
     rise = "new this period" if a["change_pct"] is None else (f"up {a['change_pct']}%" if a["change_pct"] >= 0 else f"down {-a['change_pct']}%")
-    lines = [f"Emerging {a['issue_name'].lower()} issue, {a['block']}",
+    place = f"{a['block']}, {a['district']}" if a.get("district") else a["block"]
+    lines = [f"Emerging {a['issue_name'].lower()} issue, {place}",
              f"{a['current']} related complaints across {a['villages']} villages in the last {n} days",
              f"{rise} compared with the previous {n} days ({a['previous']})",
              f"Mostly {LANG_NAMES.get(lang, lang)}-language submissions ({share}%); {a['voice_pct']}% by voice",

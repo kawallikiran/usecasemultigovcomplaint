@@ -1,7 +1,7 @@
 # Citizen screen text in each language. Officer pages are in English.
 # Keep keys identical across languages; a missing key falls back to English.
 # Translations need review by native speakers before public use.
-languages:   # code: name shown in the language picker (in its own script)
+languages:
   en: English
   hi: हिन्दी
   cg: छत्तीसगढ़ी
@@ -16,501 +16,721 @@ languages:   # code: name shown in the language picker (in its own script)
   ml: മലയാളം
   ur: اردو
   as: অসমীয়া
-fallback:    # languages without their own screen text use another language's text
+fallback:
   cg: hi
-
 strings:
   en:
-    title: "Public Grievance Portal"
-    subtitle: "District Administration"
-    language: "Language"
-    nav_file: "File a complaint"
-    nav_track: "Track complaint"
-    nav_officer: "Officer login"
-    how: "1. How would you like to tell us?"
-    type: "Type"
-    speak: "Speak"
-    complaint: "2. Your complaint"
-    complaint_hint: "Describe the problem: what, where and since when."
-    record_hint: "Press the microphone and speak your complaint."
-    where: "3. Where is the problem?"
-    district: "District"
-    block: "Block"
-    village: "Village or ward"
-    mobile: "Mobile number (optional, for updates)"
-    submit: "Submit complaint"
-    empty_error: "Please type or record your complaint."
-    ack_title: "Your complaint has been registered"
-    ticket: "Complaint number"
-    keep_number: "Keep this number to track your complaint."
-    download_receipt: "Download receipt"
-    new_complaint: "File another complaint"
-    track_title: "Track your complaint"
-    enter_ticket: "Enter complaint number"
-    check: "Check status"
-    not_found: "No complaint found with this number."
-    status: "Status"
-    st_registered: "Registered"
-    st_review: "Under review by an officer"
-    st_forwarded: "Sent to department"
-    st_escalated: "Sent to a senior officer"
-    st_resolved: "Reply sent"
-    officer_reply: "Reply from the office"
-    emergency: "In an emergency, call 112."
-    handled_note: "Every complaint is checked by an officer."
+    title: Public Grievance Portal
+    subtitle: District Administration
+    language: Language
+    nav_file: File a complaint
+    nav_track: Track complaint
+    nav_officer: Officer login
+    how: 1. How would you like to tell us?
+    type: Type
+    speak: Speak
+    complaint: 2. Your complaint
+    complaint_hint: 'Describe the problem: what, where and since when.'
+    record_hint: Press the microphone and speak your complaint.
+    where: 3. Where is the problem?
+    district: District
+    block: Block
+    village: Village or ward
+    mobile: Mobile number (optional, for updates)
+    submit: Submit complaint
+    empty_error: Please type or record your complaint.
+    ack_title: Your complaint has been registered
+    ticket: Complaint number
+    keep_number: Keep this number to track your complaint.
+    download_receipt: Download receipt
+    new_complaint: File another complaint
+    track_title: Track your complaint
+    enter_ticket: Enter complaint number
+    check: Check status
+    not_found: No complaint found with this number.
+    status: Status
+    st_registered: Registered
+    st_review: Under review by an officer
+    st_forwarded: Sent to department
+    st_escalated: Sent to a senior officer
+    st_resolved: Reply sent
+    officer_reply: Reply from the office
+    emergency: In an emergency, call 112.
+    handled_note: Every complaint is checked by an officer.
+    dept_label: Department
+    officer_label: Officer
+    expected_by: Expected reply by
+    timeline: Progress
+    common: Frequently filed complaints (optional)
+    common_none: I will write my own
+    notify_by: How should we inform you?
+    ch_sms: SMS
+    ch_whatsapp: WhatsApp
+    ch_email: Email
+    ch_portal: I will check on this portal
+    email: Email address
+    contact_needed: Please enter your mobile number or email so we can inform you.
+    to_be_assigned: To be assigned
+    msg_registered: 'Complaint {ticket} registered. Sent to: {office}. Expected reply by {date}.'
+    msg_resolved: 'Reply to complaint {ticket}: {reply}'
+    msg_escalated: Complaint {ticket} has been sent to a senior officer.
   hi:
-    title: "लोक शिकायत पोर्टल"
-    subtitle: "जिला प्रशासन"
-    language: "भाषा"
-    nav_file: "शिकायत दर्ज करें"
-    nav_track: "शिकायत की स्थिति"
-    nav_officer: "अधिकारी लॉगिन"
-    how: "1. आप अपनी शिकायत कैसे बताना चाहेंगे?"
-    type: "लिखकर"
-    speak: "बोलकर"
-    complaint: "2. आपकी शिकायत"
-    complaint_hint: "समस्या लिखें: क्या, कहाँ और कब से।"
-    record_hint: "माइक दबाएँ और अपनी शिकायत बोलें।"
-    where: "3. समस्या कहाँ है?"
-    district: "जिला"
-    block: "विकासखंड"
-    village: "गाँव या वार्ड"
-    mobile: "मोबाइल नंबर (वैकल्पिक, जानकारी के लिए)"
-    submit: "शिकायत दर्ज करें"
-    empty_error: "कृपया अपनी शिकायत लिखें या बोलें।"
-    ack_title: "आपकी शिकायत दर्ज हो गई है"
-    ticket: "शिकायत संख्या"
-    keep_number: "अपनी शिकायत की स्थिति जानने के लिए यह संख्या संभाल कर रखें।"
-    download_receipt: "पावती डाउनलोड करें"
-    new_complaint: "नई शिकायत दर्ज करें"
-    track_title: "अपनी शिकायत की स्थिति देखें"
-    enter_ticket: "शिकायत संख्या दर्ज करें"
-    check: "स्थिति देखें"
-    not_found: "इस संख्या की कोई शिकायत नहीं मिली।"
-    status: "स्थिति"
-    st_registered: "दर्ज"
-    st_review: "अधिकारी द्वारा जाँच जारी"
-    st_forwarded: "विभाग को भेजी गई"
-    st_escalated: "वरिष्ठ अधिकारी को भेजी गई"
-    st_resolved: "उत्तर भेजा गया"
-    officer_reply: "कार्यालय का उत्तर"
-    emergency: "आपातकाल में 112 पर कॉल करें।"
-    handled_note: "हर शिकायत की जाँच एक अधिकारी करते हैं।"
+    title: लोक शिकायत पोर्टल
+    subtitle: जिला प्रशासन
+    language: भाषा
+    nav_file: शिकायत दर्ज करें
+    nav_track: शिकायत की स्थिति
+    nav_officer: अधिकारी लॉगिन
+    how: 1. आप अपनी शिकायत कैसे बताना चाहेंगे?
+    type: लिखकर
+    speak: बोलकर
+    complaint: 2. आपकी शिकायत
+    complaint_hint: 'समस्या लिखें: क्या, कहाँ और कब से।'
+    record_hint: माइक दबाएँ और अपनी शिकायत बोलें।
+    where: 3. समस्या कहाँ है?
+    district: जिला
+    block: विकासखंड
+    village: गाँव या वार्ड
+    mobile: मोबाइल नंबर (वैकल्पिक, जानकारी के लिए)
+    submit: शिकायत दर्ज करें
+    empty_error: कृपया अपनी शिकायत लिखें या बोलें।
+    ack_title: आपकी शिकायत दर्ज हो गई है
+    ticket: शिकायत संख्या
+    keep_number: अपनी शिकायत की स्थिति जानने के लिए यह संख्या संभाल कर रखें।
+    download_receipt: पावती डाउनलोड करें
+    new_complaint: नई शिकायत दर्ज करें
+    track_title: अपनी शिकायत की स्थिति देखें
+    enter_ticket: शिकायत संख्या दर्ज करें
+    check: स्थिति देखें
+    not_found: इस संख्या की कोई शिकायत नहीं मिली।
+    status: स्थिति
+    st_registered: दर्ज
+    st_review: अधिकारी द्वारा जाँच जारी
+    st_forwarded: विभाग को भेजी गई
+    st_escalated: वरिष्ठ अधिकारी को भेजी गई
+    st_resolved: उत्तर भेजा गया
+    officer_reply: कार्यालय का उत्तर
+    emergency: आपातकाल में 112 पर कॉल करें।
+    handled_note: हर शिकायत की जाँच एक अधिकारी करते हैं।
+    dept_label: विभाग
+    officer_label: अधिकारी
+    expected_by: उत्तर की संभावित तिथि
+    timeline: प्रगति
+    common: अक्सर दर्ज की जाने वाली शिकायतें (वैकल्पिक)
+    common_none: मैं खुद लिखूँगा/लिखूँगी
+    notify_by: हम आपको कैसे सूचित करें?
+    ch_sms: SMS
+    ch_whatsapp: व्हाट्सऐप
+    ch_email: ईमेल
+    ch_portal: मैं इसी पोर्टल पर देखूँगा/देखूँगी
+    email: ईमेल पता
+    contact_needed: कृपया मोबाइल नंबर या ईमेल दें ताकि हम आपको सूचित कर सकें।
+    to_be_assigned: तय किया जाना है
+    msg_registered: 'शिकायत {ticket} दर्ज हुई। भेजी गई: {office}। उत्तर की संभावित तिथि {date}।'
+    msg_resolved: 'शिकायत {ticket} का उत्तर: {reply}'
+    msg_escalated: शिकायत {ticket} वरिष्ठ अधिकारी को भेजी गई है।
   bn:
-    title: "জনঅভিযোগ পোর্টাল"
-    subtitle: "জেলা প্রশাসন"
-    language: "ভাষা"
-    nav_file: "অভিযোগ জানান"
-    nav_track: "অভিযোগের অবস্থা"
-    nav_officer: "আধিকারিক লগইন"
-    how: "1. আপনি কীভাবে অভিযোগ জানাতে চান?"
-    type: "লিখে"
-    speak: "বলে"
-    complaint: "2. আপনার অভিযোগ"
-    complaint_hint: "সমস্যাটি লিখুন: কী, কোথায় এবং কবে থেকে।"
-    record_hint: "মাইক টিপে আপনার অভিযোগ বলুন।"
-    where: "3. সমস্যাটি কোথায়?"
-    district: "জেলা"
-    block: "ব্লক"
-    village: "গ্রাম বা ওয়ার্ড"
-    mobile: "মোবাইল নম্বর (ঐচ্ছিক, খবর পাওয়ার জন্য)"
-    submit: "অভিযোগ জমা দিন"
-    empty_error: "অনুগ্রহ করে আপনার অভিযোগ লিখুন বা বলুন।"
-    ack_title: "আপনার অভিযোগ নথিভুক্ত হয়েছে"
-    ticket: "অভিযোগ নম্বর"
-    keep_number: "অভিযোগের অবস্থা জানতে এই নম্বরটি রেখে দিন।"
-    download_receipt: "প্রাপ্তিস্বীকার ডাউনলোড করুন"
-    new_complaint: "নতুন অভিযোগ জানান"
-    track_title: "আপনার অভিযোগের অবস্থা দেখুন"
-    enter_ticket: "অভিযোগ নম্বর লিখুন"
-    check: "অবস্থা দেখুন"
-    not_found: "এই নম্বরে কোনো অভিযোগ পাওয়া যায়নি।"
-    status: "অবস্থা"
-    st_registered: "নথিভুক্ত"
-    st_review: "আধিকারিক যাচাই করছেন"
-    st_forwarded: "বিভাগে পাঠানো হয়েছে"
-    st_escalated: "ঊর্ধ্বতন আধিকারিকের কাছে পাঠানো হয়েছে"
-    st_resolved: "উত্তর পাঠানো হয়েছে"
-    officer_reply: "দপ্তরের উত্তর"
-    emergency: "জরুরি অবস্থায় 112-এ ফোন করুন।"
-    handled_note: "প্রতিটি অভিযোগ একজন আধিকারিক যাচাই করেন।"
+    title: জনঅভিযোগ পোর্টাল
+    subtitle: জেলা প্রশাসন
+    language: ভাষা
+    nav_file: অভিযোগ জানান
+    nav_track: অভিযোগের অবস্থা
+    nav_officer: আধিকারিক লগইন
+    how: 1. আপনি কীভাবে অভিযোগ জানাতে চান?
+    type: লিখে
+    speak: বলে
+    complaint: 2. আপনার অভিযোগ
+    complaint_hint: 'সমস্যাটি লিখুন: কী, কোথায় এবং কবে থেকে।'
+    record_hint: মাইক টিপে আপনার অভিযোগ বলুন।
+    where: 3. সমস্যাটি কোথায়?
+    district: জেলা
+    block: ব্লক
+    village: গ্রাম বা ওয়ার্ড
+    mobile: মোবাইল নম্বর (ঐচ্ছিক, খবর পাওয়ার জন্য)
+    submit: অভিযোগ জমা দিন
+    empty_error: অনুগ্রহ করে আপনার অভিযোগ লিখুন বা বলুন।
+    ack_title: আপনার অভিযোগ নথিভুক্ত হয়েছে
+    ticket: অভিযোগ নম্বর
+    keep_number: অভিযোগের অবস্থা জানতে এই নম্বরটি রেখে দিন।
+    download_receipt: প্রাপ্তিস্বীকার ডাউনলোড করুন
+    new_complaint: নতুন অভিযোগ জানান
+    track_title: আপনার অভিযোগের অবস্থা দেখুন
+    enter_ticket: অভিযোগ নম্বর লিখুন
+    check: অবস্থা দেখুন
+    not_found: এই নম্বরে কোনো অভিযোগ পাওয়া যায়নি।
+    status: অবস্থা
+    st_registered: নথিভুক্ত
+    st_review: আধিকারিক যাচাই করছেন
+    st_forwarded: বিভাগে পাঠানো হয়েছে
+    st_escalated: ঊর্ধ্বতন আধিকারিকের কাছে পাঠানো হয়েছে
+    st_resolved: উত্তর পাঠানো হয়েছে
+    officer_reply: দপ্তরের উত্তর
+    emergency: জরুরি অবস্থায় 112-এ ফোন করুন।
+    handled_note: প্রতিটি অভিযোগ একজন আধিকারিক যাচাই করেন।
+    dept_label: বিভাগ
+    officer_label: আধিকারিক
+    expected_by: উত্তরের সম্ভাব্য তারিখ
+    timeline: অগ্রগতি
+    common: প্রায়ই জানানো অভিযোগ (ঐচ্ছিক)
+    common_none: আমি নিজে লিখব
+    notify_by: আমরা আপনাকে কীভাবে জানাব?
+    ch_sms: SMS
+    ch_whatsapp: হোয়াটসঅ্যাপ
+    ch_email: ইমেল
+    ch_portal: আমি এই পোর্টালেই দেখব
+    email: ইমেল ঠিকানা
+    contact_needed: অনুগ্রহ করে মোবাইল নম্বর বা ইমেল দিন যাতে আমরা আপনাকে জানাতে পারি।
+    to_be_assigned: নির্ধারিত হবে
+    msg_registered: 'অভিযোগ {ticket} নথিভুক্ত হয়েছে। পাঠানো হয়েছে: {office}। সম্ভাব্য উত্তরের তারিখ {date}।'
+    msg_resolved: 'অভিযোগ {ticket}-এর উত্তর: {reply}'
+    msg_escalated: অভিযোগ {ticket} ঊর্ধ্বতন আধিকারিকের কাছে পাঠানো হয়েছে।
   mr:
-    title: "लोक तक्रार पोर्टल"
-    subtitle: "जिल्हा प्रशासन"
-    language: "भाषा"
-    nav_file: "तक्रार नोंदवा"
-    nav_track: "तक्रारीची स्थिती"
-    nav_officer: "अधिकारी लॉगिन"
-    how: "1. तुम्ही तक्रार कशी सांगू इच्छिता?"
-    type: "लिहून"
-    speak: "बोलून"
-    complaint: "2. तुमची तक्रार"
-    complaint_hint: "समस्या लिहा: काय, कुठे आणि कधीपासून."
-    record_hint: "माइक दाबा आणि तुमची तक्रार बोला."
-    where: "3. समस्या कुठे आहे?"
-    district: "जिल्हा"
-    block: "तालुका"
-    village: "गाव किंवा वॉर्ड"
-    mobile: "मोबाइल नंबर (ऐच्छिक, माहितीसाठी)"
-    submit: "तक्रार नोंदवा"
-    empty_error: "कृपया तुमची तक्रार लिहा किंवा बोला."
-    ack_title: "तुमची तक्रार नोंदवली गेली आहे"
-    ticket: "तक्रार क्रमांक"
-    keep_number: "तक्रारीची स्थिती पाहण्यासाठी हा क्रमांक जपून ठेवा."
-    download_receipt: "पोचपावती डाउनलोड करा"
-    new_complaint: "नवीन तक्रार नोंदवा"
-    track_title: "तुमच्या तक्रारीची स्थिती पहा"
-    enter_ticket: "तक्रार क्रमांक टाका"
-    check: "स्थिती पहा"
-    not_found: "या क्रमांकाची कोणतीही तक्रार सापडली नाही."
-    status: "स्थिती"
-    st_registered: "नोंदवली"
-    st_review: "अधिकारी तपासत आहेत"
-    st_forwarded: "विभागाकडे पाठवली"
-    st_escalated: "वरिष्ठ अधिकाऱ्यांकडे पाठवली"
-    st_resolved: "उत्तर पाठवले"
-    officer_reply: "कार्यालयाचे उत्तर"
-    emergency: "आपत्कालीन परिस्थितीत 112 वर कॉल करा."
-    handled_note: "प्रत्येक तक्रार एक अधिकारी तपासतात."
+    title: लोक तक्रार पोर्टल
+    subtitle: जिल्हा प्रशासन
+    language: भाषा
+    nav_file: तक्रार नोंदवा
+    nav_track: तक्रारीची स्थिती
+    nav_officer: अधिकारी लॉगिन
+    how: 1. तुम्ही तक्रार कशी सांगू इच्छिता?
+    type: लिहून
+    speak: बोलून
+    complaint: 2. तुमची तक्रार
+    complaint_hint: 'समस्या लिहा: काय, कुठे आणि कधीपासून.'
+    record_hint: माइक दाबा आणि तुमची तक्रार बोला.
+    where: 3. समस्या कुठे आहे?
+    district: जिल्हा
+    block: तालुका
+    village: गाव किंवा वॉर्ड
+    mobile: मोबाइल नंबर (ऐच्छिक, माहितीसाठी)
+    submit: तक्रार नोंदवा
+    empty_error: कृपया तुमची तक्रार लिहा किंवा बोला.
+    ack_title: तुमची तक्रार नोंदवली गेली आहे
+    ticket: तक्रार क्रमांक
+    keep_number: तक्रारीची स्थिती पाहण्यासाठी हा क्रमांक जपून ठेवा.
+    download_receipt: पोचपावती डाउनलोड करा
+    new_complaint: नवीन तक्रार नोंदवा
+    track_title: तुमच्या तक्रारीची स्थिती पहा
+    enter_ticket: तक्रार क्रमांक टाका
+    check: स्थिती पहा
+    not_found: या क्रमांकाची कोणतीही तक्रार सापडली नाही.
+    status: स्थिती
+    st_registered: नोंदवली
+    st_review: अधिकारी तपासत आहेत
+    st_forwarded: विभागाकडे पाठवली
+    st_escalated: वरिष्ठ अधिकाऱ्यांकडे पाठवली
+    st_resolved: उत्तर पाठवले
+    officer_reply: कार्यालयाचे उत्तर
+    emergency: आपत्कालीन परिस्थितीत 112 वर कॉल करा.
+    handled_note: प्रत्येक तक्रार एक अधिकारी तपासतात.
+    dept_label: विभाग
+    officer_label: अधिकारी
+    expected_by: उत्तराची अपेक्षित तारीख
+    timeline: प्रगती
+    common: नेहमी नोंदवल्या जाणाऱ्या तक्रारी (ऐच्छिक)
+    common_none: मी स्वतः लिहीन
+    notify_by: आम्ही तुम्हाला कसे कळवावे?
+    ch_sms: SMS
+    ch_whatsapp: व्हॉट्सॲप
+    ch_email: ईमेल
+    ch_portal: मी याच पोर्टलवर पाहीन
+    email: ईमेल पत्ता
+    contact_needed: कृपया मोबाइल नंबर किंवा ईमेल द्या म्हणजे आम्ही तुम्हाला कळवू शकू.
+    to_be_assigned: ठरवायचे आहे
+    msg_registered: 'तक्रार {ticket} नोंदवली. पाठवली: {office}. उत्तराची अपेक्षित तारीख {date}.'
+    msg_resolved: 'तक्रार {ticket} चे उत्तर: {reply}'
+    msg_escalated: तक्रार {ticket} वरिष्ठ अधिकाऱ्यांकडे पाठवली आहे.
   gu:
-    title: "જાહેર ફરિયાદ પોર્ટલ"
-    subtitle: "જિલ્લા વહીવટીતંત્ર"
-    language: "ભાષા"
-    nav_file: "ફરિયાદ નોંધાવો"
-    nav_track: "ફરિયાદની સ્થિતિ"
-    nav_officer: "અધિકારી લૉગિન"
-    how: "1. તમે ફરિયાદ કેવી રીતે જણાવવા માંગો છો?"
-    type: "લખીને"
-    speak: "બોલીને"
-    complaint: "2. તમારી ફરિયાદ"
-    complaint_hint: "સમસ્યા લખો: શું, ક્યાં અને ક્યારથી."
-    record_hint: "માઇક દબાવો અને તમારી ફરિયાદ બોલો."
-    where: "3. સમસ્યા ક્યાં છે?"
-    district: "જિલ્લો"
-    block: "તાલુકો"
-    village: "ગામ અથવા વોર્ડ"
-    mobile: "મોબાઇલ નંબર (વૈકલ્પિક, માહિતી માટે)"
-    submit: "ફરિયાદ નોંધાવો"
-    empty_error: "કૃપા કરીને તમારી ફરિયાદ લખો અથવા બોલો."
-    ack_title: "તમારી ફરિયાદ નોંધાઈ ગઈ છે"
-    ticket: "ફરિયાદ નંબર"
-    keep_number: "ફરિયાદની સ્થિતિ જાણવા માટે આ નંબર સાચવી રાખો."
-    download_receipt: "પહોંચ ડાઉનલોડ કરો"
-    new_complaint: "નવી ફરિયાદ નોંધાવો"
-    track_title: "તમારી ફરિયાદની સ્થિતિ જુઓ"
-    enter_ticket: "ફરિયાદ નંબર દાખલ કરો"
-    check: "સ્થિતિ જુઓ"
-    not_found: "આ નંબરની કોઈ ફરિયાદ મળી નથી."
-    status: "સ્થિતિ"
-    st_registered: "નોંધાયેલ"
-    st_review: "અધિકારી તપાસી રહ્યા છે"
-    st_forwarded: "વિભાગને મોકલી"
-    st_escalated: "વરિષ્ઠ અધિકારીને મોકલી"
-    st_resolved: "જવાબ મોકલ્યો"
-    officer_reply: "કચેરીનો જવાબ"
-    emergency: "કટોકટીમાં 112 પર કૉલ કરો."
-    handled_note: "દરેક ફરિયાદ એક અધિકારી તપાસે છે."
+    title: જાહેર ફરિયાદ પોર્ટલ
+    subtitle: જિલ્લા વહીવટીતંત્ર
+    language: ભાષા
+    nav_file: ફરિયાદ નોંધાવો
+    nav_track: ફરિયાદની સ્થિતિ
+    nav_officer: અધિકારી લૉગિન
+    how: 1. તમે ફરિયાદ કેવી રીતે જણાવવા માંગો છો?
+    type: લખીને
+    speak: બોલીને
+    complaint: 2. તમારી ફરિયાદ
+    complaint_hint: 'સમસ્યા લખો: શું, ક્યાં અને ક્યારથી.'
+    record_hint: માઇક દબાવો અને તમારી ફરિયાદ બોલો.
+    where: 3. સમસ્યા ક્યાં છે?
+    district: જિલ્લો
+    block: તાલુકો
+    village: ગામ અથવા વોર્ડ
+    mobile: મોબાઇલ નંબર (વૈકલ્પિક, માહિતી માટે)
+    submit: ફરિયાદ નોંધાવો
+    empty_error: કૃપા કરીને તમારી ફરિયાદ લખો અથવા બોલો.
+    ack_title: તમારી ફરિયાદ નોંધાઈ ગઈ છે
+    ticket: ફરિયાદ નંબર
+    keep_number: ફરિયાદની સ્થિતિ જાણવા માટે આ નંબર સાચવી રાખો.
+    download_receipt: પહોંચ ડાઉનલોડ કરો
+    new_complaint: નવી ફરિયાદ નોંધાવો
+    track_title: તમારી ફરિયાદની સ્થિતિ જુઓ
+    enter_ticket: ફરિયાદ નંબર દાખલ કરો
+    check: સ્થિતિ જુઓ
+    not_found: આ નંબરની કોઈ ફરિયાદ મળી નથી.
+    status: સ્થિતિ
+    st_registered: નોંધાયેલ
+    st_review: અધિકારી તપાસી રહ્યા છે
+    st_forwarded: વિભાગને મોકલી
+    st_escalated: વરિષ્ઠ અધિકારીને મોકલી
+    st_resolved: જવાબ મોકલ્યો
+    officer_reply: કચેરીનો જવાબ
+    emergency: કટોકટીમાં 112 પર કૉલ કરો.
+    handled_note: દરેક ફરિયાદ એક અધિકારી તપાસે છે.
+    dept_label: વિભાગ
+    officer_label: અધિકારી
+    expected_by: જવાબની અપેક્ષિત તારીખ
+    timeline: પ્રગતિ
+    common: વારંવાર નોંધાતી ફરિયાદો (વૈકલ્પિક)
+    common_none: હું જાતે લખીશ
+    notify_by: અમે તમને કેવી રીતે જાણ કરીએ?
+    ch_sms: SMS
+    ch_whatsapp: વોટ્સએપ
+    ch_email: ઈમેલ
+    ch_portal: હું આ પોર્ટલ પર જ જોઈશ
+    email: ઈમેલ સરનામું
+    contact_needed: કૃપા કરીને મોબાઇલ નંબર અથવા ઈમેલ આપો જેથી અમે તમને જાણ કરી શકીએ.
+    to_be_assigned: નક્કી કરવાનું બાકી
+    msg_registered: 'ફરિયાદ {ticket} નોંધાઈ. મોકલી: {office}. જવાબની અપેક્ષિત તારીખ {date}.'
+    msg_resolved: 'ફરિયાદ {ticket} નો જવાબ: {reply}'
+    msg_escalated: ફરિયાદ {ticket} વરિષ્ઠ અધિકારીને મોકલવામાં આવી છે.
   pa:
-    title: "ਜਨਤਕ ਸ਼ਿਕਾਇਤ ਪੋਰਟਲ"
-    subtitle: "ਜ਼ਿਲ੍ਹਾ ਪ੍ਰਸ਼ਾਸਨ"
-    language: "ਭਾਸ਼ਾ"
-    nav_file: "ਸ਼ਿਕਾਇਤ ਦਰਜ ਕਰੋ"
-    nav_track: "ਸ਼ਿਕਾਇਤ ਦੀ ਸਥਿਤੀ"
-    nav_officer: "ਅਧਿਕਾਰੀ ਲੌਗਇਨ"
-    how: "1. ਤੁਸੀਂ ਸ਼ਿਕਾਇਤ ਕਿਵੇਂ ਦੱਸਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
-    type: "ਲਿਖ ਕੇ"
-    speak: "ਬੋਲ ਕੇ"
-    complaint: "2. ਤੁਹਾਡੀ ਸ਼ਿਕਾਇਤ"
-    complaint_hint: "ਸਮੱਸਿਆ ਲਿਖੋ: ਕੀ, ਕਿੱਥੇ ਅਤੇ ਕਦੋਂ ਤੋਂ।"
-    record_hint: "ਮਾਈਕ ਦਬਾਓ ਅਤੇ ਆਪਣੀ ਸ਼ਿਕਾਇਤ ਬੋਲੋ।"
-    where: "3. ਸਮੱਸਿਆ ਕਿੱਥੇ ਹੈ?"
-    district: "ਜ਼ਿਲ੍ਹਾ"
-    block: "ਬਲਾਕ"
-    village: "ਪਿੰਡ ਜਾਂ ਵਾਰਡ"
-    mobile: "ਮੋਬਾਈਲ ਨੰਬਰ (ਵਿਕਲਪਿਕ, ਜਾਣਕਾਰੀ ਲਈ)"
-    submit: "ਸ਼ਿਕਾਇਤ ਦਰਜ ਕਰੋ"
-    empty_error: "ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੀ ਸ਼ਿਕਾਇਤ ਲਿਖੋ ਜਾਂ ਬੋਲੋ।"
-    ack_title: "ਤੁਹਾਡੀ ਸ਼ਿਕਾਇਤ ਦਰਜ ਹੋ ਗਈ ਹੈ"
-    ticket: "ਸ਼ਿਕਾਇਤ ਨੰਬਰ"
-    keep_number: "ਸ਼ਿਕਾਇਤ ਦੀ ਸਥਿਤੀ ਜਾਣਨ ਲਈ ਇਹ ਨੰਬਰ ਸੰਭਾਲ ਕੇ ਰੱਖੋ।"
-    download_receipt: "ਰਸੀਦ ਡਾਊਨਲੋਡ ਕਰੋ"
-    new_complaint: "ਨਵੀਂ ਸ਼ਿਕਾਇਤ ਦਰਜ ਕਰੋ"
-    track_title: "ਆਪਣੀ ਸ਼ਿਕਾਇਤ ਦੀ ਸਥਿਤੀ ਵੇਖੋ"
-    enter_ticket: "ਸ਼ਿਕਾਇਤ ਨੰਬਰ ਦਰਜ ਕਰੋ"
-    check: "ਸਥਿਤੀ ਵੇਖੋ"
-    not_found: "ਇਸ ਨੰਬਰ ਦੀ ਕੋਈ ਸ਼ਿਕਾਇਤ ਨਹੀਂ ਮਿਲੀ।"
-    status: "ਸਥਿਤੀ"
-    st_registered: "ਦਰਜ"
-    st_review: "ਅਧਿਕਾਰੀ ਜਾਂਚ ਕਰ ਰਹੇ ਹਨ"
-    st_forwarded: "ਵਿਭਾਗ ਨੂੰ ਭੇਜੀ ਗਈ"
-    st_escalated: "ਸੀਨੀਅਰ ਅਧਿਕਾਰੀ ਨੂੰ ਭੇਜੀ ਗਈ"
-    st_resolved: "ਜਵਾਬ ਭੇਜਿਆ ਗਿਆ"
-    officer_reply: "ਦਫ਼ਤਰ ਦਾ ਜਵਾਬ"
-    emergency: "ਐਮਰਜੈਂਸੀ ਵਿੱਚ 112 'ਤੇ ਕਾਲ ਕਰੋ।"
-    handled_note: "ਹਰ ਸ਼ਿਕਾਇਤ ਦੀ ਜਾਂਚ ਇੱਕ ਅਧਿਕਾਰੀ ਕਰਦੇ ਹਨ।"
+    title: ਜਨਤਕ ਸ਼ਿਕਾਇਤ ਪੋਰਟਲ
+    subtitle: ਜ਼ਿਲ੍ਹਾ ਪ੍ਰਸ਼ਾਸਨ
+    language: ਭਾਸ਼ਾ
+    nav_file: ਸ਼ਿਕਾਇਤ ਦਰਜ ਕਰੋ
+    nav_track: ਸ਼ਿਕਾਇਤ ਦੀ ਸਥਿਤੀ
+    nav_officer: ਅਧਿਕਾਰੀ ਲੌਗਇਨ
+    how: 1. ਤੁਸੀਂ ਸ਼ਿਕਾਇਤ ਕਿਵੇਂ ਦੱਸਣਾ ਚਾਹੁੰਦੇ ਹੋ?
+    type: ਲਿਖ ਕੇ
+    speak: ਬੋਲ ਕੇ
+    complaint: 2. ਤੁਹਾਡੀ ਸ਼ਿਕਾਇਤ
+    complaint_hint: 'ਸਮੱਸਿਆ ਲਿਖੋ: ਕੀ, ਕਿੱਥੇ ਅਤੇ ਕਦੋਂ ਤੋਂ।'
+    record_hint: ਮਾਈਕ ਦਬਾਓ ਅਤੇ ਆਪਣੀ ਸ਼ਿਕਾਇਤ ਬੋਲੋ।
+    where: 3. ਸਮੱਸਿਆ ਕਿੱਥੇ ਹੈ?
+    district: ਜ਼ਿਲ੍ਹਾ
+    block: ਬਲਾਕ
+    village: ਪਿੰਡ ਜਾਂ ਵਾਰਡ
+    mobile: ਮੋਬਾਈਲ ਨੰਬਰ (ਵਿਕਲਪਿਕ, ਜਾਣਕਾਰੀ ਲਈ)
+    submit: ਸ਼ਿਕਾਇਤ ਦਰਜ ਕਰੋ
+    empty_error: ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੀ ਸ਼ਿਕਾਇਤ ਲਿਖੋ ਜਾਂ ਬੋਲੋ।
+    ack_title: ਤੁਹਾਡੀ ਸ਼ਿਕਾਇਤ ਦਰਜ ਹੋ ਗਈ ਹੈ
+    ticket: ਸ਼ਿਕਾਇਤ ਨੰਬਰ
+    keep_number: ਸ਼ਿਕਾਇਤ ਦੀ ਸਥਿਤੀ ਜਾਣਨ ਲਈ ਇਹ ਨੰਬਰ ਸੰਭਾਲ ਕੇ ਰੱਖੋ।
+    download_receipt: ਰਸੀਦ ਡਾਊਨਲੋਡ ਕਰੋ
+    new_complaint: ਨਵੀਂ ਸ਼ਿਕਾਇਤ ਦਰਜ ਕਰੋ
+    track_title: ਆਪਣੀ ਸ਼ਿਕਾਇਤ ਦੀ ਸਥਿਤੀ ਵੇਖੋ
+    enter_ticket: ਸ਼ਿਕਾਇਤ ਨੰਬਰ ਦਰਜ ਕਰੋ
+    check: ਸਥਿਤੀ ਵੇਖੋ
+    not_found: ਇਸ ਨੰਬਰ ਦੀ ਕੋਈ ਸ਼ਿਕਾਇਤ ਨਹੀਂ ਮਿਲੀ।
+    status: ਸਥਿਤੀ
+    st_registered: ਦਰਜ
+    st_review: ਅਧਿਕਾਰੀ ਜਾਂਚ ਕਰ ਰਹੇ ਹਨ
+    st_forwarded: ਵਿਭਾਗ ਨੂੰ ਭੇਜੀ ਗਈ
+    st_escalated: ਸੀਨੀਅਰ ਅਧਿਕਾਰੀ ਨੂੰ ਭੇਜੀ ਗਈ
+    st_resolved: ਜਵਾਬ ਭੇਜਿਆ ਗਿਆ
+    officer_reply: ਦਫ਼ਤਰ ਦਾ ਜਵਾਬ
+    emergency: ਐਮਰਜੈਂਸੀ ਵਿੱਚ 112 'ਤੇ ਕਾਲ ਕਰੋ।
+    handled_note: ਹਰ ਸ਼ਿਕਾਇਤ ਦੀ ਜਾਂਚ ਇੱਕ ਅਧਿਕਾਰੀ ਕਰਦੇ ਹਨ।
+    dept_label: ਵਿਭਾਗ
+    officer_label: ਅਧਿਕਾਰੀ
+    expected_by: ਜਵਾਬ ਦੀ ਸੰਭਾਵਿਤ ਮਿਤੀ
+    timeline: ਪ੍ਰਗਤੀ
+    common: ਅਕਸਰ ਦਰਜ ਹੋਣ ਵਾਲੀਆਂ ਸ਼ਿਕਾਇਤਾਂ (ਵਿਕਲਪਿਕ)
+    common_none: ਮੈਂ ਆਪ ਲਿਖਾਂਗਾ/ਲਿਖਾਂਗੀ
+    notify_by: ਅਸੀਂ ਤੁਹਾਨੂੰ ਕਿਵੇਂ ਸੂਚਿਤ ਕਰੀਏ?
+    ch_sms: SMS
+    ch_whatsapp: ਵਟਸਐਪ
+    ch_email: ਈਮੇਲ
+    ch_portal: ਮੈਂ ਇਸੇ ਪੋਰਟਲ 'ਤੇ ਵੇਖਾਂਗਾ/ਵੇਖਾਂਗੀ
+    email: ਈਮੇਲ ਪਤਾ
+    contact_needed: ਕਿਰਪਾ ਕਰਕੇ ਮੋਬਾਈਲ ਨੰਬਰ ਜਾਂ ਈਮੇਲ ਦਿਓ ਤਾਂ ਜੋ ਅਸੀਂ ਤੁਹਾਨੂੰ ਸੂਚਿਤ ਕਰ ਸਕੀਏ।
+    to_be_assigned: ਤੈਅ ਕੀਤਾ ਜਾਣਾ ਹੈ
+    msg_registered: 'ਸ਼ਿਕਾਇਤ {ticket} ਦਰਜ ਹੋਈ। ਭੇਜੀ ਗਈ: {office}। ਜਵਾਬ ਦੀ ਸੰਭਾਵਿਤ ਮਿਤੀ {date}।'
+    msg_resolved: 'ਸ਼ਿਕਾਇਤ {ticket} ਦਾ ਜਵਾਬ: {reply}'
+    msg_escalated: ਸ਼ਿਕਾਇਤ {ticket} ਸੀਨੀਅਰ ਅਧਿਕਾਰੀ ਨੂੰ ਭੇਜੀ ਗਈ ਹੈ।
   or:
-    title: "ଜନ ଅଭିଯୋଗ ପୋର୍ଟାଲ"
-    subtitle: "ଜିଲ୍ଲା ପ୍ରଶାସନ"
-    language: "ଭାଷା"
-    nav_file: "ଅଭିଯୋଗ କରନ୍ତୁ"
-    nav_track: "ଅଭିଯୋଗର ସ୍ଥିତି"
-    nav_officer: "ଅଧିକାରୀ ଲଗଇନ"
-    how: "1. ଆପଣ ଅଭିଯୋଗ କିପରି ଜଣାଇବାକୁ ଚାହାନ୍ତି?"
-    type: "ଲେଖି"
-    speak: "କହି"
-    complaint: "2. ଆପଣଙ୍କ ଅଭିଯୋଗ"
-    complaint_hint: "ସମସ୍ୟା ଲେଖନ୍ତୁ: କ'ଣ, କେଉଁଠି ଏବଂ କେବେଠାରୁ।"
-    record_hint: "ମାଇକ ଦବାନ୍ତୁ ଏବଂ ଆପଣଙ୍କ ଅଭିଯୋଗ କୁହନ୍ତୁ।"
-    where: "3. ସମସ୍ୟା କେଉଁଠି?"
-    district: "ଜିଲ୍ଲା"
-    block: "ବ୍ଲକ"
-    village: "ଗାଁ କିମ୍ବା ୱାର୍ଡ"
-    mobile: "ମୋବାଇଲ ନମ୍ବର (ଇଚ୍ଛାଧୀନ, ସୂଚନା ପାଇଁ)"
-    submit: "ଅଭିଯୋଗ ଦାଖଲ କରନ୍ତୁ"
-    empty_error: "ଦୟାକରି ଆପଣଙ୍କ ଅଭିଯୋଗ ଲେଖନ୍ତୁ କିମ୍ବା କୁହନ୍ତୁ।"
-    ack_title: "ଆପଣଙ୍କ ଅଭିଯୋଗ ପଞ୍ଜିକୃତ ହୋଇଛି"
-    ticket: "ଅଭିଯୋଗ ନମ୍ବର"
-    keep_number: "ଅଭିଯୋଗର ସ୍ଥିତି ଜାଣିବା ପାଇଁ ଏହି ନମ୍ବର ସାଇତି ରଖନ୍ତୁ।"
-    download_receipt: "ରସିଦ ଡାଉନଲୋଡ କରନ୍ତୁ"
-    new_complaint: "ନୂଆ ଅଭିଯୋଗ କରନ୍ତୁ"
-    track_title: "ଆପଣଙ୍କ ଅଭିଯୋଗର ସ୍ଥିତି ଦେଖନ୍ତୁ"
-    enter_ticket: "ଅଭିଯୋଗ ନମ୍ବର ଲେଖନ୍ତୁ"
-    check: "ସ୍ଥିତି ଦେଖନ୍ତୁ"
-    not_found: "ଏହି ନମ୍ବରରେ କୌଣସି ଅଭିଯୋଗ ମିଳିଲା ନାହିଁ।"
-    status: "ସ୍ଥିତି"
-    st_registered: "ପଞ୍ଜିକୃତ"
-    st_review: "ଅଧିକାରୀ ଯାଞ୍ଚ କରୁଛନ୍ତି"
-    st_forwarded: "ବିଭାଗକୁ ପଠାଯାଇଛି"
-    st_escalated: "ବରିଷ୍ଠ ଅଧିକାରୀଙ୍କ ପାଖକୁ ପଠାଯାଇଛି"
-    st_resolved: "ଉତ୍ତର ପଠାଯାଇଛି"
-    officer_reply: "କାର୍ଯ୍ୟାଳୟର ଉତ୍ତର"
-    emergency: "ଜରୁରୀକାଳୀନ ପରିସ୍ଥିତିରେ 112 କୁ କଲ କରନ୍ତୁ।"
-    handled_note: "ପ୍ରତ୍ୟେକ ଅଭିଯୋଗ ଜଣେ ଅଧିକାରୀ ଯାଞ୍ଚ କରନ୍ତି।"
+    title: ଜନ ଅଭିଯୋଗ ପୋର୍ଟାଲ
+    subtitle: ଜିଲ୍ଲା ପ୍ରଶାସନ
+    language: ଭାଷା
+    nav_file: ଅଭିଯୋଗ କରନ୍ତୁ
+    nav_track: ଅଭିଯୋଗର ସ୍ଥିତି
+    nav_officer: ଅଧିକାରୀ ଲଗଇନ
+    how: 1. ଆପଣ ଅଭିଯୋଗ କିପରି ଜଣାଇବାକୁ ଚାହାନ୍ତି?
+    type: ଲେଖି
+    speak: କହି
+    complaint: 2. ଆପଣଙ୍କ ଅଭିଯୋଗ
+    complaint_hint: 'ସମସ୍ୟା ଲେଖନ୍ତୁ: କ''ଣ, କେଉଁଠି ଏବଂ କେବେଠାରୁ।'
+    record_hint: ମାଇକ ଦବାନ୍ତୁ ଏବଂ ଆପଣଙ୍କ ଅଭିଯୋଗ କୁହନ୍ତୁ।
+    where: 3. ସମସ୍ୟା କେଉଁଠି?
+    district: ଜିଲ୍ଲା
+    block: ବ୍ଲକ
+    village: ଗାଁ କିମ୍ବା ୱାର୍ଡ
+    mobile: ମୋବାଇଲ ନମ୍ବର (ଇଚ୍ଛାଧୀନ, ସୂଚନା ପାଇଁ)
+    submit: ଅଭିଯୋଗ ଦାଖଲ କରନ୍ତୁ
+    empty_error: ଦୟାକରି ଆପଣଙ୍କ ଅଭିଯୋଗ ଲେଖନ୍ତୁ କିମ୍ବା କୁହନ୍ତୁ।
+    ack_title: ଆପଣଙ୍କ ଅଭିଯୋଗ ପଞ୍ଜିକୃତ ହୋଇଛି
+    ticket: ଅଭିଯୋଗ ନମ୍ବର
+    keep_number: ଅଭିଯୋଗର ସ୍ଥିତି ଜାଣିବା ପାଇଁ ଏହି ନମ୍ବର ସାଇତି ରଖନ୍ତୁ।
+    download_receipt: ରସିଦ ଡାଉନଲୋଡ କରନ୍ତୁ
+    new_complaint: ନୂଆ ଅଭିଯୋଗ କରନ୍ତୁ
+    track_title: ଆପଣଙ୍କ ଅଭିଯୋଗର ସ୍ଥିତି ଦେଖନ୍ତୁ
+    enter_ticket: ଅଭିଯୋଗ ନମ୍ବର ଲେଖନ୍ତୁ
+    check: ସ୍ଥିତି ଦେଖନ୍ତୁ
+    not_found: ଏହି ନମ୍ବରରେ କୌଣସି ଅଭିଯୋଗ ମିଳିଲା ନାହିଁ।
+    status: ସ୍ଥିତି
+    st_registered: ପଞ୍ଜିକୃତ
+    st_review: ଅଧିକାରୀ ଯାଞ୍ଚ କରୁଛନ୍ତି
+    st_forwarded: ବିଭାଗକୁ ପଠାଯାଇଛି
+    st_escalated: ବରିଷ୍ଠ ଅଧିକାରୀଙ୍କ ପାଖକୁ ପଠାଯାଇଛି
+    st_resolved: ଉତ୍ତର ପଠାଯାଇଛି
+    officer_reply: କାର୍ଯ୍ୟାଳୟର ଉତ୍ତର
+    emergency: ଜରୁରୀକାଳୀନ ପରିସ୍ଥିତିରେ 112 କୁ କଲ କରନ୍ତୁ।
+    handled_note: ପ୍ରତ୍ୟେକ ଅଭିଯୋଗ ଜଣେ ଅଧିକାରୀ ଯାଞ୍ଚ କରନ୍ତି।
+    dept_label: ବିଭାଗ
+    officer_label: ଅଧିକାରୀ
+    expected_by: ଉତ୍ତରର ସମ୍ଭାବ୍ୟ ତାରିଖ
+    timeline: ଅଗ୍ରଗତି
+    common: ପ୍ରାୟତଃ ହେଉଥିବା ଅଭିଯୋଗ (ଇଚ୍ଛାଧୀନ)
+    common_none: ମୁଁ ନିଜେ ଲେଖିବି
+    notify_by: ଆମେ ଆପଣଙ୍କୁ କିପରି ଜଣାଇବୁ?
+    ch_sms: SMS
+    ch_whatsapp: ହ୍ୱାଟସଆପ
+    ch_email: ଇମେଲ
+    ch_portal: ମୁଁ ଏହି ପୋର୍ଟାଲରେ ଦେଖିବି
+    email: ଇମେଲ ଠିକଣା
+    contact_needed: ଦୟାକରି ମୋବାଇଲ ନମ୍ବର କିମ୍ବା ଇମେଲ ଦିଅନ୍ତୁ ଯାହାଦ୍ୱାରା ଆମେ ଆପଣଙ୍କୁ ଜଣାଇପାରିବୁ।
+    to_be_assigned: ସ୍ଥିର ହେବାକୁ ଅଛି
+    msg_registered: 'ଅଭିଯୋଗ {ticket} ପଞ୍ଜିକୃତ। ପଠାଯାଇଛି: {office}। ଉତ୍ତରର ସମ୍ଭାବ୍ୟ ତାରିଖ {date}।'
+    msg_resolved: 'ଅଭିଯୋଗ {ticket}ର ଉତ୍ତର: {reply}'
+    msg_escalated: ଅଭିଯୋଗ {ticket} ବରିଷ୍ଠ ଅଧିକାରୀଙ୍କ ପାଖକୁ ପଠାଯାଇଛି।
   ta:
-    title: "பொது குறைதீர் இணையதளம்"
-    subtitle: "மாவட்ட நிர்வாகம்"
-    language: "மொழி"
-    nav_file: "புகார் அளிக்க"
-    nav_track: "புகாரின் நிலை"
-    nav_officer: "அலுவலர் உள்நுழைவு"
-    how: "1. உங்கள் புகாரை எப்படி தெரிவிக்க விரும்புகிறீர்கள்?"
-    type: "எழுதி"
-    speak: "பேசி"
-    complaint: "2. உங்கள் புகார்"
-    complaint_hint: "பிரச்சினையை எழுதுங்கள்: என்ன, எங்கே, எப்போதிலிருந்து."
-    record_hint: "மைக்கை அழுத்தி உங்கள் புகாரைப் பேசுங்கள்."
-    where: "3. பிரச்சினை எங்கே?"
-    district: "மாவட்டம்"
-    block: "வட்டாரம்"
-    village: "கிராமம் அல்லது வார்டு"
-    mobile: "கைபேசி எண் (விருப்பத்தேர்வு, தகவலுக்கு)"
-    submit: "புகாரைச் சமர்ப்பிக்கவும்"
-    empty_error: "உங்கள் புகாரை எழுதவும் அல்லது பேசவும்."
-    ack_title: "உங்கள் புகார் பதிவு செய்யப்பட்டது"
-    ticket: "புகார் எண்"
-    keep_number: "புகாரின் நிலையை அறிய இந்த எண்ணைப் பாதுகாத்து வைக்கவும்."
-    download_receipt: "ஒப்புகைச் சீட்டைப் பதிவிறக்கவும்"
-    new_complaint: "புதிய புகார் அளிக்க"
-    track_title: "உங்கள் புகாரின் நிலையைப் பார்க்க"
-    enter_ticket: "புகார் எண்ணை உள்ளிடவும்"
-    check: "நிலையைப் பார்க்க"
-    not_found: "இந்த எண்ணில் எந்தப் புகாரும் இல்லை."
-    status: "நிலை"
-    st_registered: "பதிவு செய்யப்பட்டது"
-    st_review: "அலுவலர் பரிசீலனையில்"
-    st_forwarded: "துறைக்கு அனுப்பப்பட்டது"
-    st_escalated: "மூத்த அலுவலருக்கு அனுப்பப்பட்டது"
-    st_resolved: "பதில் அனுப்பப்பட்டது"
-    officer_reply: "அலுவலகத்தின் பதில்"
-    emergency: "அவசர நிலையில் 112-ஐ அழைக்கவும்."
-    handled_note: "ஒவ்வொரு புகாரையும் ஒரு அலுவலர் சரிபார்க்கிறார்."
+    title: பொது குறைதீர் இணையதளம்
+    subtitle: மாவட்ட நிர்வாகம்
+    language: மொழி
+    nav_file: புகார் அளிக்க
+    nav_track: புகாரின் நிலை
+    nav_officer: அலுவலர் உள்நுழைவு
+    how: 1. உங்கள் புகாரை எப்படி தெரிவிக்க விரும்புகிறீர்கள்?
+    type: எழுதி
+    speak: பேசி
+    complaint: 2. உங்கள் புகார்
+    complaint_hint: 'பிரச்சினையை எழுதுங்கள்: என்ன, எங்கே, எப்போதிலிருந்து.'
+    record_hint: மைக்கை அழுத்தி உங்கள் புகாரைப் பேசுங்கள்.
+    where: 3. பிரச்சினை எங்கே?
+    district: மாவட்டம்
+    block: வட்டாரம்
+    village: கிராமம் அல்லது வார்டு
+    mobile: கைபேசி எண் (விருப்பத்தேர்வு, தகவலுக்கு)
+    submit: புகாரைச் சமர்ப்பிக்கவும்
+    empty_error: உங்கள் புகாரை எழுதவும் அல்லது பேசவும்.
+    ack_title: உங்கள் புகார் பதிவு செய்யப்பட்டது
+    ticket: புகார் எண்
+    keep_number: புகாரின் நிலையை அறிய இந்த எண்ணைப் பாதுகாத்து வைக்கவும்.
+    download_receipt: ஒப்புகைச் சீட்டைப் பதிவிறக்கவும்
+    new_complaint: புதிய புகார் அளிக்க
+    track_title: உங்கள் புகாரின் நிலையைப் பார்க்க
+    enter_ticket: புகார் எண்ணை உள்ளிடவும்
+    check: நிலையைப் பார்க்க
+    not_found: இந்த எண்ணில் எந்தப் புகாரும் இல்லை.
+    status: நிலை
+    st_registered: பதிவு செய்யப்பட்டது
+    st_review: அலுவலர் பரிசீலனையில்
+    st_forwarded: துறைக்கு அனுப்பப்பட்டது
+    st_escalated: மூத்த அலுவலருக்கு அனுப்பப்பட்டது
+    st_resolved: பதில் அனுப்பப்பட்டது
+    officer_reply: அலுவலகத்தின் பதில்
+    emergency: அவசர நிலையில் 112-ஐ அழைக்கவும்.
+    handled_note: ஒவ்வொரு புகாரையும் ஒரு அலுவலர் சரிபார்க்கிறார்.
+    dept_label: துறை
+    officer_label: அலுவலர்
+    expected_by: பதில் எதிர்பார்க்கப்படும் தேதி
+    timeline: முன்னேற்றம்
+    common: அடிக்கடி அளிக்கப்படும் புகார்கள் (விருப்பத்தேர்வு)
+    common_none: நானே எழுதுகிறேன்
+    notify_by: உங்களுக்கு எப்படித் தெரிவிக்க வேண்டும்?
+    ch_sms: SMS
+    ch_whatsapp: வாட்ஸ்அப்
+    ch_email: மின்னஞ்சல்
+    ch_portal: இந்த இணையதளத்திலேயே பார்த்துக்கொள்கிறேன்
+    email: மின்னஞ்சல் முகவரி
+    contact_needed: உங்களுக்குத் தெரிவிக்க கைபேசி எண் அல்லது மின்னஞ்சலை அளிக்கவும்.
+    to_be_assigned: ஒதுக்கப்பட வேண்டும்
+    msg_registered: 'புகார் {ticket} பதிவு செய்யப்பட்டது. அனுப்பப்பட்டது: {office}. பதில் எதிர்பார்க்கப்படும் தேதி {date}.'
+    msg_resolved: 'புகார் {ticket}-க்கான பதில்: {reply}'
+    msg_escalated: புகார் {ticket} மூத்த அலுவலருக்கு அனுப்பப்பட்டது.
   te:
-    title: "ప్రజా ఫిర్యాదుల పోర్టల్"
-    subtitle: "జిల్లా పరిపాలన"
-    language: "భాష"
-    nav_file: "ఫిర్యాదు చేయండి"
-    nav_track: "ఫిర్యాదు స్థితి"
-    nav_officer: "అధికారి లాగిన్"
-    how: "1. మీ ఫిర్యాదును ఎలా తెలియజేయాలనుకుంటున్నారు?"
-    type: "రాసి"
-    speak: "మాట్లాడి"
-    complaint: "2. మీ ఫిర్యాదు"
-    complaint_hint: "సమస్యను రాయండి: ఏమిటి, ఎక్కడ, ఎప్పటి నుండి."
-    record_hint: "మైక్ నొక్కి మీ ఫిర్యాదు చెప్పండి."
-    where: "3. సమస్య ఎక్కడ ఉంది?"
-    district: "జిల్లా"
-    block: "మండలం"
-    village: "గ్రామం లేదా వార్డు"
-    mobile: "మొబైల్ నంబర్ (ఐచ్ఛికం, సమాచారం కోసం)"
-    submit: "ఫిర్యాదు సమర్పించండి"
-    empty_error: "దయచేసి మీ ఫిర్యాదు రాయండి లేదా చెప్పండి."
-    ack_title: "మీ ఫిర్యాదు నమోదు చేయబడింది"
-    ticket: "ఫిర్యాదు సంఖ్య"
-    keep_number: "ఫిర్యాదు స్థితి తెలుసుకోవడానికి ఈ సంఖ్యను భద్రపరచుకోండి."
-    download_receipt: "రసీదు డౌన్‌లోడ్ చేయండి"
-    new_complaint: "కొత్త ఫిర్యాదు చేయండి"
-    track_title: "మీ ఫిర్యాదు స్థితిని చూడండి"
-    enter_ticket: "ఫిర్యాదు సంఖ్యను నమోదు చేయండి"
-    check: "స్థితి చూడండి"
-    not_found: "ఈ సంఖ్యతో ఏ ఫిర్యాదూ లేదు."
-    status: "స్థితి"
-    st_registered: "నమోదైంది"
-    st_review: "అధికారి పరిశీలనలో ఉంది"
-    st_forwarded: "శాఖకు పంపబడింది"
-    st_escalated: "సీనియర్ అధికారికి పంపబడింది"
-    st_resolved: "సమాధానం పంపబడింది"
-    officer_reply: "కార్యాలయం సమాధానం"
-    emergency: "అత్యవసర పరిస్థితిలో 112కు కాల్ చేయండి."
-    handled_note: "ప్రతి ఫిర్యాదును ఒక అధికారి పరిశీలిస్తారు."
+    title: ప్రజా ఫిర్యాదుల పోర్టల్
+    subtitle: జిల్లా పరిపాలన
+    language: భాష
+    nav_file: ఫిర్యాదు చేయండి
+    nav_track: ఫిర్యాదు స్థితి
+    nav_officer: అధికారి లాగిన్
+    how: 1. మీ ఫిర్యాదును ఎలా తెలియజేయాలనుకుంటున్నారు?
+    type: రాసి
+    speak: మాట్లాడి
+    complaint: 2. మీ ఫిర్యాదు
+    complaint_hint: 'సమస్యను రాయండి: ఏమిటి, ఎక్కడ, ఎప్పటి నుండి.'
+    record_hint: మైక్ నొక్కి మీ ఫిర్యాదు చెప్పండి.
+    where: 3. సమస్య ఎక్కడ ఉంది?
+    district: జిల్లా
+    block: మండలం
+    village: గ్రామం లేదా వార్డు
+    mobile: మొబైల్ నంబర్ (ఐచ్ఛికం, సమాచారం కోసం)
+    submit: ఫిర్యాదు సమర్పించండి
+    empty_error: దయచేసి మీ ఫిర్యాదు రాయండి లేదా చెప్పండి.
+    ack_title: మీ ఫిర్యాదు నమోదు చేయబడింది
+    ticket: ఫిర్యాదు సంఖ్య
+    keep_number: ఫిర్యాదు స్థితి తెలుసుకోవడానికి ఈ సంఖ్యను భద్రపరచుకోండి.
+    download_receipt: రసీదు డౌన్‌లోడ్ చేయండి
+    new_complaint: కొత్త ఫిర్యాదు చేయండి
+    track_title: మీ ఫిర్యాదు స్థితిని చూడండి
+    enter_ticket: ఫిర్యాదు సంఖ్యను నమోదు చేయండి
+    check: స్థితి చూడండి
+    not_found: ఈ సంఖ్యతో ఏ ఫిర్యాదూ లేదు.
+    status: స్థితి
+    st_registered: నమోదైంది
+    st_review: అధికారి పరిశీలనలో ఉంది
+    st_forwarded: శాఖకు పంపబడింది
+    st_escalated: సీనియర్ అధికారికి పంపబడింది
+    st_resolved: సమాధానం పంపబడింది
+    officer_reply: కార్యాలయం సమాధానం
+    emergency: అత్యవసర పరిస్థితిలో 112కు కాల్ చేయండి.
+    handled_note: ప్రతి ఫిర్యాదును ఒక అధికారి పరిశీలిస్తారు.
+    dept_label: శాఖ
+    officer_label: అధికారి
+    expected_by: సమాధానం అంచనా తేదీ
+    timeline: పురోగతి
+    common: తరచుగా చేసే ఫిర్యాదులు (ఐచ్ఛికం)
+    common_none: నేనే రాస్తాను
+    notify_by: మీకు ఎలా తెలియజేయాలి?
+    ch_sms: SMS
+    ch_whatsapp: వాట్సాప్
+    ch_email: ఈమెయిల్
+    ch_portal: నేను ఈ పోర్టల్‌లోనే చూస్తాను
+    email: ఈమెయిల్ చిరునామా
+    contact_needed: మీకు తెలియజేయడానికి మొబైల్ నంబర్ లేదా ఈమెయిల్ ఇవ్వండి.
+    to_be_assigned: కేటాయించాల్సి ఉంది
+    msg_registered: 'ఫిర్యాదు {ticket} నమోదైంది. పంపబడింది: {office}. సమాధానం అంచనా తేదీ {date}.'
+    msg_resolved: 'ఫిర్యాదు {ticket}కు సమాధానం: {reply}'
+    msg_escalated: ఫిర్యాదు {ticket} సీనియర్ అధికారికి పంపబడింది.
   kn:
-    title: "ಸಾರ್ವಜನಿಕ ಕುಂದುಕೊರತೆ ಪೋರ್ಟಲ್"
-    subtitle: "ಜಿಲ್ಲಾ ಆಡಳಿತ"
-    language: "ಭಾಷೆ"
-    nav_file: "ದೂರು ನೀಡಿ"
-    nav_track: "ದೂರಿನ ಸ್ಥಿತಿ"
-    nav_officer: "ಅಧಿಕಾರಿ ಲಾಗಿನ್"
-    how: "1. ನಿಮ್ಮ ದೂರನ್ನು ಹೇಗೆ ತಿಳಿಸಲು ಬಯಸುತ್ತೀರಿ?"
-    type: "ಬರೆದು"
-    speak: "ಮಾತನಾಡಿ"
-    complaint: "2. ನಿಮ್ಮ ದೂರು"
-    complaint_hint: "ಸಮಸ್ಯೆಯನ್ನು ಬರೆಯಿರಿ: ಏನು, ಎಲ್ಲಿ ಮತ್ತು ಯಾವಾಗಿನಿಂದ."
-    record_hint: "ಮೈಕ್ ಒತ್ತಿ ನಿಮ್ಮ ದೂರನ್ನು ಹೇಳಿ."
-    where: "3. ಸಮಸ್ಯೆ ಎಲ್ಲಿದೆ?"
-    district: "ಜಿಲ್ಲೆ"
-    block: "ತಾಲ್ಲೂಕು"
-    village: "ಗ್ರಾಮ ಅಥವಾ ವಾರ್ಡ್"
-    mobile: "ಮೊಬೈಲ್ ಸಂಖ್ಯೆ (ಐಚ್ಛಿಕ, ಮಾಹಿತಿಗಾಗಿ)"
-    submit: "ದೂರು ಸಲ್ಲಿಸಿ"
-    empty_error: "ದಯವಿಟ್ಟು ನಿಮ್ಮ ದೂರನ್ನು ಬರೆಯಿರಿ ಅಥವಾ ಹೇಳಿ."
-    ack_title: "ನಿಮ್ಮ ದೂರು ದಾಖಲಾಗಿದೆ"
-    ticket: "ದೂರು ಸಂಖ್ಯೆ"
-    keep_number: "ದೂರಿನ ಸ್ಥಿತಿ ತಿಳಿಯಲು ಈ ಸಂಖ್ಯೆಯನ್ನು ಉಳಿಸಿಕೊಳ್ಳಿ."
-    download_receipt: "ಸ್ವೀಕೃತಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ"
-    new_complaint: "ಹೊಸ ದೂರು ನೀಡಿ"
-    track_title: "ನಿಮ್ಮ ದೂರಿನ ಸ್ಥಿತಿ ನೋಡಿ"
-    enter_ticket: "ದೂರು ಸಂಖ್ಯೆ ನಮೂದಿಸಿ"
-    check: "ಸ್ಥಿತಿ ನೋಡಿ"
-    not_found: "ಈ ಸಂಖ್ಯೆಯ ಯಾವುದೇ ದೂರು ಕಂಡುಬಂದಿಲ್ಲ."
-    status: "ಸ್ಥಿತಿ"
-    st_registered: "ದಾಖಲಾಗಿದೆ"
-    st_review: "ಅಧಿಕಾರಿ ಪರಿಶೀಲಿಸುತ್ತಿದ್ದಾರೆ"
-    st_forwarded: "ಇಲಾಖೆಗೆ ಕಳುಹಿಸಲಾಗಿದೆ"
-    st_escalated: "ಹಿರಿಯ ಅಧಿಕಾರಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ"
-    st_resolved: "ಉತ್ತರ ಕಳುಹಿಸಲಾಗಿದೆ"
-    officer_reply: "ಕಚೇರಿಯ ಉತ್ತರ"
-    emergency: "ತುರ್ತು ಸಂದರ್ಭದಲ್ಲಿ 112ಕ್ಕೆ ಕರೆ ಮಾಡಿ."
-    handled_note: "ಪ್ರತಿ ದೂರನ್ನು ಒಬ್ಬ ಅಧಿಕಾರಿ ಪರಿಶೀಲಿಸುತ್ತಾರೆ."
+    title: ಸಾರ್ವಜನಿಕ ಕುಂದುಕೊರತೆ ಪೋರ್ಟಲ್
+    subtitle: ಜಿಲ್ಲಾ ಆಡಳಿತ
+    language: ಭಾಷೆ
+    nav_file: ದೂರು ನೀಡಿ
+    nav_track: ದೂರಿನ ಸ್ಥಿತಿ
+    nav_officer: ಅಧಿಕಾರಿ ಲಾಗಿನ್
+    how: 1. ನಿಮ್ಮ ದೂರನ್ನು ಹೇಗೆ ತಿಳಿಸಲು ಬಯಸುತ್ತೀರಿ?
+    type: ಬರೆದು
+    speak: ಮಾತನಾಡಿ
+    complaint: 2. ನಿಮ್ಮ ದೂರು
+    complaint_hint: 'ಸಮಸ್ಯೆಯನ್ನು ಬರೆಯಿರಿ: ಏನು, ಎಲ್ಲಿ ಮತ್ತು ಯಾವಾಗಿನಿಂದ.'
+    record_hint: ಮೈಕ್ ಒತ್ತಿ ನಿಮ್ಮ ದೂರನ್ನು ಹೇಳಿ.
+    where: 3. ಸಮಸ್ಯೆ ಎಲ್ಲಿದೆ?
+    district: ಜಿಲ್ಲೆ
+    block: ತಾಲ್ಲೂಕು
+    village: ಗ್ರಾಮ ಅಥವಾ ವಾರ್ಡ್
+    mobile: ಮೊಬೈಲ್ ಸಂಖ್ಯೆ (ಐಚ್ಛಿಕ, ಮಾಹಿತಿಗಾಗಿ)
+    submit: ದೂರು ಸಲ್ಲಿಸಿ
+    empty_error: ದಯವಿಟ್ಟು ನಿಮ್ಮ ದೂರನ್ನು ಬರೆಯಿರಿ ಅಥವಾ ಹೇಳಿ.
+    ack_title: ನಿಮ್ಮ ದೂರು ದಾಖಲಾಗಿದೆ
+    ticket: ದೂರು ಸಂಖ್ಯೆ
+    keep_number: ದೂರಿನ ಸ್ಥಿತಿ ತಿಳಿಯಲು ಈ ಸಂಖ್ಯೆಯನ್ನು ಉಳಿಸಿಕೊಳ್ಳಿ.
+    download_receipt: ಸ್ವೀಕೃತಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ
+    new_complaint: ಹೊಸ ದೂರು ನೀಡಿ
+    track_title: ನಿಮ್ಮ ದೂರಿನ ಸ್ಥಿತಿ ನೋಡಿ
+    enter_ticket: ದೂರು ಸಂಖ್ಯೆ ನಮೂದಿಸಿ
+    check: ಸ್ಥಿತಿ ನೋಡಿ
+    not_found: ಈ ಸಂಖ್ಯೆಯ ಯಾವುದೇ ದೂರು ಕಂಡುಬಂದಿಲ್ಲ.
+    status: ಸ್ಥಿತಿ
+    st_registered: ದಾಖಲಾಗಿದೆ
+    st_review: ಅಧಿಕಾರಿ ಪರಿಶೀಲಿಸುತ್ತಿದ್ದಾರೆ
+    st_forwarded: ಇಲಾಖೆಗೆ ಕಳುಹಿಸಲಾಗಿದೆ
+    st_escalated: ಹಿರಿಯ ಅಧಿಕಾರಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ
+    st_resolved: ಉತ್ತರ ಕಳುಹಿಸಲಾಗಿದೆ
+    officer_reply: ಕಚೇರಿಯ ಉತ್ತರ
+    emergency: ತುರ್ತು ಸಂದರ್ಭದಲ್ಲಿ 112ಕ್ಕೆ ಕರೆ ಮಾಡಿ.
+    handled_note: ಪ್ರತಿ ದೂರನ್ನು ಒಬ್ಬ ಅಧಿಕಾರಿ ಪರಿಶೀಲಿಸುತ್ತಾರೆ.
+    dept_label: ಇಲಾಖೆ
+    officer_label: ಅಧಿಕಾರಿ
+    expected_by: ಉತ್ತರದ ನಿರೀಕ್ಷಿತ ದಿನಾಂಕ
+    timeline: ಪ್ರಗತಿ
+    common: ಆಗಾಗ ನೀಡಲಾಗುವ ದೂರುಗಳು (ಐಚ್ಛಿಕ)
+    common_none: ನಾನೇ ಬರೆಯುತ್ತೇನೆ
+    notify_by: ನಿಮಗೆ ಹೇಗೆ ತಿಳಿಸಬೇಕು?
+    ch_sms: SMS
+    ch_whatsapp: ವಾಟ್ಸಾಪ್
+    ch_email: ಇಮೇಲ್
+    ch_portal: ನಾನು ಈ ಪೋರ್ಟಲ್‌ನಲ್ಲೇ ನೋಡುತ್ತೇನೆ
+    email: ಇಮೇಲ್ ವಿಳಾಸ
+    contact_needed: ನಿಮಗೆ ತಿಳಿಸಲು ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ಅಥವಾ ಇಮೇಲ್ ನೀಡಿ.
+    to_be_assigned: ನಿಗದಿಪಡಿಸಬೇಕಿದೆ
+    msg_registered: 'ದೂರು {ticket} ದಾಖಲಾಗಿದೆ. ಕಳುಹಿಸಲಾಗಿದೆ: {office}. ಉತ್ತರದ ನಿರೀಕ್ಷಿತ ದಿನಾಂಕ {date}.'
+    msg_resolved: 'ದೂರು {ticket}ಗೆ ಉತ್ತರ: {reply}'
+    msg_escalated: ದೂರು {ticket} ಹಿರಿಯ ಅಧಿಕಾರಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ.
   ml:
-    title: "പൊതു പരാതി പോർട്ടൽ"
-    subtitle: "ജില്ലാ ഭരണകൂടം"
-    language: "ഭാഷ"
-    nav_file: "പരാതി നൽകുക"
-    nav_track: "പരാതിയുടെ നില"
-    nav_officer: "ഉദ്യോഗസ്ഥ ലോഗിൻ"
-    how: "1. നിങ്ങളുടെ പരാതി എങ്ങനെ അറിയിക്കാൻ ആഗ്രഹിക്കുന്നു?"
-    type: "എഴുതി"
-    speak: "പറഞ്ഞ്"
-    complaint: "2. നിങ്ങളുടെ പരാതി"
-    complaint_hint: "പ്രശ്നം എഴുതുക: എന്ത്, എവിടെ, എപ്പോൾ മുതൽ."
-    record_hint: "മൈക്ക് അമർത്തി നിങ്ങളുടെ പരാതി പറയുക."
-    where: "3. പ്രശ്നം എവിടെയാണ്?"
-    district: "ജില്ല"
-    block: "ബ്ലോക്ക്"
-    village: "ഗ്രാമം അല്ലെങ്കിൽ വാർഡ്"
-    mobile: "മൊബൈൽ നമ്പർ (ഐച്ഛികം, വിവരങ്ങൾക്കായി)"
-    submit: "പരാതി സമർപ്പിക്കുക"
-    empty_error: "ദയവായി നിങ്ങളുടെ പരാതി എഴുതുക അല്ലെങ്കിൽ പറയുക."
-    ack_title: "നിങ്ങളുടെ പരാതി രജിസ്റ്റർ ചെയ്തു"
-    ticket: "പരാതി നമ്പർ"
-    keep_number: "പരാതിയുടെ നില അറിയാൻ ഈ നമ്പർ സൂക്ഷിക്കുക."
-    download_receipt: "രസീത് ഡൗൺലോഡ് ചെയ്യുക"
-    new_complaint: "പുതിയ പരാതി നൽകുക"
-    track_title: "നിങ്ങളുടെ പരാതിയുടെ നില കാണുക"
-    enter_ticket: "പരാതി നമ്പർ നൽകുക"
-    check: "നില കാണുക"
-    not_found: "ഈ നമ്പറിൽ പരാതിയൊന്നും കണ്ടെത്തിയില്ല."
-    status: "നില"
-    st_registered: "രജിസ്റ്റർ ചെയ്തു"
-    st_review: "ഉദ്യോഗസ്ഥൻ പരിശോധിക്കുന്നു"
-    st_forwarded: "വകുപ്പിലേക്ക് അയച്ചു"
-    st_escalated: "മുതിർന്ന ഉദ്യോഗസ്ഥന് അയച്ചു"
-    st_resolved: "മറുപടി അയച്ചു"
-    officer_reply: "ഓഫീസിന്റെ മറുപടി"
-    emergency: "അടിയന്തര സാഹചര്യത്തിൽ 112-ൽ വിളിക്കുക."
-    handled_note: "ഓരോ പരാതിയും ഒരു ഉദ്യോഗസ്ഥൻ പരിശോധിക്കുന്നു."
+    title: പൊതു പരാതി പോർട്ടൽ
+    subtitle: ജില്ലാ ഭരണകൂടം
+    language: ഭാഷ
+    nav_file: പരാതി നൽകുക
+    nav_track: പരാതിയുടെ നില
+    nav_officer: ഉദ്യോഗസ്ഥ ലോഗിൻ
+    how: 1. നിങ്ങളുടെ പരാതി എങ്ങനെ അറിയിക്കാൻ ആഗ്രഹിക്കുന്നു?
+    type: എഴുതി
+    speak: പറഞ്ഞ്
+    complaint: 2. നിങ്ങളുടെ പരാതി
+    complaint_hint: 'പ്രശ്നം എഴുതുക: എന്ത്, എവിടെ, എപ്പോൾ മുതൽ.'
+    record_hint: മൈക്ക് അമർത്തി നിങ്ങളുടെ പരാതി പറയുക.
+    where: 3. പ്രശ്നം എവിടെയാണ്?
+    district: ജില്ല
+    block: ബ്ലോക്ക്
+    village: ഗ്രാമം അല്ലെങ്കിൽ വാർഡ്
+    mobile: മൊബൈൽ നമ്പർ (ഐച്ഛികം, വിവരങ്ങൾക്കായി)
+    submit: പരാതി സമർപ്പിക്കുക
+    empty_error: ദയവായി നിങ്ങളുടെ പരാതി എഴുതുക അല്ലെങ്കിൽ പറയുക.
+    ack_title: നിങ്ങളുടെ പരാതി രജിസ്റ്റർ ചെയ്തു
+    ticket: പരാതി നമ്പർ
+    keep_number: പരാതിയുടെ നില അറിയാൻ ഈ നമ്പർ സൂക്ഷിക്കുക.
+    download_receipt: രസീത് ഡൗൺലോഡ് ചെയ്യുക
+    new_complaint: പുതിയ പരാതി നൽകുക
+    track_title: നിങ്ങളുടെ പരാതിയുടെ നില കാണുക
+    enter_ticket: പരാതി നമ്പർ നൽകുക
+    check: നില കാണുക
+    not_found: ഈ നമ്പറിൽ പരാതിയൊന്നും കണ്ടെത്തിയില്ല.
+    status: നില
+    st_registered: രജിസ്റ്റർ ചെയ്തു
+    st_review: ഉദ്യോഗസ്ഥൻ പരിശോധിക്കുന്നു
+    st_forwarded: വകുപ്പിലേക്ക് അയച്ചു
+    st_escalated: മുതിർന്ന ഉദ്യോഗസ്ഥന് അയച്ചു
+    st_resolved: മറുപടി അയച്ചു
+    officer_reply: ഓഫീസിന്റെ മറുപടി
+    emergency: അടിയന്തര സാഹചര്യത്തിൽ 112-ൽ വിളിക്കുക.
+    handled_note: ഓരോ പരാതിയും ഒരു ഉദ്യോഗസ്ഥൻ പരിശോധിക്കുന്നു.
+    dept_label: വകുപ്പ്
+    officer_label: ഉദ്യോഗസ്ഥൻ
+    expected_by: മറുപടി പ്രതീക്ഷിക്കുന്ന തീയതി
+    timeline: പുരോഗതി
+    common: പതിവായി നൽകുന്ന പരാതികൾ (ഐച്ഛികം)
+    common_none: ഞാൻ സ്വയം എഴുതാം
+    notify_by: നിങ്ങളെ എങ്ങനെ അറിയിക്കണം?
+    ch_sms: SMS
+    ch_whatsapp: വാട്സ്ആപ്പ്
+    ch_email: ഇമെയിൽ
+    ch_portal: ഞാൻ ഈ പോർട്ടലിൽ തന്നെ നോക്കാം
+    email: ഇമെയിൽ വിലാസം
+    contact_needed: നിങ്ങളെ അറിയിക്കാൻ മൊബൈൽ നമ്പറോ ഇമെയിലോ നൽകുക.
+    to_be_assigned: നിശ്ചയിക്കാനുണ്ട്
+    msg_registered: 'പരാതി {ticket} രജിസ്റ്റർ ചെയ്തു. അയച്ചത്: {office}. മറുപടി പ്രതീക്ഷിക്കുന്ന തീയതി {date}.'
+    msg_resolved: 'പരാതി {ticket}-ന് മറുപടി: {reply}'
+    msg_escalated: പരാതി {ticket} മുതിർന്ന ഉദ്യോഗസ്ഥന് അയച്ചു.
   ur:
-    title: "عوامی شکایات پورٹل"
-    subtitle: "ضلع انتظامیہ"
-    language: "زبان"
-    nav_file: "شکایت درج کریں"
-    nav_track: "شکایت کی صورتحال"
-    nav_officer: "افسر لاگ ان"
-    how: "1. آپ اپنی شکایت کیسے بتانا چاہیں گے؟"
-    type: "لکھ کر"
-    speak: "بول کر"
-    complaint: "2. آپ کی شکایت"
-    complaint_hint: "مسئلہ لکھیں: کیا، کہاں اور کب سے۔"
-    record_hint: "مائیک دبائیں اور اپنی شکایت بولیں۔"
-    where: "3. مسئلہ کہاں ہے؟"
-    district: "ضلع"
-    block: "بلاک"
-    village: "گاؤں یا وارڈ"
-    mobile: "موبائل نمبر (اختیاری، معلومات کے لیے)"
-    submit: "شکایت درج کریں"
-    empty_error: "براہ کرم اپنی شکایت لکھیں یا بولیں۔"
-    ack_title: "آپ کی شکایت درج ہو گئی ہے"
-    ticket: "شکایت نمبر"
-    keep_number: "شکایت کی صورتحال جاننے کے لیے یہ نمبر محفوظ رکھیں۔"
-    download_receipt: "رسید ڈاؤن لوڈ کریں"
-    new_complaint: "نئی شکایت درج کریں"
-    track_title: "اپنی شکایت کی صورتحال دیکھیں"
-    enter_ticket: "شکایت نمبر درج کریں"
-    check: "صورتحال دیکھیں"
-    not_found: "اس نمبر کی کوئی شکایت نہیں ملی۔"
-    status: "صورتحال"
-    st_registered: "درج"
-    st_review: "افسر جانچ کر رہے ہیں"
-    st_forwarded: "محکمے کو بھیجی گئی"
-    st_escalated: "سینئر افسر کو بھیجی گئی"
-    st_resolved: "جواب بھیج دیا گیا"
-    officer_reply: "دفتر کا جواب"
-    emergency: "ہنگامی صورت میں 112 پر کال کریں۔"
-    handled_note: "ہر شکایت کی جانچ ایک افسر کرتے ہیں۔"
+    title: عوامی شکایات پورٹل
+    subtitle: ضلع انتظامیہ
+    language: زبان
+    nav_file: شکایت درج کریں
+    nav_track: شکایت کی صورتحال
+    nav_officer: افسر لاگ ان
+    how: 1. آپ اپنی شکایت کیسے بتانا چاہیں گے؟
+    type: لکھ کر
+    speak: بول کر
+    complaint: 2. آپ کی شکایت
+    complaint_hint: 'مسئلہ لکھیں: کیا، کہاں اور کب سے۔'
+    record_hint: مائیک دبائیں اور اپنی شکایت بولیں۔
+    where: 3. مسئلہ کہاں ہے؟
+    district: ضلع
+    block: بلاک
+    village: گاؤں یا وارڈ
+    mobile: موبائل نمبر (اختیاری، معلومات کے لیے)
+    submit: شکایت درج کریں
+    empty_error: براہ کرم اپنی شکایت لکھیں یا بولیں۔
+    ack_title: آپ کی شکایت درج ہو گئی ہے
+    ticket: شکایت نمبر
+    keep_number: شکایت کی صورتحال جاننے کے لیے یہ نمبر محفوظ رکھیں۔
+    download_receipt: رسید ڈاؤن لوڈ کریں
+    new_complaint: نئی شکایت درج کریں
+    track_title: اپنی شکایت کی صورتحال دیکھیں
+    enter_ticket: شکایت نمبر درج کریں
+    check: صورتحال دیکھیں
+    not_found: اس نمبر کی کوئی شکایت نہیں ملی۔
+    status: صورتحال
+    st_registered: درج
+    st_review: افسر جانچ کر رہے ہیں
+    st_forwarded: محکمے کو بھیجی گئی
+    st_escalated: سینئر افسر کو بھیجی گئی
+    st_resolved: جواب بھیج دیا گیا
+    officer_reply: دفتر کا جواب
+    emergency: ہنگامی صورت میں 112 پر کال کریں۔
+    handled_note: ہر شکایت کی جانچ ایک افسر کرتے ہیں۔
+    dept_label: محکمہ
+    officer_label: افسر
+    expected_by: جواب کی متوقع تاریخ
+    timeline: پیش رفت
+    common: اکثر درج کی جانے والی شکایات (اختیاری)
+    common_none: میں خود لکھوں گا/گی
+    notify_by: ہم آپ کو کیسے مطلع کریں؟
+    ch_sms: SMS
+    ch_whatsapp: واٹس ایپ
+    ch_email: ای میل
+    ch_portal: میں اسی پورٹل پر دیکھوں گا/گی
+    email: ای میل پتہ
+    contact_needed: براہ کرم موبائل نمبر یا ای میل دیں تاکہ ہم آپ کو مطلع کر سکیں۔
+    to_be_assigned: طے ہونا باقی ہے
+    msg_registered: 'شکایت {ticket} درج ہو گئی۔ بھیجی گئی: {office}۔ جواب کی متوقع تاریخ {date}۔'
+    msg_resolved: 'شکایت {ticket} کا جواب: {reply}'
+    msg_escalated: شکایت {ticket} سینئر افسر کو بھیج دی گئی ہے۔
   as:
-    title: "ৰাজহুৱা অভিযোগ পৰ্টেল"
-    subtitle: "জিলা প্ৰশাসন"
-    language: "ভাষা"
-    nav_file: "অভিযোগ দাখিল কৰক"
-    nav_track: "অভিযোগৰ স্থিতি"
-    nav_officer: "বিষয়া লগইন"
-    how: "1. আপুনি অভিযোগ কেনেকৈ জনাব বিচাৰে?"
-    type: "লিখি"
-    speak: "কৈ"
-    complaint: "2. আপোনাৰ অভিযোগ"
-    complaint_hint: "সমস্যাটো লিখক: কি, ক'ত আৰু কেতিয়াৰ পৰা।"
-    record_hint: "মাইক টিপি আপোনাৰ অভিযোগ কওক।"
-    where: "3. সমস্যাটো ক'ত?"
-    district: "জিলা"
-    block: "উন্নয়ন খণ্ড"
-    village: "গাঁও বা ৱাৰ্ড"
-    mobile: "মোবাইল নম্বৰ (ঐচ্ছিক, তথ্যৰ বাবে)"
-    submit: "অভিযোগ দাখিল কৰক"
-    empty_error: "অনুগ্ৰহ কৰি আপোনাৰ অভিযোগ লিখক বা কওক।"
-    ack_title: "আপোনাৰ অভিযোগ পঞ্জীভুক্ত কৰা হৈছে"
-    ticket: "অভিযোগ নম্বৰ"
-    keep_number: "অভিযোগৰ স্থিতি জানিবলৈ এই নম্বৰটো সাঁচি ৰাখক।"
-    download_receipt: "ৰচিদ ডাউনলোড কৰক"
-    new_complaint: "নতুন অভিযোগ দাখিল কৰক"
-    track_title: "আপোনাৰ অভিযোগৰ স্থিতি চাওক"
-    enter_ticket: "অভিযোগ নম্বৰ লিখক"
-    check: "স্থিতি চাওক"
-    not_found: "এই নম্বৰৰ কোনো অভিযোগ পোৱা নগ'ল।"
-    status: "স্থিতি"
-    st_registered: "পঞ্জীভুক্ত"
-    st_review: "বিষয়াই পৰীক্ষা কৰি আছে"
-    st_forwarded: "বিভাগলৈ পঠোৱা হৈছে"
-    st_escalated: "জ্যেষ্ঠ বিষয়ালৈ পঠোৱা হৈছে"
-    st_resolved: "উত্তৰ পঠোৱা হৈছে"
-    officer_reply: "কাৰ্যালয়ৰ উত্তৰ"
-    emergency: "জৰুৰীকালীন অৱস্থাত 112 নম্বৰত ফোন কৰক।"
-    handled_note: "প্ৰতিটো অভিযোগ এজন বিষয়াই পৰীক্ষা কৰে।"
+    title: ৰাজহুৱা অভিযোগ পৰ্টেল
+    subtitle: জিলা প্ৰশাসন
+    language: ভাষা
+    nav_file: অভিযোগ দাখিল কৰক
+    nav_track: অভিযোগৰ স্থিতি
+    nav_officer: বিষয়া লগইন
+    how: 1. আপুনি অভিযোগ কেনেকৈ জনাব বিচাৰে?
+    type: লিখি
+    speak: কৈ
+    complaint: 2. আপোনাৰ অভিযোগ
+    complaint_hint: 'সমস্যাটো লিখক: কি, ক''ত আৰু কেতিয়াৰ পৰা।'
+    record_hint: মাইক টিপি আপোনাৰ অভিযোগ কওক।
+    where: 3. সমস্যাটো ক'ত?
+    district: জিলা
+    block: উন্নয়ন খণ্ড
+    village: গাঁও বা ৱাৰ্ড
+    mobile: মোবাইল নম্বৰ (ঐচ্ছিক, তথ্যৰ বাবে)
+    submit: অভিযোগ দাখিল কৰক
+    empty_error: অনুগ্ৰহ কৰি আপোনাৰ অভিযোগ লিখক বা কওক।
+    ack_title: আপোনাৰ অভিযোগ পঞ্জীভুক্ত কৰা হৈছে
+    ticket: অভিযোগ নম্বৰ
+    keep_number: অভিযোগৰ স্থিতি জানিবলৈ এই নম্বৰটো সাঁচি ৰাখক।
+    download_receipt: ৰচিদ ডাউনলোড কৰক
+    new_complaint: নতুন অভিযোগ দাখিল কৰক
+    track_title: আপোনাৰ অভিযোগৰ স্থিতি চাওক
+    enter_ticket: অভিযোগ নম্বৰ লিখক
+    check: স্থিতি চাওক
+    not_found: এই নম্বৰৰ কোনো অভিযোগ পোৱা নগ'ল।
+    status: স্থিতি
+    st_registered: পঞ্জীভুক্ত
+    st_review: বিষয়াই পৰীক্ষা কৰি আছে
+    st_forwarded: বিভাগলৈ পঠোৱা হৈছে
+    st_escalated: জ্যেষ্ঠ বিষয়ালৈ পঠোৱা হৈছে
+    st_resolved: উত্তৰ পঠোৱা হৈছে
+    officer_reply: কাৰ্যালয়ৰ উত্তৰ
+    emergency: জৰুৰীকালীন অৱস্থাত 112 নম্বৰত ফোন কৰক।
+    handled_note: প্ৰতিটো অভিযোগ এজন বিষয়াই পৰীক্ষা কৰে।
+    dept_label: বিভাগ
+    officer_label: বিষয়া
+    expected_by: উত্তৰৰ সম্ভাব্য তাৰিখ
+    timeline: অগ্ৰগতি
+    common: সঘনাই দাখিল কৰা অভিযোগ (ঐচ্ছিক)
+    common_none: মই নিজে লিখিম
+    notify_by: আমি আপোনাক কেনেকৈ জনাম?
+    ch_sms: SMS
+    ch_whatsapp: হোৱাটছএপ
+    ch_email: ইমেইল
+    ch_portal: মই এই পৰ্টেলতে চাম
+    email: ইমেইল ঠিকনা
+    contact_needed: আপোনাক জনাবলৈ মোবাইল নম্বৰ বা ইমেইল দিয়ক।
+    to_be_assigned: নিৰ্ধাৰণ কৰিবলৈ বাকী
+    msg_registered: 'অভিযোগ {ticket} পঞ্জীভুক্ত। পঠোৱা হৈছে: {office}। উত্তৰৰ সম্ভাব্য তাৰিখ {date}।'
+    msg_resolved: 'অভিযোগ {ticket}ৰ উত্তৰ: {reply}'
+    msg_escalated: অভিযোগ {ticket} জ্যেষ্ঠ বিষয়ালৈ পঠোৱা হৈছে।

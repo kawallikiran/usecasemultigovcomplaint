@@ -26,6 +26,7 @@ checks:
 
 generator:                 # python -m grievdesk ew-generate  rebuilds the synthetic data from these
   seed: 26
-  total: 500
+  total: 500                 # complaints in Demo District (with the planted patterns)
+  other_districts_total: 300 # background complaints in Hill District and River District
 
 thresholds: {route_confidence: 0.55, language_confidence: 0.6, fuzzy_match: 0.85, max_chars: 2000}

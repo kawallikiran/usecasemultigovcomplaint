@@ -1,0 +1,33 @@
+# Complaint categories within each department. The first category whose keyword appears in the complaint is
+# chosen; otherwise the department's first category is used. Officers can change the category when reviewing.
+# Keywords match like department keywords: Indian-script words as parts of words, English words as whole words.
+categories:
+  water:
+    - {key: handpump, name: "Handpump / tubewell repair", keywords: [handpump, hand pump, tubewell, borewell, हैंडपंप, हातपंप, नलकूप, बोरवेल, ਨਲਕਾ, নলকূপ, ନଳକୂପ, ಕೈಪಂಪು, அடிகுழாய், చేతిపంపు, હેન્ડપંપ]}
+    - {key: no_supply, name: "No water supply / tap", keywords: [tap, supply, pipeline, nal, नल, नळ, ਟੂਟੀ, কল, টেপ, குழாய், కుళాయి, ನಲ್ಲಿ, പൈപ്പ്, નળ, نلکا]}
+    - {key: dirty_water, name: "Dirty or unsafe water", keywords: [dirty, contaminated, गंदा, गंदे, मटमैला]}
+  electricity:
+    - {key: transformer, name: "Transformer / line fault", keywords: [transformer, live wire, ट्रांसफार्मर, ट्रान्सफॉर्मर, ਟਰਾਂਸਫਾਰਮਰ, ট্রান্সফরমার, ট্ৰান্সফৰ্মাৰ, ଟ୍ରାନ୍ସଫର୍ମର, மின்மாற்றி, ట్రాన్స్ఫార్మర, ಟ್ರಾನ್ಸ್ಫಾರ್ಮರ್, ട്രാൻസ്ഫോർമർ, ટ્રાન્સફોર્મર, ٹرانسفارمر]}
+    - {key: meter_bill, name: "Meter or bill problem", keywords: [meter, bill, मीटर, बिल]}
+    - {key: power_cut, name: "No electricity / power cut", keywords: [electricity, power, bijli, बिजली, वीज, light]}
+  ration:
+    - {key: ration_card, name: "Ration card (name, cancellation)", keywords: [ration card, cancelled, card mein naam, राशन कार्ड में नाम, नाम कटा, नाम नहीं]}
+    - {key: short_weight, name: "Less quantity / weighing", keywords: [कम तौल, less, कम]}
+    - {key: ration_not_given, name: "Ration not given", keywords: [rice, wheat, chawal, चावल, चाउर, गेहूं, ration, राशन]}
+  pension:
+    - {key: pension_not_received, name: "Pension not received", keywords: [pension, पेंशन]}
+  roads:
+    - {key: bridge, name: "Bridge / culvert", keywords: [bridge, पुल]}
+    - {key: potholes, name: "Potholes / road damage", keywords: [pothole, potholes, गड्ढ, gaddha, gaddhe, खड्ड, road, sadak, सड़क, रद्दा]}
+  health:
+    - {key: ambulance, name: "Ambulance", keywords: [ambulance, एम्बुलेंस]}
+    - {key: no_doctor_medicine, name: "No doctor / medicine", keywords: [doctor, medicine, डॉक्टर, डाक्टर, दवाई, दवा, dawai]}
+  education:
+    - {key: midday_meal, name: "Mid-day meal", keywords: [mid day meal, khana, मध्याह्न भोजन, खाना]}
+    - {key: scholarship, name: "Scholarship", keywords: [scholarship, छात्रवृत्ति]}
+    - {key: teacher_absent, name: "Teacher absent", keywords: [teacher, master, शिक्षक, गुरुजी]}
+  revenue:
+    - {key: mutation_patta, name: "Mutation / patta", keywords: [mutation, patta, नामांतरण, पट्टा]}
+    - {key: land_record, name: "Land record / boundary", keywords: [record, boundary, khasra, खसरा, जमीन, भुइयां]}
+  police:
+    - {key: police_inaction, name: "Police action needed", keywords: [police, पुलिस]}

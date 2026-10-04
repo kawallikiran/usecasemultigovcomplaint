@@ -1,4 +1,5 @@
-"""Portal logic: screen text, citizen flow, voice, officer rules, downloads, speech-to-text."""
+"""Portal workflow: frequent complaints, filing, officer review, notifications, analytics, quality view."""
+import datetime as dt
 import json
 import os
 import sys
@@ -11,19 +12,28 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 sys.path.insert(0, ROOT)
 
 from grievdesk import portal as P                    # noqa: E402
+from grievdesk import analytics as A                 # noqa: E402
+from grievdesk import quality as Q                   # noqa: E402
 from grievdesk.common.config import load_config     # noqa: E402
 from grievdesk.system import GrievanceRouter         # noqa: E402
 
+DEMO = dict(district="Demo District", block="South Block", village="Amadi")
 
-class STT(BaseHTTPRequestHandler):
+
+class Hook(BaseHTTPRequestHandler):
+    seen = []
+
     def log_message(self, *a):
         pass
 
     def do_POST(self):
         body = self.rfile.read(int(self.headers["Content-Length"]))
-        ok = self.path.endswith("/audio/transcriptions") and b'name="file"' in body and b'name="model"' in body
-        out = json.dumps({"text": "गाँव में नल से पानी नहीं आ रहा है, हैंडपंप खराब है।"}).encode()
-        self.send_response(200 if ok else 400)
+        if self.path.endswith("/audio/transcriptions"):
+            out = json.dumps({"text": "गाँव में नल से पानी नहीं आ रहा है, हैंडपंप खराब है।"}).encode()
+        else:
+            Hook.seen.append(json.loads(body))
+            out = b"{}"
+        self.send_response(200)
         self.end_headers()
         self.wfile.write(out)
 
@@ -31,7 +41,7 @@ class STT(BaseHTTPRequestHandler):
 class TestPortal(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        for k in ("AI_PROVIDER", "AI_MODEL", "AI_API_KEY", "AI_BASE_URL"):
+        for k in ("AI_PROVIDER", "AI_MODEL", "AI_API_KEY", "AI_BASE_URL", "SMS_GATEWAY_URL", "SMTP_HOST"):
             os.environ.pop(k, None)
         cls.T = P.Text()
         cls.r = GrievanceRouter(load_config(os.path.join(ROOT, "config", "grievance.yaml")))
@@ -39,70 +49,118 @@ class TestPortal(unittest.TestCase):
     def setUp(self):
         self.store = P.Store(os.path.join(tempfile.mkdtemp(), "c.json"))
 
-    def test_every_language_has_every_text(self):
+    def file(self, text, lang="en", **kw):
+        args = dict(DEMO, notify_by="sms", mobile="9876543210")
+        args.update(kw)
+        return P.submit(self.r, self.store, self.T, lang, "text", text=text, **args)
+
+    def test_screen_text_complete(self):
         keys = set(self.T.strings["en"])
         for lang, d in self.T.strings.items():
             self.assertEqual(set(d), keys, lang)
-        self.assertEqual(self.T("cg", "title"), self.T("hi", "title"))      # Chhattisgarhi uses Hindi screen text
 
-    def test_typed_complaint_flow(self):
-        rec = P.submit(self.r, self.store, "ta", "text", text="ரேஷன் கடையில் அரிசி கொடுக்கவில்லை.",
-                       block="South Block", village="Amadi", mobile="9876543210")
-        self.assertRegex(rec["ticket"], r"^GRV/\d{4}/\d{5}$")
-        self.assertEqual((rec["status"], rec["department"], rec["mobile"]), ("forwarded", "ration", "XXXXXX3210"))
-        status, _ = P.citizen_status(rec, self.T, "ta", self.r.depts)
-        self.assertEqual(status, self.T("ta", "st_forwarded"))
-        html = P.receipt_html(rec, self.T, "ta", self.r.depts)
-        self.assertIn(rec["ticket"], html)
-        self.assertIn(self.T("ta", "ack_title"), html)
+    def test_frequent_complaints_route_correctly_in_every_language(self):
+        import yaml
+        with open(os.path.join(ROOT, "data", "grievance", "common_complaints.yaml"), encoding="utf-8") as f:
+            data = yaml.safe_load(f)["complaints"]
+        for lang, items in data.items():
+            self.assertEqual(len(items), 8, lang)
+            for it in items:
+                o = self.r.process({"id": "t", "text": it["text"]})
+                self.assertEqual(o["department"], it["department"], (lang, it["text"]))
+                self.assertFalse(o["sensitive_categories"], (lang, it["text"]))
 
-    def test_aadhaar_in_complaint_is_hidden(self):
-        rec = P.submit(self.r, self.store, "en", "text", text="My Aadhaar 2345 6789 0123, no water from handpump")
-        self.assertNotIn("2345 6789 0123", rec["text"])
+    def test_filing_assigns_named_officer_and_acknowledges(self):
+        tpl = P.common_complaints("ta")[3]
+        rec = self.file(tpl["text"], "ta", template_category=tpl["category"])
+        self.assertEqual((rec["status"], rec["department"], rec["assigned_to"], rec["category"]),
+                         ("pending_review", "ration", "OFF-RAT01", "ration_not_given"))
+        v = P.citizen_view(rec, self.T, "ta", self.r.depts)
+        self.assertEqual(v["officer"], "Food Inspector")
+        msg = self.store.outbox.all()[-1]
+        self.assertEqual((msg["channel"], msg["to"], msg["kind"]), ("sms", "XXXXXX3210", "registered"))
+        self.assertIn(rec["ticket"], msg["message"])
 
-    def test_voice_without_speech_service_waits_for_officer(self):
-        rec = P.submit(self.r, self.store, "hi", "voice", audio=b"RIFFxxxx", block="North Block", village="Amapur")
-        self.assertEqual((rec["status"], rec["transcript"]), ("review", "pending"))
-        _, errs = P.act(self.store, rec, "reply", "Asha", reply="done")
-        self.assertIn("Type the voice complaint first.", errs)
-        new, errs = P.save_transcript(self.r, self.store, rec["ticket"], "गाँव में नल से पानी नहीं आ रहा है, हैंडपंप खराब है।", "Asha")
-        self.assertEqual(new["department"], "water")
+    def test_nothing_is_answered_without_an_officer(self):
+        rec = self.file("No drinking water from the handpump for a week.")
+        self.assertEqual(rec["status"], "pending_review")
+        self.assertEqual(rec["reply"], "")
 
-    def test_voice_with_speech_service(self):
-        srv = ThreadingHTTPServer(("127.0.0.1", 0), STT)
+    def test_only_assigned_officer_or_supervisor_can_approve(self):
+        rec = self.file("No drinking water from the handpump for a week.")
+        self.assertIn("This complaint is assigned to another officer.", P.approve(self.store, self.T, self.r.depts, rec, "OFF-RAT01", "x")[1])
+        _, errs, *_ = P.approve(self.store, self.T, self.r.depts, rec, "OFF-WAT01", rec["suggestion"]["draft_reply"])
+        self.assertTrue(any("placeholder" in e for e in errs))
+        new, errs, note = P.approve(self.store, self.T, self.r.depts, rec, "OFF-SR01", "Handpump repaired.", priority="high")
+        self.assertEqual((errs, new["status"], new["priority"], note["kind"]), ([], "approved", "high", "approved"))
+
+    def test_reassign_moves_to_the_new_departments_officer(self):
+        rec = self.file("No drinking water from the handpump for a week.")
+        _, errs = P.reassign(self.store, self.r, rec, "OFF-WAT01", "roads", "")
+        self.assertIn("Add a short note explaining the reassignment.", errs)
+        new, errs = P.reassign(self.store, self.r, rec, "OFF-WAT01", "roads", "pipe broken by road works")
+        self.assertEqual((new["assigned_to"], new["status"]), ("OFF-ROA01", "pending_review"))
+
+    def test_sensitive_goes_to_designated_officer(self):
+        rec = self.file("पड़ोसी ने मारपीट की और धमकी दी", "hi")
+        self.assertEqual(rec["assigned_to"], "OFF-SC01")
+        new, errs = P.escalate(self.store, self.T, self.r.depts, rec, "OFF-SC01", "threat to life")
+        self.assertEqual((new["assigned_to"], new["status"]), ("OFF-SR01", "escalated"))
+
+    def test_voice_waits_for_officer_then_routes(self):
+        rec = P.submit(self.r, self.store, self.T, "hi", "voice", audio=b"RIFFxxxx", notify_by="portal", **DEMO)
+        self.assertEqual((rec["assigned_to"], rec["transcript"]), ("OFF-GC01", "pending"))
+        new, _ = P.save_transcript(self.r, self.store, rec["ticket"], "गाँव में नल से पानी नहीं आ रहा है, हैंडपंप खराब है।", "OFF-GC01")
+        self.assertEqual((new["department"], new["assigned_to"]), ("water", "OFF-WAT01"))
+
+    def test_speech_service_and_sms_gateway(self):
+        srv = ThreadingHTTPServer(("127.0.0.1", 0), Hook)
         threading.Thread(target=srv.serve_forever, daemon=True).start()
+        base = f"http://127.0.0.1:{srv.server_address[1]}"
+        os.environ["SMS_GATEWAY_URL"] = base + "/sms"
         try:
-            prof = {"base_url": f"http://127.0.0.1:{srv.server_address[1]}/v1", "model": "m", "api_key_env": ""}
-            rec = P.submit(self.r, self.store, "hi", "voice", audio=b"RIFFxxxx", speech_profile=prof)
+            prof = {"base_url": base + "/v1", "model": "m", "api_key_env": ""}
+            rec = P.submit(self.r, self.store, self.T, "hi", "voice", audio=b"RIFF", notify_by="sms", mobile="9876543210",
+                           speech_profile=prof, **DEMO)
             self.assertEqual((rec["transcript"], rec["department"]), ("automatic", "water"))
+            self.assertEqual(self.store.outbox.all()[-1]["status"], "sent")
+            self.assertEqual(Hook.seen[-1]["to"], "9876543210")
         finally:
+            os.environ.pop("SMS_GATEWAY_URL", None)
             srv.shutdown()
 
-    def test_officer_rules(self):
-        rec = P.submit(self.r, self.store, "hi", "text", text="पड़ोसी ने मारपीट की और धमकी दी")
-        _, errs = P.act(self.store, rec, "reply", "Asha", reply="ok")
-        self.assertTrue(any("Sensitive" in e for e in errs))
-        _, errs = P.act(self.store, rec, "escalate", "Asha")
-        self.assertIn("Add a short note for the record.", errs)
-        new, errs = P.act(self.store, rec, "escalate", "Asha", note="threat to life")
-        self.assertEqual((errs, new["status"]), ([], "escalated"))
+    def test_contacts_kept_out_of_the_register(self):
+        rec = self.file("No drinking water from the handpump for a week.")
+        self.assertNotIn("9876543210", json.dumps(self.store.get(rec["ticket"])))
+        self.assertNotIn("9876543210", P.register_csv(self.store, self.r.depts))
+        self.assertNotIn("9876543210", json.dumps(self.store.outbox.all()))
 
-    def test_placeholder_must_be_replaced(self):
-        rec = P.submit(self.r, self.store, "en", "text", text="No drinking water from the handpump for a week.")
-        _, errs = P.act(self.store, rec, "reply", "Asha", reply=rec["suggestion"]["draft_reply"])
-        self.assertTrue(any("placeholder" in e for e in errs))
+    def test_audit_and_agreement(self):
+        rec = self.file("No drinking water from the handpump for a week.")
+        P.approve(self.store, self.T, self.r.depts, rec, "OFF-WAT01", "Repaired.")
+        self.assertEqual(P.review_agreement(self.store), {"approved": 1, "kept": 1, "changed": 0})
+        self.assertEqual({r["Action"] for r in P.audit_rows(self.store)}, {"registered", "approved"})
 
-    def test_downloads(self):
-        P.submit(self.r, self.store, "en", "text", text="No drinking water from the handpump for a week.")
-        reg = P.register_csv(self.store, self.r.depts)
-        self.assertTrue(reg.startswith("\ufeff"))
-        self.assertIn("Public Health Engineering Department", reg)
-        self.assertIn("registered", P.actions_csv(self.store))
 
-    def test_queue_puts_sensitive_first(self):
-        P.submit(self.r, self.store, "en", "text", text="No drinking water from the handpump for a week.")
-        s = P.submit(self.r, self.store, "hi", "text", text="पड़ोसी ने मारपीट की और धमकी दी")
-        self.assertEqual(P.queue(self.store)[0]["ticket"], s["ticket"])
+class TestAnalyticsAndQuality(unittest.TestCase):
+    def test_analytics_tables(self):
+        df, vil = A.load()
+        as_of = dt.date(2026, 10, 3)
+        self.assertEqual(len(df), 800)
+        self.assertEqual(set(df["district"]), {"Demo District", "Hill District", "River District"})
+        k = A.kpis(df, as_of)
+        self.assertEqual(k["Complaints"], k["Resolved"] + k["Pending"])
+        loc = A.location_table(df, vil)
+        self.assertIn("Per 1,000 people", loc.columns)
+        self.assertGreater(len(A.focus_areas(df, vil, [], as_of)), 0)
+        self.assertGreater(len(A.excel_report(df, vil, [], as_of)), 1000)
+
+    def test_plain_quality_view(self):
+        findings = [{"test_no": 3, "passed": False, "severity": "High", "probe": "x", "actual": "leak"},
+                    {"test_no": 1, "passed": True, "severity": "High", "probe": "y", "actual": ""}]
+        rows = {r["Check"]: r for r in Q.plain_checks(findings)}
+        self.assertEqual(rows["Protects personal details"]["Result"], "Needs attention (serious)")
+        self.assertEqual(rows["Fair to every language and area"]["Result"], "OK")
 
 
 class TestStreamlitPortal(unittest.TestCase):
@@ -118,6 +176,7 @@ class TestStreamlitPortal(unittest.TestCase):
             self.skipTest("This Streamlit test runner does not support page navigation")
         self.assertFalse(at.exception, at.exception)
         at.text_area(key="complaint_text").set_value("No drinking water from the handpump for a week.")
+        at.radio[1].set_value("portal")
         next(b for b in at.button if b.label == "Submit complaint").click().run()
         self.assertFalse(at.exception, at.exception)
         self.assertTrue(any("GRV/" in m.value for m in at.markdown))

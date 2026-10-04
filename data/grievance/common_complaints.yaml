@@ -1,0 +1,352 @@
+note: Frequently filed complaints shown to citizens as optional quick picks. Picking one fills the complaint box; the citizen can still edit it. Needs native-speaker review before public use.
+complaints:
+  en:
+  - department: water
+    category: handpump
+    text: The handpump in our village is broken and there is no drinking water.
+  - department: water
+    category: no_supply
+    text: Water is not coming in the tap for many days.
+  - department: electricity
+    category: power_cut
+    text: There is no electricity for many days, the transformer is burnt.
+  - department: ration
+    category: ration_not_given
+    text: The ration shop dealer is not giving rice on my ration card.
+  - department: pension
+    category: pension_not_received
+    text: My old age pension has not been received for months.
+  - department: roads
+    category: potholes
+    text: The road has big potholes and is unsafe.
+  - department: health
+    category: no_doctor_medicine
+    text: There is no doctor at the health centre and no medicine.
+  - department: education
+    category: teacher_absent
+    text: The teacher does not come to the school regularly.
+  hi:
+  - department: water
+    category: handpump
+    text: हमारे गाँव का हैंडपंप खराब है और पीने का पानी नहीं है।
+  - department: water
+    category: no_supply
+    text: कई दिनों से नल में पानी नहीं आ रहा है।
+  - department: electricity
+    category: power_cut
+    text: कई दिनों से बिजली नहीं है, ट्रांसफार्मर जल गया है।
+  - department: ration
+    category: ration_not_given
+    text: राशन दुकान वाला मेरे राशन कार्ड पर चावल नहीं दे रहा है।
+  - department: pension
+    category: pension_not_received
+    text: मेरी वृद्धावस्था पेंशन कई महीनों से नहीं मिली है।
+  - department: roads
+    category: potholes
+    text: सड़क पर बड़े गड्ढे हैं और चलना खतरनाक है।
+  - department: health
+    category: no_doctor_medicine
+    text: स्वास्थ्य केंद्र में डॉक्टर नहीं है और दवाई नहीं मिलती।
+  - department: education
+    category: teacher_absent
+    text: स्कूल में शिक्षक नियमित रूप से नहीं आते हैं।
+  cg:
+  - department: water
+    category: handpump
+    text: हमर गाँव के हैंडपंप खराब हवय, पीए बर पानी नइ हे।
+  - department: water
+    category: no_supply
+    text: कतको दिन ले नल म पानी नइ आवत हे।
+  - department: electricity
+    category: power_cut
+    text: कतको दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।
+  - department: ration
+    category: ration_not_given
+    text: राशन दुकान वाला मोर राशन कार्ड म चाउर नइ देवत हे।
+  - department: pension
+    category: pension_not_received
+    text: मोर वृद्धावस्था पेंशन कतको महीना ले नइ मिले हे।
+  - department: roads
+    category: potholes
+    text: रद्दा म बड़े-बड़े गड्ढा हवय।
+  - department: health
+    category: no_doctor_medicine
+    text: अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।
+  - department: education
+    category: teacher_absent
+    text: इस्कूल म गुरुजी रोज नइ आवत हे।
+  bn:
+  - department: water
+    category: handpump
+    text: আমাদের গ্রামের নলকূপ খারাপ, পানীয় জল নেই।
+  - department: water
+    category: no_supply
+    text: অনেক দিন ধরে কলে পানীয় জল আসছে না।
+  - department: electricity
+    category: power_cut
+    text: অনেক দিন ধরে বিদ্যুৎ নেই, ট্রান্সফরমার পুড়ে গেছে।
+  - department: ration
+    category: ration_not_given
+    text: রেশন ডিলার আমার রেশন কার্ডে চাল দিচ্ছে না।
+  - department: pension
+    category: pension_not_received
+    text: আমার বার্ধক্য ভাতা কয়েক মাস ধরে পাইনি।
+  - department: roads
+    category: potholes
+    text: রাস্তায় বড় বড় গর্ত, চলাচল বিপজ্জনক।
+  - department: health
+    category: no_doctor_medicine
+    text: স্বাস্থ্যকেন্দ্রে ডাক্তার নেই, ওষুধও পাওয়া যায় না।
+  - department: education
+    category: teacher_absent
+    text: স্কুলে শিক্ষক নিয়মিত আসেন না।
+  mr:
+  - department: water
+    category: handpump
+    text: आमच्या गावातील हातपंप बंद आहे, पिण्याचे पाणी नाही.
+  - department: water
+    category: no_supply
+    text: अनेक दिवसांपासून नळाला पाणी येत नाही.
+  - department: electricity
+    category: power_cut
+    text: अनेक दिवसांपासून वीज नाही, ट्रान्सफॉर्मर जळाला आहे.
+  - department: ration
+    category: ration_not_given
+    text: रेशन दुकानदार माझ्या रेशन कार्डवर तांदूळ देत नाही.
+  - department: pension
+    category: pension_not_received
+    text: माझे वृद्धापकाळ पेन्शन अनेक महिन्यांपासून मिळाले नाही.
+  - department: roads
+    category: potholes
+    text: रस्त्यावर मोठे खड्डे आहेत, प्रवास धोकादायक आहे.
+  - department: health
+    category: no_doctor_medicine
+    text: रुग्णालयात डॉक्टर नाहीत आणि औषध मिळत नाही.
+  - department: education
+    category: teacher_absent
+    text: शाळा सुरू असूनही शिक्षक नियमित येत नाहीत.
+  gu:
+  - department: water
+    category: handpump
+    text: અમારા ગામનો હેન્ડપંપ બગડી ગયો છે, પીવાનું પાણી નથી.
+  - department: water
+    category: no_supply
+    text: ઘણા દિવસથી નળમાં પાણી આવતું નથી.
+  - department: electricity
+    category: power_cut
+    text: ઘણા દિવસથી વીજળી નથી, ટ્રાન્સફોર્મર બળી ગયું છે.
+  - department: ration
+    category: ration_not_given
+    text: રેશનની દુકાનમાં મારા રેશનકાર્ડ પર ચોખા આપતા નથી.
+  - department: pension
+    category: pension_not_received
+    text: મારું વૃદ્ધ પેન્શન ઘણા મહિનાથી મળ્યું નથી.
+  - department: roads
+    category: potholes
+    text: રસ્તા પર મોટા ખાડા છે, ચાલવું જોખમી છે.
+  - department: health
+    category: no_doctor_medicine
+    text: દવાખાનામાં ડોક્ટર નથી અને દવા મળતી નથી.
+  - department: education
+    category: teacher_absent
+    text: શાળામાં શિક્ષક નિયમિત આવતા નથી.
+  pa:
+  - department: water
+    category: handpump
+    text: ਸਾਡੇ ਪਿੰਡ ਦਾ ਨਲਕਾ ਖਰਾਬ ਹੈ, ਪੀਣ ਵਾਲਾ ਪਾਣੀ ਨਹੀਂ ਹੈ।
+  - department: water
+    category: no_supply
+    text: ਕਈ ਦਿਨਾਂ ਤੋਂ ਟੂਟੀ ਵਿੱਚ ਪਾਣੀ ਨਹੀਂ ਆ ਰਿਹਾ।
+  - department: electricity
+    category: power_cut
+    text: ਕਈ ਦਿਨਾਂ ਤੋਂ ਬਿਜਲੀ ਨਹੀਂ ਹੈ, ਟਰਾਂਸਫਾਰਮਰ ਸੜ ਗਿਆ ਹੈ।
+  - department: ration
+    category: ration_not_given
+    text: ਰਾਸ਼ਨ ਡਿਪੂ ਵਾਲਾ ਮੈਨੂੰ ਕਣਕ ਨਹੀਂ ਦੇ ਰਿਹਾ।
+  - department: pension
+    category: pension_not_received
+    text: ਮੇਰੀ ਬੁਢਾਪਾ ਪੈਨਸ਼ਨ ਕਈ ਮਹੀਨਿਆਂ ਤੋਂ ਨਹੀਂ ਆਈ।
+  - department: roads
+    category: potholes
+    text: ਸੜਕ ਵਿੱਚ ਵੱਡੇ ਟੋਏ ਹਨ, ਚੱਲਣਾ ਖ਼ਤਰਨਾਕ ਹੈ।
+  - department: health
+    category: no_doctor_medicine
+    text: ਹਸਪਤਾਲ ਵਿੱਚ ਡਾਕਟਰ ਨਹੀਂ ਹੈ ਅਤੇ ਦਵਾਈ ਨਹੀਂ ਮਿਲਦੀ।
+  - department: education
+    category: teacher_absent
+    text: ਸਕੂਲ ਵਿੱਚ ਅਧਿਆਪਕ ਨਿਯਮਤ ਨਹੀਂ ਆਉਂਦੇ।
+  or:
+  - department: water
+    category: handpump
+    text: ଆମ ଗାଁର ନଳକୂପ ଖରାପ, ପିଇବା ପାଣି ନାହିଁ।
+  - department: water
+    category: no_supply
+    text: ଅନେକ ଦିନ ହେଲା ଟ୍ୟୁବୱେଲରୁ ପାଣି ଆସୁନାହିଁ।
+  - department: electricity
+    category: power_cut
+    text: ଅନେକ ଦିନ ହେଲା ବିଦ୍ୟୁତ ନାହିଁ, ଟ୍ରାନ୍ସଫର୍ମର ପୋଡ଼ିଯାଇଛି।
+  - department: ration
+    category: ration_not_given
+    text: ରାସନ ଡିଲର ମୋ ରାସନ କାର୍ଡରେ ଚାଉଳ ଦେଉନାହିଁ।
+  - department: pension
+    category: pension_not_received
+    text: ମୋର ବାର୍ଦ୍ଧକ୍ୟ ଭତ୍ତା କିଛି ମାସ ହେଲା ମିଳିନାହିଁ।
+  - department: roads
+    category: potholes
+    text: ରାସ୍ତାରେ ବଡ଼ ବଡ଼ ଗାତ, ଚାଲିବା ବିପଦଜନକ।
+  - department: health
+    category: no_doctor_medicine
+    text: ଡାକ୍ତରଖାନାରେ ଡାକ୍ତର ନାହାନ୍ତି, ଔଷଧ ମିଳୁନାହିଁ।
+  - department: education
+    category: teacher_absent
+    text: ସ୍କୁଲରେ ଶିକ୍ଷକ ନିୟମିତ ଆସୁନାହାନ୍ତି।
+  ta:
+  - department: water
+    category: handpump
+    text: எங்கள் கிராமத்தில் அடிகுழாய் பழுதாகிவிட்டது, குடிநீர் இல்லை.
+  - department: water
+    category: no_supply
+    text: பல நாட்களாக குழாயில் தண்ணீர் வரவில்லை.
+  - department: electricity
+    category: power_cut
+    text: பல நாட்களாக மின்சாரம் இல்லை, மின்மாற்றி எரிந்துவிட்டது.
+  - department: ration
+    category: ration_not_given
+    text: ரேஷன் கடையில் என் குடும்ப அட்டைக்கு அரிசி கொடுக்கவில்லை.
+  - department: pension
+    category: pension_not_received
+    text: எனது முதியோர் ஓய்வூதியம் பல மாதங்களாக வரவில்லை.
+  - department: roads
+    category: potholes
+    text: சாலையில் பெரிய குழிகள் உள்ளன, பயணம் ஆபத்தானது.
+  - department: health
+    category: no_doctor_medicine
+    text: மருத்துவமனையில் மருத்துவர் இல்லை, மருந்தும் கிடைக்கவில்லை.
+  - department: education
+    category: teacher_absent
+    text: பள்ளிக்கு ஆசிரியர் தொடர்ந்து வருவதில்லை.
+  te:
+  - department: water
+    category: handpump
+    text: మా గ్రామంలో చేతిపంపు పాడైంది, మంచినీరు లేదు.
+  - department: water
+    category: no_supply
+    text: చాలా రోజులుగా కుళాయిలో నీళ్లు రావడం లేదు.
+  - department: electricity
+    category: power_cut
+    text: చాలా రోజులుగా కరెంటు లేదు, ట్రాన్స్ఫార్మర్ కాలిపోయింది.
+  - department: ration
+    category: ration_not_given
+    text: రేషన్ డీలర్ నా కార్డుపై బియ్యం ఇవ్వడం లేదు.
+  - department: pension
+    category: pension_not_received
+    text: నా వృద్ధాప్య పింఛన్ చాలా నెలలుగా రాలేదు.
+  - department: roads
+    category: potholes
+    text: రోడ్డుపై పెద్ద గుంతలు ఉన్నాయి.
+  - department: health
+    category: no_doctor_medicine
+    text: ఆసుపత్రిలో డాక్టర్ లేరు, మందులు దొరకడం లేదు.
+  - department: education
+    category: teacher_absent
+    text: పాఠశాలకు ఉపాధ్యాయులు సక్రమంగా రావడం లేదు.
+  kn:
+  - department: water
+    category: handpump
+    text: ನಮ್ಮ ಊರಿನ ಕೈಪಂಪು ಕೆಟ್ಟಿದೆ, ಕುಡಿಯುವ ನೀರು ಇಲ್ಲ.
+  - department: water
+    category: no_supply
+    text: ಹಲವು ದಿನಗಳಿಂದ ನಲ್ಲಿಯಲ್ಲಿ ನೀರು ಬರುತ್ತಿಲ್ಲ.
+  - department: electricity
+    category: power_cut
+    text: ಹಲವು ದಿನಗಳಿಂದ ವಿದ್ಯುತ್ ಇಲ್ಲ, ಟ್ರಾನ್ಸ್ಫಾರ್ಮರ್ ಸುಟ್ಟುಹೋಗಿದೆ.
+  - department: ration
+    category: ration_not_given
+    text: ಪಡಿತರ ಅಂಗಡಿಯಲ್ಲಿ ನನ್ನ ಕಾರ್ಡಿಗೆ ಅಕ್ಕಿ ಕೊಡುತ್ತಿಲ್ಲ.
+  - department: pension
+    category: pension_not_received
+    text: ನನ್ನ ವೃದ್ಧಾಪ್ಯ ಪಿಂಚಣಿ ಹಲವು ತಿಂಗಳಿಂದ ಬಂದಿಲ್ಲ.
+  - department: roads
+    category: potholes
+    text: ರಸ್ತೆಯಲ್ಲಿ ದೊಡ್ಡ ಗುಂಡಿಗಳಿವೆ.
+  - department: health
+    category: no_doctor_medicine
+    text: ಆಸ್ಪತ್ರೆಯಲ್ಲಿ ವೈದ್ಯರಿಲ್ಲ, ಔಷಧ ಸಿಗುತ್ತಿಲ್ಲ.
+  - department: education
+    category: teacher_absent
+    text: ಶಾಲೆಗೆ ಶಿಕ್ಷಕರು ನಿಯಮಿತವಾಗಿ ಬರುತ್ತಿಲ್ಲ.
+  ml:
+  - department: water
+    category: handpump
+    text: ഞങ്ങളുടെ ഗ്രാമത്തിലെ പൈപ്പ് കേടായി, കുടിവെള്ളം ഇല്ല.
+  - department: water
+    category: no_supply
+    text: പല ദിവസങ്ങളായി പൈപ്പ് വഴി വെള്ളം വരുന്നില്ല.
+  - department: electricity
+    category: power_cut
+    text: പല ദിവസങ്ങളായി വൈദ്യുതി ഇല്ല, ട്രാൻസ്ഫോർമർ കേടായി.
+  - department: ration
+    category: ration_not_given
+    text: റേഷൻ കടയിൽ എന്റെ കാർഡിന് അരി നൽകുന്നില്ല.
+  - department: pension
+    category: pension_not_received
+    text: എന്റെ വിധവ പെൻഷൻ മാസങ്ങളായി ലഭിച്ചിട്ടില്ല.
+  - department: roads
+    category: potholes
+    text: റോഡ് മുഴുവൻ വലിയ കുഴികൾ ആണ്.
+  - department: health
+    category: no_doctor_medicine
+    text: ആശുപത്രിയിൽ ഡോക്ടർ ഇല്ല, മരുന്ന് കിട്ടുന്നില്ല.
+  - department: education
+    category: teacher_absent
+    text: സ്കൂൾ അധ്യാപകർ കൃത്യമായി ക്ലാസിൽ വരുന്നില്ല.
+  ur:
+  - department: water
+    category: handpump
+    text: ہمارے گاؤں کا نلکا خراب ہے، پینے کا پانی نہیں ہے۔
+  - department: water
+    category: no_supply
+    text: کئی دنوں سے نلکا بند ہے اور پانی نہیں آ رہا۔
+  - department: electricity
+    category: power_cut
+    text: کئی دنوں سے بجلی نہیں ہے، ٹرانسفارمر جل گیا ہے۔
+  - department: ration
+    category: ration_not_given
+    text: راشن ڈیلر میرے کارڈ پر چاول نہیں دے رہا۔
+  - department: pension
+    category: pension_not_received
+    text: میری بڑھاپے کی پنشن کئی مہینوں سے نہیں ملی۔
+  - department: roads
+    category: potholes
+    text: سڑک پر بڑے گڑھے ہیں۔
+  - department: health
+    category: no_doctor_medicine
+    text: ہسپتال میں ڈاکٹر نہیں ہے اور دوائی نہیں ملتی۔
+  - department: education
+    category: teacher_absent
+    text: اسکول میں استاد باقاعدگی سے نہیں آتے۔
+  as:
+  - department: water
+    category: handpump
+    text: আমাৰ গাঁৱৰ নলকূপটো বেয়া হৈছে, খোৱাপানী নাই।
+  - department: water
+    category: no_supply
+    text: বহুদিন ধৰি টেপত খোৱাপানী অহা নাই।
+  - department: electricity
+    category: power_cut
+    text: বহুদিন ধৰি বিদ্যুৎ নাই, ট্ৰান্সফৰ্মাৰ জ্বলি গৈছে।
+  - department: ration
+    category: ration_not_given
+    text: ৰেচন ডিলাৰে মোৰ কাৰ্ডত চাউল দিয়া নাই।
+  - department: pension
+    category: pension_not_received
+    text: মোৰ বাৰ্ধক্য পেঞ্চন কেইমাহমান ধৰি পোৱা নাই।
+  - department: roads
+    category: potholes
+    text: ৰাস্তাত ডাঙৰ ডাঙৰ গাঁত আছে।
+  - department: health
+    category: no_doctor_medicine
+    text: চিকিৎসালয়ত ডাক্তৰ নাই, ঔষধ পোৱা নাযায়।
+  - department: education
+    category: teacher_absent
+    text: বিদ্যালয়ত শিক্ষক নিয়মীয়াকৈ নাহে।

@@ -163,35 +163,69 @@ streamlit run app.py
 
 ## The portal
 
-A simple guided flow for citizens, with officer pages behind a login. The screen language is picked in the top corner (13 Indian languages and English; Chhattisgarhi uses the Hindi screen text). The choice is kept in the address, for example `?lang=ta`.
+**Citizens** (no login; screen language picked in the top corner: 13 Indian languages and English)
 
-**Citizens: no login**
+1. **Tell us how:** Type, or Speak into the microphone.
+2. **Your complaint:** optionally pick one of the **frequently filed complaints** in your language. It fills the box and can still be edited. Otherwise write your own.
+3. **Where:** district, then block, then village.
+4. **How should we inform you:** SMS, WhatsApp, email, or check on the portal.
 
-| Page | What it does |
+After submitting, the citizen sees:
+- the complaint number (for example `GRV/2026/00012`);
+- the department and officer it was sent to, and the expected reply date;
+- the progress so far;
+- **Download receipt**: a printable acknowledgement in their language.
+
+**Track complaint** shows the same details, plus the office's reply once approved.
+
+**Officers** (log in as yourself; password from `OFFICER_PASSWORD` in `.env`, default `officer@123`; change it)
+
+| Who | Sees |
 | --- | --- |
-| File a complaint | 1. Choose **Type** or **Speak**. 2. Type the complaint or record it with the microphone. 3. Pick the block and village. An optional mobile number is stored with only its last 4 digits. **Submit** shows a complaint number (for example `GRV/2026/00012`) and its status, with **Download receipt**: an acknowledgement slip in the chosen language that can be printed or saved as PDF from the browser. |
-| Track complaint | Enter the complaint number to see the status in your language, and the office's reply once sent. |
+| Department officers, grievance cell, designated officer | **My complaints** (assigned to them) and **Analytics** |
+| Additional Collector (supervisor) | Also **All complaints**, **Audit log** and **Notifications** |
+| System administrator | Also **Quality checks**, **Model performance** and **Settings** |
 
-Citizens never pick a template. They type or speak in their own words. Sample complaints are kept for officers under **System checks**.
+**Human review, not automatic answers.** Every complaint waits for its officer:
+- **Assignment:** routine complaints go to the department's officer, unclear ones to the grievance cell, and sensitive ones to the designated officer.
+- **Review:** the officer checks the system's suggestion and can edit the category and priority. They then **approve and inform the citizen** (with a reply they have written), **reassign** to another department (which moves it to that officer), or **escalate** to the Additional Collector.
+- **Voice complaints:** if speech-to-text is not set up, the grievance cell plays the recording and types it first.
+- **Approval rules:** only the assigned officer or a supervisor can approve, sensitive complaints only by the designated or senior officer, and the draft placeholder must be replaced.
 
-**Officers: "Officer login"**
+**Notifications.** Acknowledgement, approval and escalation messages go out in the citizen's language, by the channel they chose. Every message is recorded in the outbox (Notifications page). Actual sending is switched on in `.env`:
+- **email:** `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM`;
+- **SMS and WhatsApp:** `SMS_GATEWAY_URL` / `WHATSAPP_GATEWAY_URL` plus a token. Any gateway that accepts a JSON `{"to", "message"}` POST works, or a small relay in front of the provider's API.
 
-The password is set by `OFFICER_PASSWORD` in `.env` and defaults to `officer@123`. Change it.
+Mobile numbers and emails are stored apart from the complaint register and appear masked everywhere else.
 
-| Page | What it does |
+**Analytics** (report date and filters for district, department and dates):
+- **Headline figures:** totals, resolved, pending, overdue, average days to resolve, and voice share.
+- **Where to focus:** emerging issues, departments falling behind, and villages with the most complaints per 1,000 people.
+- **Breakdowns:** by department, category, district, block, village, language and channel.
+- **Service performance by department.**
+- **Download:** an Excel report.
+
+**Technical section:**
+- **Quality checks:** the eight checks in plain words ("Fair to every language and area", "People stay in charge" and so on), each marked OK or Needs attention, with what was found.
+- **Model performance:** results on each test set and by language, plus how often officers kept the system's suggested department.
+- **Audit log:** every action by every officer, downloadable.
+- **Notifications:** the outbox.
+- **Settings:** the sorting engine, speech-to-text and the officer list.
+
+## Data files
+
+All in `data/grievance/`; everything is synthetic.
+
+| File | What it holds |
 | --- | --- |
-| Work queue | Voice complaints still to be typed and sensitive complaints come first. Officers can play a voice complaint, type it in, and the system sorts it. They see the suggested department, priority and reasons, then **forward**, **escalate** or **send reply and close**. The rules are enforced: name required, a note for forwarding or escalating, the draft placeholder replaced, and sensitive cases cannot be closed from the desk. |
-| District dashboard | Alerts for emerging issues by block and village, with a report date picker. Complaints filed on the portal are included. |
-| Reports and downloads | Complaint register and officer actions (CSV, opens in Excel with Indian scripts), dashboard workbook (Excel), issues by block, and alerts. |
-| System checks | Runs the eight standard checks on a test set and downloads the results. Also lets officers try sample complaints without registering them. |
-| Settings | Chooses the complaint-sorting engine (rules or an AI service) and the speech-to-text service, shows the status of each service, lists the languages, and has **Log out**. |
-
-**Voice complaints**
-- **Recording:** recorded in the browser. The microphone needs the page opened as `http://127.0.0.1:<port>` or `http://localhost:<port>`, or over HTTPS. Browsers block it on a plain network address.
-- **Transcription:** if a speech-to-text service is ready (OpenAI, Groq, or a local server with the same API; see `speech:` in `config/ai_providers.yaml`), the complaint is transcribed and sorted at once.
-- **Without a speech service:** the recording is kept and the complaint goes to the work queue for an officer to listen to and type. Voice complaints therefore always work.
-
-**Data kept** (in the `reports` volume): `reports/portal/complaints.json` holds the register, with personal numbers hidden. `reports/portal/voice/` holds the recordings.
+| `early_warning_complaints.csv` | 800 complaints across 3 districts and 110 villages over 28 days: language, channel, department, category, officer, status, due and resolved dates. Used for analytics and early warning. |
+| `villages.csv` | State, district, block, village (with Devanagari name), population, settlement type |
+| `officers.csv` | 13 officers: department officers, grievance cell, designated officer for sensitive cases, Additional Collector, administrator |
+| `common_complaints.yaml` | 8 frequently filed complaints in each of 14 languages, with department and category |
+| `categories.yaml` | Complaint categories within each department and the words that identify them |
+| `ui_strings.yaml` | Screen text and notification messages in 13 languages |
+| `routing.yaml`, `lexicon_indic.yaml`, `languages.yaml`, `templates.yaml` | Departments, keywords, languages, reply templates |
+| `grievances.csv`, `challenge.csv`, `multilingual.csv` | Test sets for the quality checks |
 
 ## Command line
 

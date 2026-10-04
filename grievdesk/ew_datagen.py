@@ -27,7 +27,19 @@ DEVA_STEMS = {"Ama": "आमा", "Bhanu": "भानु", "Chira": "चिर�
               "Sona": "सोना", "Tola": "टोला", "Urla": "उरला", "Bela": "बेला", "Kosa": "कोसा", "Mahu": "महु",
               "Saja": "सजा", "Teli": "तेली", "Bori": "बोरी", "Hardi": "हरदी", "Kuru": "कुरु", "Paru": "परु",
               "Sirsi": "सिरसी", "Dhamni": "धमनी"}
-DEVA_SUFFIX = {"pur": "पुर", "di": "डीह", "nagar": "नगर", "gaon": "गाँव"}
+DEVA_SUFFIX = {"pur": "पुर", "di": "डीह", "nagar": "नगर", "gaon": "गाँव", "garh": "गढ़", "pali": "पाली",
+               "kona": "कोना", "ghat": "घाट", "tikra": "टिकरा", "para": "पारा"}
+STATE = "Demo State"
+OTHER_DISTRICTS = {   # background complaints only (no planted patterns), for state and district analytics
+    "Hill District": {"Upper Block": (8, "garh", {"cg": 0.5, "hi": 0.35, "hinglish": 0.1, "en": 0.05}),
+                      "Lower Block": (8, "pali", {"cg": 0.45, "hi": 0.4, "hinglish": 0.1, "en": 0.05}),
+                      "Valley Block": (8, "kona", {"cg": 0.6, "hi": 0.3, "hinglish": 0.08, "en": 0.02})},
+    "River District": {"Ghat Block": (8, "ghat", {"cg": 0.3, "hi": 0.45, "hinglish": 0.2, "en": 0.05}),
+                       "Delta Block": (8, "tikra", {"cg": 0.4, "hi": 0.4, "hinglish": 0.15, "en": 0.05}),
+                       "Bank Block": (8, "para", {"cg": 0.25, "hi": 0.45, "hinglish": 0.2, "en": 0.1})},
+}
+SLA = {"water": 7, "electricity": 3, "ration": 7, "pension": 15, "roads": 30, "health": 3, "revenue": 30,
+       "education": 15, "police": 1}
 
 # {v} = village, {d} = number of days. Water texts deliberately mix strong (2 keywords) and weak (1 keyword) wording,
 # so some route automatically and some go to an officer first, as in real life.
@@ -108,13 +120,21 @@ PLANTED = [  # scenario, block, issue, (current, previous), villages in current 
 ]
 
 
+def _population(name):
+    import hashlib
+    return 600 + int(hashlib.sha1(name.encode()).hexdigest(), 16) % 3900      # stable 600 - 4,499
+
+
 def villages():
     out = []
-    for b, (n, suffix, _) in BLOCKS.items():
-        for i in range(n):
-            out.append({"village": f"{STEMS[i]}{suffix}", "village_local": DEVA_STEMS[STEMS[i]] + DEVA_SUFFIX[suffix],
-                        "block": b, "district": "Demo District",
-                        "settlement": "semi-urban" if b == "East Block" and i < 4 else "rural"})
+    every = [("Demo District", BLOCKS)] + list(OTHER_DISTRICTS.items())
+    for district, blocks in every:
+        for b, (n, suffix, _) in blocks.items():
+            for i in range(n):
+                name = f"{STEMS[i]}{suffix}"
+                out.append({"village": name, "village_local": DEVA_STEMS[STEMS[i]] + DEVA_SUFFIX[suffix],
+                            "block": b, "district": district, "state": STATE, "population": _population(name),
+                            "settlement": "semi-urban" if b == "East Block" and i < 4 else "rural"})
     return out
 
 
@@ -130,8 +150,13 @@ def generate(cfg) -> int:
         by_block.setdefault(v["block"], []).append(v["village"])
         local[v["village"]] = v["village_local"]
 
+    mixes = {b: v[2] for b, v in BLOCKS.items()}
+    for blocks in OTHER_DISTRICTS.values():
+        mixes.update({b: v[2] for b, v in blocks.items()})
+    district_of = {v["village"]: v["district"] for v in vrows}
+
     def pick_lang(block, issue):
-        mix = BLOCKS[block][2]
+        mix = mixes[block]
         lang = rng.choices(list(mix), weights=list(mix.values()))[0]
         if issue == "water" and lang == "cg" and rng.random() < 0.3:
             return "cg_roman"
@@ -145,7 +170,7 @@ def generate(cfg) -> int:
         start = as_of - dt.timedelta(days=(win if window == "current" else 2 * win) - 1)
         date = start + dt.timedelta(days=rng.randint(0, win - 1))
         voice = rng.random() < (0.25 if lang in ("cg", "cg_roman") else 0.12)
-        return {"date": date.isoformat(), "district": "Demo District", "block": block, "village": village,
+        return {"date": date.isoformat(), "state": STATE, "district": district_of[village], "block": block, "village": village,
                 "channel": "voice" if voice else "text",
                 "language_group": "cg" if lang == "cg_roman" else lang,
                 "written_as": "Latin letters" if lang in ("cg_roman", "hinglish", "en") else "own script",
@@ -167,18 +192,56 @@ def generate(cfg) -> int:
         if (block, issue) in planted_keys:
             continue
         rows.append(make(block, issue, rng.choice(["current", "previous"]), rng.choice(by_block[block]), "background"))
-    rows.sort(key=lambda x: (x["date"], x["block"], x["village"]))
+    # other districts: thinly spread background complaints
+    other_blocks = {b: d for d, blocks in OTHER_DISTRICTS.items() for b in blocks}
+    target = len(rows) + int(g.get("other_districts_total", 300))
+    while len(rows) < target:
+        block = rng.choice(list(other_blocks))
+        r = rng.random()
+        issue = "sensitive" if r < 0.07 else ("unclear" if r < 0.12 else rng.choice(issues))
+        rows.append(make(block, issue, rng.choice(["current", "previous"]), rng.choice(by_block[block]), "background"))
+    rows.sort(key=lambda x: (x["date"], x["district"], x["block"], x["village"]))
+    _outcomes(rows, rng, as_of)
     for i, row in enumerate(rows, 1):
         row["complaint_id"] = f"EW{i:04d}"
     os.makedirs(os.path.dirname(cfg["dataset"]), exist_ok=True)
-    cols = ["complaint_id", "date", "district", "block", "village", "channel", "language_group", "written_as",
-            "text", "true_issue", "scenario"]
+    cols = ["complaint_id", "date", "state", "district", "block", "village", "channel", "language_group", "written_as",
+            "text", "true_issue", "scenario", "department", "category", "officer_id", "status", "resolved_date",
+            "days_to_resolve", "due_date"]
     with open(cfg["dataset"], "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols)
         w.writeheader()
         w.writerows(rows)
     with open(cfg["villages"], "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=["village", "village_local", "block", "district", "settlement"])
+        w = csv.DictWriter(f, fieldnames=["village", "village_local", "block", "district", "state", "population", "settlement"])
         w.writeheader()
         w.writerows(vrows)
     return len(rows)
+
+
+OFFICER_FOR = {"water": "OFF-WAT01", "electricity": "OFF-ELE01", "ration": "OFF-RAT01", "pension": "OFF-PEN01",
+               "roads": "OFF-ROA01", "health": "OFF-HEA01", "revenue": "OFF-REV01", "education": "OFF-EDU01",
+               "police": "OFF-POL01"}
+
+
+def _outcomes(rows, rng, as_of):
+    """Final department and category (as an officer would confirm them), the officer, and what happened next."""
+    from .taxonomy import categorize
+    depts = list(SLA)
+    for r in rows:
+        dept = r["true_issue"] if r["true_issue"] in SLA else ("police" if r["true_issue"] == "sensitive"
+                                                                else rng.choice(depts[:-1]))
+        r["department"], r["category"] = dept, categorize(dept, r["text"])
+        r["officer_id"] = "OFF-SC01" if r["true_issue"] == "sensitive" else OFFICER_FOR[dept]
+        d = dt.date.fromisoformat(r["date"])
+        r["due_date"] = (d + dt.timedelta(days=SLA[dept])).isoformat()
+        age = (as_of - d).days
+        p_done = 0.85 if age >= 14 else 0.45
+        if rng.random() < p_done:
+            late = rng.random() < 0.18
+            days = SLA[dept] + rng.randint(1, 10) if late else max(1, int(SLA[dept] * rng.uniform(0.3, 1.0)))
+            days = min(days, max(age, 1))
+            r["status"], r["days_to_resolve"] = "Resolved", days
+            r["resolved_date"] = (d + dt.timedelta(days=days)).isoformat()
+        else:
+            r["status"], r["days_to_resolve"], r["resolved_date"] = "Pending", "", ""

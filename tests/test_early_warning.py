@@ -30,7 +30,8 @@ class TestEarlyWarning(unittest.TestCase):
         return next((a for a in self.alerts if a["issue"] == issue and a["block"] == block), None)
 
     def test_generator_is_deterministic_and_complete(self):
-        self.assertEqual(len(self.rows), 500)
+        self.assertEqual(len(self.rows), 800)
+        self.assertEqual(sum(r["district"] == "Demo District" for r in self.rows), 500)
         spike = [r for r in self.rows if r["scenario"] == "spike_water" and r["date"] >= "2026-09-20"]
         self.assertEqual(len(spike), 127)
         self.assertEqual(len({r["village"] for r in spike}), 23)

@@ -1,63 +1,111 @@
-village,village_local,block,district,settlement
-Amapur,आमापुर,North Block,Demo District,rural
-Bhanupur,भानुपुर,North Block,Demo District,rural
-Chirapur,चिरापुर,North Block,Demo District,rural
-Dongripur,डोंगरीपुर,North Block,Demo District,rural
-Garhipur,गढ़ीपुर,North Block,Demo District,rural
-Jharipur,झरीपुर,North Block,Demo District,rural
-Kesapur,केसापुर,North Block,Demo District,rural
-Latapur,लतापुर,North Block,Demo District,rural
-Mohlapur,मोहलापुर,North Block,Demo District,rural
-Nawapur,नवापुर,North Block,Demo District,rural
-Pandripur,पंडरीपुर,North Block,Demo District,rural
-Ranipur,रानीपुर,North Block,Demo District,rural
-Amadi,आमाडीह,South Block,Demo District,rural
-Bhanudi,भानुडीह,South Block,Demo District,rural
-Chiradi,चिराडीह,South Block,Demo District,rural
-Dongridi,डोंगरीडीह,South Block,Demo District,rural
-Garhidi,गढ़ीडीह,South Block,Demo District,rural
-Jharidi,झरीडीह,South Block,Demo District,rural
-Kesadi,केसाडीह,South Block,Demo District,rural
-Latadi,लताडीह,South Block,Demo District,rural
-Mohladi,मोहलाडीह,South Block,Demo District,rural
-Nawadi,नवाडीह,South Block,Demo District,rural
-Pandridi,पंडरीडीह,South Block,Demo District,rural
-Ranidi,रानीडीह,South Block,Demo District,rural
-Sonadi,सोनाडीह,South Block,Demo District,rural
-Toladi,टोलाडीह,South Block,Demo District,rural
-Urladi,उरलाडीह,South Block,Demo District,rural
-Beladi,बेलाडीह,South Block,Demo District,rural
-Kosadi,कोसाडीह,South Block,Demo District,rural
-Mahudi,महुडीह,South Block,Demo District,rural
-Sajadi,सजाडीह,South Block,Demo District,rural
-Telidi,तेलीडीह,South Block,Demo District,rural
-Boridi,बोरीडीह,South Block,Demo District,rural
-Hardidi,हरदीडीह,South Block,Demo District,rural
-Kurudi,कुरुडीह,South Block,Demo District,rural
-Parudi,परुडीह,South Block,Demo District,rural
-Sirsidi,सिरसीडीह,South Block,Demo District,rural
-Dhamnidi,धमनीडीह,South Block,Demo District,rural
-Amanagar,आमानगर,East Block,Demo District,semi-urban
-Bhanunagar,भानुनगर,East Block,Demo District,semi-urban
-Chiranagar,चिरानगर,East Block,Demo District,semi-urban
-Dongrinagar,डोंगरीनगर,East Block,Demo District,semi-urban
-Garhinagar,गढ़ीनगर,East Block,Demo District,rural
-Jharinagar,झरीनगर,East Block,Demo District,rural
-Kesanagar,केसानगर,East Block,Demo District,rural
-Latanagar,लतानगर,East Block,Demo District,rural
-Mohlanagar,मोहलानगर,East Block,Demo District,rural
-Nawanagar,नवानगर,East Block,Demo District,rural
-Pandrinagar,पंडरीनगर,East Block,Demo District,rural
-Raninagar,रानीनगर,East Block,Demo District,rural
-Amagaon,आमागाँव,West Block,Demo District,rural
-Bhanugaon,भानुगाँव,West Block,Demo District,rural
-Chiragaon,चिरागाँव,West Block,Demo District,rural
-Dongrigaon,डोंगरीगाँव,West Block,Demo District,rural
-Garhigaon,गढ़ीगाँव,West Block,Demo District,rural
-Jharigaon,झरीगाँव,West Block,Demo District,rural
-Kesagaon,केसागाँव,West Block,Demo District,rural
-Latagaon,लतागाँव,West Block,Demo District,rural
-Mohlagaon,मोहलागाँव,West Block,Demo District,rural
-Nawagaon,नवागाँव,West Block,Demo District,rural
-Pandrigaon,पंडरीगाँव,West Block,Demo District,rural
-Ranigaon,रानीगाँव,West Block,Demo District,rural
+village,village_local,block,district,state,population,settlement
+Amapur,आमापुर,North Block,Demo District,Demo State,4348,rural
+Bhanupur,भानुपुर,North Block,Demo District,Demo State,2932,rural
+Chirapur,चिरापुर,North Block,Demo District,Demo State,4447,rural
+Dongripur,डोंगरीपुर,North Block,Demo District,Demo State,4105,rural
+Garhipur,गढ़ीपुर,North Block,Demo District,Demo State,1503,rural
+Jharipur,झरीपुर,North Block,Demo District,Demo State,943,rural
+Kesapur,केसापुर,North Block,Demo District,Demo State,4010,rural
+Latapur,लतापुर,North Block,Demo District,Demo State,3147,rural
+Mohlapur,मोहलापुर,North Block,Demo District,Demo State,1354,rural
+Nawapur,नवापुर,North Block,Demo District,Demo State,2063,rural
+Pandripur,पंडरीपुर,North Block,Demo District,Demo State,1375,rural
+Ranipur,रानीपुर,North Block,Demo District,Demo State,2540,rural
+Amadi,आमाडीह,South Block,Demo District,Demo State,875,rural
+Bhanudi,भानुडीह,South Block,Demo District,Demo State,3296,rural
+Chiradi,चिराडीह,South Block,Demo District,Demo State,3319,rural
+Dongridi,डोंगरीडीह,South Block,Demo District,Demo State,2104,rural
+Garhidi,गढ़ीडीह,South Block,Demo District,Demo State,2808,rural
+Jharidi,झरीडीह,South Block,Demo District,Demo State,1913,rural
+Kesadi,केसाडीह,South Block,Demo District,Demo State,1885,rural
+Latadi,लताडीह,South Block,Demo District,Demo State,2574,rural
+Mohladi,मोहलाडीह,South Block,Demo District,Demo State,3759,rural
+Nawadi,नवाडीह,South Block,Demo District,Demo State,1755,rural
+Pandridi,पंडरीडीह,South Block,Demo District,Demo State,3977,rural
+Ranidi,रानीडीह,South Block,Demo District,Demo State,1788,rural
+Sonadi,सोनाडीह,South Block,Demo District,Demo State,2790,rural
+Toladi,टोलाडीह,South Block,Demo District,Demo State,2470,rural
+Urladi,उरलाडीह,South Block,Demo District,Demo State,4075,rural
+Beladi,बेलाडीह,South Block,Demo District,Demo State,2798,rural
+Kosadi,कोसाडीह,South Block,Demo District,Demo State,3884,rural
+Mahudi,महुडीह,South Block,Demo District,Demo State,3628,rural
+Sajadi,सजाडीह,South Block,Demo District,Demo State,2784,rural
+Telidi,तेलीडीह,South Block,Demo District,Demo State,1567,rural
+Boridi,बोरीडीह,South Block,Demo District,Demo State,2803,rural
+Hardidi,हरदीडीह,South Block,Demo District,Demo State,2376,rural
+Kurudi,कुरुडीह,South Block,Demo District,Demo State,2115,rural
+Parudi,परुडीह,South Block,Demo District,Demo State,3628,rural
+Sirsidi,सिरसीडीह,South Block,Demo District,Demo State,3391,rural
+Dhamnidi,धमनीडीह,South Block,Demo District,Demo State,1827,rural
+Amanagar,आमानगर,East Block,Demo District,Demo State,3712,semi-urban
+Bhanunagar,भानुनगर,East Block,Demo District,Demo State,2294,semi-urban
+Chiranagar,चिरानगर,East Block,Demo District,Demo State,2912,semi-urban
+Dongrinagar,डोंगरीनगर,East Block,Demo District,Demo State,3304,semi-urban
+Garhinagar,गढ़ीनगर,East Block,Demo District,Demo State,4371,rural
+Jharinagar,झरीनगर,East Block,Demo District,Demo State,2334,rural
+Kesanagar,केसानगर,East Block,Demo District,Demo State,2946,rural
+Latanagar,लतानगर,East Block,Demo District,Demo State,3071,rural
+Mohlanagar,मोहलानगर,East Block,Demo District,Demo State,2759,rural
+Nawanagar,नवानगर,East Block,Demo District,Demo State,1830,rural
+Pandrinagar,पंडरीनगर,East Block,Demo District,Demo State,797,rural
+Raninagar,रानीनगर,East Block,Demo District,Demo State,1298,rural
+Amagaon,आमागाँव,West Block,Demo District,Demo State,3182,rural
+Bhanugaon,भानुगाँव,West Block,Demo District,Demo State,1665,rural
+Chiragaon,चिरागाँव,West Block,Demo District,Demo State,839,rural
+Dongrigaon,डोंगरीगाँव,West Block,Demo District,Demo State,3150,rural
+Garhigaon,गढ़ीगाँव,West Block,Demo District,Demo State,1206,rural
+Jharigaon,झरीगाँव,West Block,Demo District,Demo State,2512,rural
+Kesagaon,केसागाँव,West Block,Demo District,Demo State,2607,rural
+Latagaon,लतागाँव,West Block,Demo District,Demo State,4310,rural
+Mohlagaon,मोहलागाँव,West Block,Demo District,Demo State,2276,rural
+Nawagaon,नवागाँव,West Block,Demo District,Demo State,1864,rural
+Pandrigaon,पंडरीगाँव,West Block,Demo District,Demo State,3429,rural
+Ranigaon,रानीगाँव,West Block,Demo District,Demo State,682,rural
+Amagarh,आमागढ़,Upper Block,Hill District,Demo State,3053,rural
+Bhanugarh,भानुगढ़,Upper Block,Hill District,Demo State,4166,rural
+Chiragarh,चिरागढ़,Upper Block,Hill District,Demo State,3643,rural
+Dongrigarh,डोंगरीगढ़,Upper Block,Hill District,Demo State,3849,rural
+Garhigarh,गढ़ीगढ़,Upper Block,Hill District,Demo State,2506,rural
+Jharigarh,झरीगढ़,Upper Block,Hill District,Demo State,1057,rural
+Kesagarh,केसागढ़,Upper Block,Hill District,Demo State,2629,rural
+Latagarh,लतागढ़,Upper Block,Hill District,Demo State,4022,rural
+Amapali,आमापाली,Lower Block,Hill District,Demo State,3429,rural
+Bhanupali,भानुपाली,Lower Block,Hill District,Demo State,2831,rural
+Chirapali,चिरापाली,Lower Block,Hill District,Demo State,3755,rural
+Dongripali,डोंगरीपाली,Lower Block,Hill District,Demo State,4143,rural
+Garhipali,गढ़ीपाली,Lower Block,Hill District,Demo State,2022,rural
+Jharipali,झरीपाली,Lower Block,Hill District,Demo State,793,rural
+Kesapali,केसापाली,Lower Block,Hill District,Demo State,3640,rural
+Latapali,लतापाली,Lower Block,Hill District,Demo State,3219,rural
+Amakona,आमाकोना,Valley Block,Hill District,Demo State,1540,rural
+Bhanukona,भानुकोना,Valley Block,Hill District,Demo State,1797,rural
+Chirakona,चिराकोना,Valley Block,Hill District,Demo State,3104,rural
+Dongrikona,डोंगरीकोना,Valley Block,Hill District,Demo State,3392,rural
+Garhikona,गढ़ीकोना,Valley Block,Hill District,Demo State,3616,rural
+Jharikona,झरीकोना,Valley Block,Hill District,Demo State,2167,rural
+Kesakona,केसाकोना,Valley Block,Hill District,Demo State,2555,rural
+Latakona,लताकोना,Valley Block,Hill District,Demo State,4455,rural
+Amaghat,आमाघाट,Ghat Block,River District,Demo State,4225,rural
+Bhanughat,भानुघाट,Ghat Block,River District,Demo State,4142,rural
+Chiraghat,चिराघाट,Ghat Block,River District,Demo State,628,rural
+Dongrighat,डोंगरीघाट,Ghat Block,River District,Demo State,3519,rural
+Garhighat,गढ़ीघाट,Ghat Block,River District,Demo State,628,rural
+Jharighat,झरीघाट,Ghat Block,River District,Demo State,4034,rural
+Kesaghat,केसाघाट,Ghat Block,River District,Demo State,3234,rural
+Lataghat,लताघाट,Ghat Block,River District,Demo State,1748,rural
+Amatikra,आमाटिकरा,Delta Block,River District,Demo State,3395,rural
+Bhanutikra,भानुटिकरा,Delta Block,River District,Demo State,1358,rural
+Chiratikra,चिराटिकरा,Delta Block,River District,Demo State,1775,rural
+Dongritikra,डोंगरीटिकरा,Delta Block,River District,Demo State,2688,rural
+Garhitikra,गढ़ीटिकरा,Delta Block,River District,Demo State,2618,rural
+Jharitikra,झरीटिकरा,Delta Block,River District,Demo State,3055,rural
+Kesatikra,केसाटिकरा,Delta Block,River District,Demo State,2726,rural
+Latatikra,लताटिकरा,Delta Block,River District,Demo State,1483,rural
+Amapara,आमापारा,Bank Block,River District,Demo State,3623,rural
+Bhanupara,भानुपारा,Bank Block,River District,Demo State,2436,rural
+Chirapara,चिरापारा,Bank Block,River District,Demo State,3472,rural
+Dongripara,डोंगरीपारा,Bank Block,River District,Demo State,1364,rural
+Garhipara,गढ़ीपारा,Bank Block,River District,Demo State,2771,rural
+Jharipara,झरीपारा,Bank Block,River District,Demo State,3752,rural
+Kesapara,केसापारा,Bank Block,River District,Demo State,1153,rural
+Latapara,लतापारा,Bank Block,River District,Demo State,4431,rural
