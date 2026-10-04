@@ -17,7 +17,7 @@ from grievdesk import quality as Q                   # noqa: E402
 from grievdesk.common.config import load_config     # noqa: E402
 from grievdesk.system import GrievanceRouter         # noqa: E402
 
-DEMO = dict(district="Demo District", block="South Block", village="Amadi")
+DEMO = dict(state="Tamil Nadu", district="Coimbatore", town="Coimbatore", locality="Ward 12")
 
 
 class Hook(BaseHTTPRequestHandler):
@@ -69,6 +69,21 @@ class TestPortal(unittest.TestCase):
                 o = self.r.process({"id": "t", "text": it["text"]})
                 self.assertEqual(o["department"], it["department"], (lang, it["text"]))
                 self.assertFalse(o["sensitive_categories"], (lang, it["text"]))
+
+    def test_locations_and_zones(self):
+        from grievdesk import locations as L
+        rows = L.load()
+        self.assertGreater(len(rows), 5000)
+        st = {r["state"] for r in rows}
+        for z, states in L.ZONES.items():
+            for s_ in states:
+                self.assertIn(s_, st, s_)
+        self.assertNotIn("Unmapped", {r["zone"] for r in rows})
+        self.assertEqual(L.zone_of("Telangana"), "South Zone")
+        self.assertIn("Hyderabad", {r["district"] for r in rows if r["state"] == "Telangana"})
+        self.assertEqual({r["district"] for r in rows if r["state"] == "Ladakh"}, {"Leh (Ladakh)", "Kargil"})
+        rec = self.file("No drinking water from the handpump for a week.")
+        self.assertEqual((rec["zone"], rec["town"], rec["locality"]), ("South Zone", "Coimbatore", "Ward 12"))
 
     def test_filing_assigns_named_officer_and_acknowledges(self):
         tpl = P.common_complaints("ta")[3]
@@ -146,12 +161,15 @@ class TestAnalyticsAndQuality(unittest.TestCase):
     def test_analytics_tables(self):
         df, vil = A.load()
         as_of = dt.date(2026, 10, 3)
-        self.assertEqual(len(df), 800)
-        self.assertEqual(set(df["district"]), {"Demo District", "Hill District", "River District"})
+        self.assertEqual(len(df), 2000)
+        self.assertEqual(set(df["zone"]), {"North Zone", "South Zone", "East Zone", "West Zone", "Central Zone", "Northeast Zone"})
         k = A.kpis(df, as_of)
         self.assertEqual(k["Complaints"], k["Resolved"] + k["Pending"])
+        self.assertEqual(len(A.filter_df(df, zone="Central Zone", state="Chhattisgarh", district="Raipur")),
+                         int(((df["state"] == "Chhattisgarh") & (df["district"] == "Raipur")).sum()))
         loc = A.location_table(df, vil)
-        self.assertIn("Per 1,000 people", loc.columns)
+        self.assertIn("Urban status", loc.columns)
+        self.assertIn("Last 14 days", A.district_table(df, as_of).columns)
         self.assertGreater(len(A.focus_areas(df, vil, [], as_of)), 0)
         self.assertGreater(len(A.excel_report(df, vil, [], as_of)), 1000)
 

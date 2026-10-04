@@ -167,7 +167,7 @@ streamlit run app.py
 
 1. **Tell us how:** Type, or Speak into the microphone.
 2. **Your complaint:** optionally pick one of the **frequently filed complaints** in your language. It fills the box and can still be edited. Otherwise write your own.
-3. **Where:** district, then block, then village.
+3. **Where:** state, then district, then city or town, plus an optional village or locality.
 4. **How should we inform you:** SMS, WhatsApp, email, or check on the portal.
 
 After submitting, the citizen sees:
@@ -212,14 +212,51 @@ Mobile numbers and emails are stored apart from the complaint register and appea
 - **Notifications:** the outbox.
 - **Settings:** the sorting engine, speech-to-text and the officer list.
 
+## Places and zones
+
+Locations are real: the **Census 2011 list of cities and towns** (`data/grievance/source_census2011_towns.xlsx`), cleaned into `data/grievance/locations.csv`. The result has 5,134 cities and towns in 589 districts across all 36 states and union territories. `python -c "from grievdesk.locations import build; build()"` rebuilds it.
+
+Changes made to bring the 2011 list up to date:
+- **Renamed states:** Orissa is now Odisha, Uttaranchal is now Uttarakhand, and Pondicherry is now Puducherry.
+- **Telangana (2014):** its ten 2011 districts (including Rangareddi and "Hyderabad and Rangareddi") moved from Andhra Pradesh.
+- **Ladakh (2019):** Leh (Ladakh) and Kargil moved from Jammu & Kashmir.
+- **One union territory (2020):** Dadra & Nagar Haveli and Daman & Diu are combined.
+- **Cleanup:** duplicate rows and the notes at the end of the sheet are removed. Urban status (Municipal Corporation, Nagar Panchayat, Census Town and so on) comes from the sheet's own legend.
+
+District names are as in 2011; some districts have since been split or renamed. The list has cities and towns, not villages, so citizens choose State, then District, then City/Town, and can type their village or locality in an extra box. The state is pre-selected from the screen language (Tamil Nadu for Tamil, and so on).
+
+**Zones:**
+
+| Zone | States and union territories |
+| --- | --- |
+| North | Chandigarh, Delhi, Haryana, Himachal Pradesh, Jammu & Kashmir, Ladakh, Punjab, Rajasthan |
+| South | Andaman & Nicobar, Andhra Pradesh, Karnataka, Kerala, Lakshadweep, Puducherry, Tamil Nadu, Telangana |
+| East | Bihar, Jharkhand, Odisha, West Bengal |
+| West | Dadra and Nagar Haveli and Daman and Diu, Goa, Gujarat, Maharashtra |
+| Central | Chhattisgarh, Madhya Pradesh, Uttar Pradesh, Uttarakhand |
+| Northeast | Arunachal Pradesh, Assam, Manipur, Meghalaya, Mizoram, Nagaland, Sikkim, Tripura |
+
+**Demo complaints** (`demo_complaints.csv`, rebuilt with `python -m grievdesk ew-generate`):
+- **Size and spread:** 2,000 complaints over 28 days on real towns in 529 districts across all six zones.
+- **Language:** each complaint is in its state's main language, using the frequently filed complaints and some informal wording.
+- **Marked as sample data:** the complaints are made up, and every row is marked `synthetic=yes`.
+- **Planted early-warning patterns:**
+  - a water-supply spike in Raipur, Chhattisgarh (127 complaints in 14 towns, should alert High);
+  - a health cluster in Bilaspur, Chhattisgarh (should alert Medium);
+  - a small electricity rise in North Twentyfour Parganas, West Bengal (should not alert);
+  - a tiny roads jump in Ernakulam, Kerala (should not alert).
+
+The early warning groups complaints by **issue and district** (district and state together, since names such as Bilaspur and Aurangabad repeat). Analytics filter by zone, state and district, with tables by district and by city/town.
+
 ## Data files
 
-All in `data/grievance/`; everything is synthetic.
+All in `data/grievance/`.
 
 | File | What it holds |
 | --- | --- |
-| `early_warning_complaints.csv` | 800 complaints across 3 districts and 110 villages over 28 days: language, channel, department, category, officer, status, due and resolved dates. Used for analytics and early warning. |
-| `villages.csv` | State, district, block, village (with Devanagari name), population, settlement type |
+| `locations.csv` | Zone, state, district, city/town, urban status, Census codes (real places) |
+| `source_census2011_towns.xlsx` | The original Census 2011 cities and towns list |
+| `demo_complaints.csv` | 2,000 sample complaints on real places: language, channel, department, category, officer, status, due and resolved dates |
 | `officers.csv` | 13 officers: department officers, grievance cell, designated officer for sensitive cases, Additional Collector, administrator |
 | `common_complaints.yaml` | 8 frequently filed complaints in each of 14 languages, with department and category |
 | `categories.yaml` | Complaint categories within each department and the words that identify them |

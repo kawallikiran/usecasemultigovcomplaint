@@ -81,12 +81,6 @@ def header():
     return new
 
 
-def village_label(lang, district, block, village):
-    if lang in ("hi", "cg", "mr"):
-        return dict(places().get(district, {}).get(block, [])).get(village, village)
-    return village
-
-
 def status_block(rec, lang, router):
     v = P.citizen_view(rec, T, lang, router.depts)
     st.info(f"**{T(lang, 'status')}:** {v['status']}")
@@ -98,8 +92,7 @@ def status_block(rec, lang, router):
         st.markdown(f"**{T(lang, 'timeline')}**")
         st.markdown("\n".join(f"- {d}: {s}" for d, s in v["timeline"]))
     st.download_button(T(lang, "download_receipt"),
-                       P.receipt_html(rec, T, lang, router.depts,
-                                      village_label(lang, rec["district"], rec["block"], rec["village"])).encode("utf-8"),
+                       P.receipt_html(rec, T, lang, router.depts).encode("utf-8"),
                        file_name=rec["ticket"].replace("/", "-") + ".html", mime="text/html")
 
 
@@ -144,11 +137,13 @@ def file_page():
             st.file_uploader(T(lang, "record_hint"), type=["wav", "mp3", "m4a", "ogg", "webm"], key="voice")
 
     st.markdown(f"**{T(lang, 'where')}**")
+    states = list(places())
+    default = P.DEFAULT_STATE.get(lang, states[0])
     c1, c2, c3 = st.columns(3)
-    district = c1.selectbox(T(lang, "district"), list(places()))
-    block = c2.selectbox(T(lang, "block"), list(places()[district]))
-    village = c3.selectbox(T(lang, "village"), [v for v, _ in places()[district][block]],
-                           format_func=lambda v: village_label(lang, district, block, v))
+    state = c1.selectbox(T(lang, "state"), states, index=states.index(default) if default in states else 0)
+    district = c2.selectbox(T(lang, "district"), list(places()[state]))
+    town = c3.selectbox(T(lang, "town"), places()[state][district])
+    locality = st.text_input(T(lang, "locality"), max_chars=120)
 
     st.markdown(f"**4. {T(lang, 'notify_by')}**")
     ch_keys = ["sms", "whatsapp", "email", "portal"]
@@ -172,7 +167,7 @@ def file_page():
                 rec = P.submit(router, store, T, lang, "text" if audio is None else "voice",
                                text=typed.strip() or None, audio=audio.getvalue() if audio is not None else None,
                                audio_name=getattr(audio, "name", "complaint.wav") or "complaint.wav",
-                               district=district, block=block, village=village, notify_by=ch, mobile=mobile,
+                               state=state, district=district, town=town, locality=locality, notify_by=ch, mobile=mobile,
                                email=email, speech_profile=speech_profile() if audio is not None else None,
                                template_category=template["category"] if template else None)
             st.session_state["done"] = rec["ticket"]
@@ -231,7 +226,8 @@ def complaints_view(scope):
 def review_panel(rec, router):
     s = rec.get("suggestion") or {}
     st.subheader(rec["ticket"])
-    st.caption(f"Received {rec['created'].replace('T', ' ')[:16]} · {rec['village']}, {rec['block']}, {rec['district']} · "
+    st.caption(f"Received {rec['created'].replace('T', ' ')[:16]} · "
+               f"{', '.join(x for x in (rec.get('locality'), rec.get('town'), rec.get('district'), rec.get('state'), rec.get('zone')) if x)} · "
                f"Inform by: {rec.get('notify_by', 'portal')} · Due {dt.date.fromisoformat(rec['due_date']).strftime('%d-%m-%Y')} · "
                f"Assigned to {P.officer_label(rec['assigned_to'])}")
     if rec.get("audio") and os.path.exists(os.path.join(ui.ROOT, rec["audio"])):
@@ -316,18 +312,25 @@ def analytics_page():
     st.title("Analytics")
     base = dt.date.fromisoformat(str(ui.load_config(ui.EW_CONFIG)["as_of"]))
     df, vil = A.load(P.portal_rows_for_analytics(store))
-    c1, c2, c3, c4 = st.columns(4)
-    district = c1.selectbox("District", ["All"] + sorted(df["district"].unique()))
-    department = c2.selectbox("Department", ["All"] + sorted(df["Department"].unique()))
-    start = c3.date_input("From", value=df["date"].min().date())
-    as_of = c4.date_input("To (report date)", value=base)
-    f = A.filter_df(df, district, department, start, as_of)
+    st.caption("Places are real (Census 2011 cities and towns, current state boundaries). Complaint figures include sample data.")
+    c1, c2, c3 = st.columns(3)
+    zone = c1.selectbox("Zone", ["All"] + sorted(df["zone"].unique()))
+    zdf = df if zone == "All" else df[df["zone"] == zone]
+    state = c2.selectbox("State / UT", ["All"] + sorted(zdf["state"].unique()))
+    sdf = zdf if state == "All" else zdf[zdf["state"] == state]
+    district = c3.selectbox("District", ["All"] + sorted(sdf["district"].unique()))
+    c4, c5, c6 = st.columns(3)
+    department = c4.selectbox("Department", ["All"] + sorted(df["Department"].unique()))
+    start = c5.date_input("From", value=df["date"].min().date())
+    as_of = c6.date_input("To (report date)", value=base)
+    f = A.filter_df(df, zone, state, district, department, start, as_of)
     for c, (k, v) in zip(st.columns(6), A.kpis(f, as_of).items()):
         c.metric(k, v)
 
     st.subheader("Where to focus")
     cfg, _, _, cards, _ = ew_cards(len(store.all()), str(as_of))
-    alerts = [a for a, _, _ in cards if district == "All" or a.get("district") == district]
+    alerts = [a for a, _, _ in cards if (zone == "All" or a.get("zone") == zone) and (state == "All" or a.get("state") == state)
+              and (district == "All" or a.get("district") == district)]
     for a, lines, notes in cards:
         if a in alerts:
             (st.error if a["priority"] == "High" else st.warning)("  \n".join([f"**{lines[0]}**"] + lines[1:]))
@@ -341,8 +344,11 @@ def analytics_page():
     st.line_chart(A.trend(f))
     st.subheader("Where complaints come from")
     l1, l2 = st.columns(2)
-    l1.bar_chart(A.by(f, "district").rename(columns={"district": "District"}).set_index("District"))
-    l2.bar_chart(A.by(f, "block").rename(columns={"block": "Block"}).set_index("Block"))
+    l1.bar_chart(A.by(f, "zone").rename(columns={"zone": "Zone"}).set_index("Zone"))
+    l2.bar_chart(A.by(f, "state", top=15).rename(columns={"state": "State"}).set_index("State"))
+    st.markdown("**By district**")
+    st.dataframe(A.district_table(f, as_of), hide_index=True)
+    st.markdown("**By city / town**")
     st.dataframe(A.location_table(f, vil), hide_index=True)
     st.subheader("Service performance by department")
     st.dataframe(A.department_performance(f, as_of), hide_index=True)

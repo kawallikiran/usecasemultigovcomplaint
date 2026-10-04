@@ -17,6 +17,7 @@ import yaml
 from .__main__ import ROOT
 from .common.pii import mask
 from .notify import Outbox
+from .locations import zone_of
 from .taxonomy import categorize, category_name
 
 DATA = os.path.join(ROOT, "data", "grievance")
@@ -47,13 +48,14 @@ def common_complaints(lang):
 
 
 def places():
-    """{district: {block: [(village, village_local), ...]}}"""
-    out = {}
-    with open(os.path.join(DATA, "villages.csv"), encoding="utf-8") as f:
-        for r in csv.DictReader(f):
-            out.setdefault(r["district"], {}).setdefault(r["block"], []).append(
-                (r["village"], r.get("village_local") or r["village"]))
-    return out
+    """{state: {district: [city/town, ...]}} from the Census 2011 towns list (current state boundaries)."""
+    from .locations import tree
+    return tree()
+
+
+DEFAULT_STATE = {"ta": "Tamil Nadu", "te": "Telangana", "kn": "Karnataka", "ml": "Kerala", "bn": "West Bengal",
+                 "as": "Assam", "or": "Odisha", "gu": "Gujarat", "mr": "Maharashtra", "pa": "Punjab",
+                 "ur": "Jammu & Kashmir", "hi": "Chhattisgarh", "cg": "Chhattisgarh", "en": "Chhattisgarh"}
 
 
 def officers():
@@ -181,13 +183,14 @@ def _notify(store, rec, kind, T, depts, reply=""):
     return store.outbox.send(rec["ticket"], channel, to, msg, kind)
 
 
-def submit(router, store, T, lang, channel, text=None, audio=None, audio_name="complaint.wav", district="", block="",
-           village="", notify_by="portal", mobile="", email="", speech_profile=None, template_category=None, now=None):
+def submit(router, store, T, lang, channel, text=None, audio=None, audio_name="complaint.wav", state="", district="",
+           town="", locality="", notify_by="portal", mobile="", email="", speech_profile=None, template_category=None, now=None):
     """Registers a complaint, assigns it to an officer for review, and sends the acknowledgement."""
     now = now or dt.datetime.now()
     ticket = store.next_ticket(now.date())
     rec = {"ticket": ticket, "created": now.isoformat(timespec="seconds"), "ui_language": lang, "channel": channel,
-           "state": "Demo State", "district": district, "block": block, "village": village, "text": "",
+           "zone": zone_of(state), "state": state, "district": district, "town": town,
+           "locality": mask((locality or "").strip())[:120], "text": "",
            "transcript": "none", "audio": "", "status": "pending_review", "department": None, "category": "other",
            "priority": "normal", "assigned_to": CELL_OFFICER, "reply": "", "suggestion": None, "history": [],
            "notify_by": notify_by}
@@ -240,14 +243,15 @@ def citizen_view(rec, T, lang, depts):
             "reply": rec.get("reply") if st == "approved" else "", "timeline": timeline}
 
 
-def receipt_html(rec, T, lang, depts, village_label=""):
+def receipt_html(rec, T, lang, depts):
     """Printable acknowledgement slip (HTML renders every Indian script; print or save as PDF from the browser)."""
     e = html.escape
     v = citizen_view(rec, T, lang, depts)
     rtl = ' dir="rtl"' if lang == "ur" else ""
     rows = [(T(lang, "ticket"), rec["ticket"]), ("Date", rec["created"].replace("T", " ")[:16]),
-            (T(lang, "district"), rec["district"]), (T(lang, "block"), rec.get("block", "")),
-            (T(lang, "village"), village_label or rec.get("village", "")), (T(lang, "dept_label"), v["department"]),
+            (T(lang, "state"), rec.get("state", "")), (T(lang, "district"), rec["district"]),
+            (T(lang, "town"), rec.get("town", "")), (T(lang, "locality"), rec.get("locality", "")),
+            (T(lang, "dept_label"), v["department"]),
             (T(lang, "officer_label"), v["officer"]), (T(lang, "expected_by"), v["expected"]),
             (T(lang, "status"), v["status"])]
     body = "".join(f"<tr><th>{e(k)}</th><td>{e(str(val))}</td></tr>" for k, val in rows if val)
@@ -292,7 +296,7 @@ def queue_rows(recs, depts):
         rows.append({"Complaint no.": r["ticket"], "Received": r["created"].replace("T", " ")[:16],
                      "Channel": "Voice" if r["channel"] == "voice" else "Typed",
                      "Language": s.get("language_name") or "-",
-                     "Place": f"{r.get('village', '')}, {r.get('block', '')}",
+                     "Place": ", ".join(x for x in (r.get("locality"), r.get("town"), r.get("district"), r.get("state")) if x),
                      "Department": depts.get(r.get("department") or "", {}).get("name", "Not assigned"),
                      "Category": category_name(r.get("department"), r.get("category")),
                      "Priority": (r.get("priority") or "-").capitalize(),
@@ -389,13 +393,13 @@ def _edits(rec, category, priority):
 def register_csv(store, depts):
     buf = io.StringIO()
     w = csv.writer(buf)
-    w.writerow(["Complaint no.", "Received", "Channel", "Screen language", "Detected language", "State", "District",
-                "Block", "Village", "Department", "Category", "Priority", "Sensitive", "Assigned to", "Due date",
+    w.writerow(["Complaint no.", "Received", "Channel", "Screen language", "Detected language", "Zone", "State", "District",
+                "City / town", "Village or locality", "Department", "Category", "Priority", "Sensitive", "Assigned to", "Due date",
                 "Status", "Informed by", "Complaint (personal numbers hidden)", "Reply"])
     for r in store.all():
         s = r.get("suggestion") or {}
-        w.writerow([r["ticket"], r["created"], r["channel"], r["ui_language"], s.get("language_name", ""), r.get("state", ""),
-                    r["district"], r.get("block", ""), r.get("village", ""),
+        w.writerow([r["ticket"], r["created"], r["channel"], r["ui_language"], s.get("language_name", ""), r.get("zone", ""), r.get("state", ""),
+                    r["district"], r.get("town", ""), r.get("locality", ""),
                     depts.get(r.get("department") or "", {}).get("name", ""), category_name(r.get("department"), r.get("category")),
                     r.get("priority", ""), "yes" if s.get("sensitive_categories") else "", officer_label(r.get("assigned_to")),
                     r.get("due_date", ""), STATUS_EN.get(r["status"], r["status"]), r.get("notify_by", ""),
@@ -452,10 +456,10 @@ def portal_rows_for_analytics(store):
     for r in store.all():
         if not r.get("district"):
             continue
-        rows.append({"complaint_id": r["ticket"], "date": r["created"][:10], "state": r.get("state", ""),
-                     "district": r["district"], "block": r.get("block", ""), "village": r.get("village", ""),
+        rows.append({"complaint_id": r["ticket"], "date": r["created"][:10], "zone": r.get("zone", ""),
+                     "state": r.get("state", ""), "district": r["district"], "town": r.get("town", ""),
                      "channel": r["channel"], "language_group": (r.get("suggestion") or {}).get("language") or "",
-                     "written_as": "", "text": r.get("text", ""), "true_issue": "", "scenario": "portal",
+                     "text": r.get("text", ""), "true_issue": "", "scenario": "portal",
                      "department": r.get("department") or "", "category": r.get("category", ""),
                      "officer_id": r.get("assigned_to", ""),
                      "status": "Resolved" if r["status"] == "approved" else "Pending",

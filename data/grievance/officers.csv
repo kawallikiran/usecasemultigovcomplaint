@@ -1,14 +1,14 @@
-officer_id,name,designation,role,handles,district
-OFF-GC01,Neha Verma,Grievance Cell Officer,officer,grievance_cell,Demo District
-OFF-SC01,Kavita Netam,Designated Officer (Sensitive Cases),officer,sensitive,Demo District
-OFF-SR01,Rajesh Sahu,Additional Collector,supervisor,senior,Demo District
-OFF-WAT01,Amit Patel,"Executive Engineer, Public Health Engineering",officer,water,Demo District
-OFF-ELE01,Suresh Yadav,"Assistant Engineer, Power Distribution",officer,electricity,Demo District
-OFF-RAT01,Meena Dhruw,Food Inspector,officer,ration,Demo District
-OFF-PEN01,Anil Kurre,Social Welfare Officer,officer,pension,Demo District
-OFF-ROA01,Vikas Markam,"Executive Engineer, Public Works",officer,roads,Demo District
-OFF-HEA01,Dr. Pooja Sinha,Block Medical Officer,officer,health,Demo District
-OFF-REV01,Ramesh Tiwari,Tehsildar,officer,revenue,Demo District
-OFF-EDU01,Sunita Joshi,District Education Officer,officer,education,Demo District
-OFF-POL01,Arjun Singh,"Station House Officer, Police",officer,police,Demo District
-ADMIN01,District IT Nodal Officer,System Administrator,admin,all,Demo District
+officer_id,name,designation,role,handles,districts
+OFF-GC01,Neha Verma,Grievance Cell Officer,officer,grievance_cell,All districts (demo)
+OFF-SC01,Kavita Netam,Designated Officer (Sensitive Cases),officer,sensitive,All districts (demo)
+OFF-SR01,Rajesh Sahu,Additional Collector,supervisor,senior,All districts (demo)
+OFF-WAT01,Amit Patel,"Executive Engineer, Public Health Engineering",officer,water,All districts (demo)
+OFF-ELE01,Suresh Yadav,"Assistant Engineer, Power Distribution",officer,electricity,All districts (demo)
+OFF-RAT01,Meena Dhruw,Food Inspector,officer,ration,All districts (demo)
+OFF-PEN01,Anil Kurre,Social Welfare Officer,officer,pension,All districts (demo)
+OFF-ROA01,Vikas Markam,"Executive Engineer, Public Works",officer,roads,All districts (demo)
+OFF-HEA01,Dr. Pooja Sinha,Block Medical Officer,officer,health,All districts (demo)
+OFF-REV01,Ramesh Tiwari,Tehsildar,officer,revenue,All districts (demo)
+OFF-EDU01,Sunita Joshi,District Education Officer,officer,education,All districts (demo)
+OFF-POL01,Arjun Singh,"Station House Officer, Police",officer,police,All districts (demo)
+ADMIN01,District IT Nodal Officer,System Administrator,admin,all,All districts (demo)

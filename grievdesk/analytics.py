@@ -1,4 +1,4 @@
-"""Grievance analytics: counts by department, category, state, district, block and village, trends, service
+"""Grievance analytics: counts by department, category, zone, state, district and city/town, trends, service
 performance and where to focus. Uses the district complaint data plus complaints filed on the portal."""
 import csv
 import datetime as dt
@@ -16,10 +16,10 @@ LANG = {"cg": "Chhattisgarhi", "hi": "Hindi", "hinglish": "Hinglish", "en": "Eng
 
 
 def load(extra_rows=None):
-    df = pd.read_csv(os.path.join(DATA, "early_warning_complaints.csv"), dtype=str).fillna("")
+    df = pd.read_csv(os.path.join(DATA, "demo_complaints.csv"), dtype=str).fillna("")
     if extra_rows:
         df = pd.concat([df, pd.DataFrame(extra_rows).astype(str)], ignore_index=True)
-    vil = pd.read_csv(os.path.join(DATA, "villages.csv"), dtype={"population": int})
+    vil = pd.read_csv(os.path.join(DATA, "locations.csv"), dtype=str)
     df["date"] = pd.to_datetime(df["date"])
     df["Department"] = df["department"].map(lambda d: ISSUE_NAMES.get(d, d.capitalize() if d else "Not assigned"))
     df["Category"] = [category_name(d, c) for d, c in zip(df["department"], df["category"])]
@@ -28,8 +28,12 @@ def load(extra_rows=None):
     return df, vil
 
 
-def filter_df(df, district="All", department="All", start=None, end=None):
+def filter_df(df, zone="All", state="All", district="All", department="All", start=None, end=None):
     out = df
+    if zone != "All":
+        out = out[out["zone"] == zone]
+    if state != "All":
+        out = out[out["state"] == state]
     if district != "All":
         out = out[out["district"] == district]
     if department != "All":
@@ -56,11 +60,29 @@ def by(df, col, top=None):
 
 
 def location_table(df, vil):
-    t = df.groupby(["state", "district", "block", "village"]).size().rename("Complaints").reset_index()
-    t = t.merge(vil[["village", "population"]], on="village", how="left")
-    t["Per 1,000 people"] = (t["Complaints"] / t["population"] * 1000).round(1)
-    return t.rename(columns={"state": "State", "district": "District", "block": "Block", "village": "Village",
-                             "population": "Population"}).sort_values("Per 1,000 people", ascending=False)
+    """Complaints per city/town, with its urban status from the Census list."""
+    t = df.groupby(["zone", "state", "district", "town"]).size().rename("Complaints").reset_index()
+    t = t.merge(vil[["state", "district", "town", "urban_status"]], on=["state", "district", "town"], how="left")
+    pend = df[df["status"] == "Pending"].groupby(["state", "district", "town"]).size().rename("Pending").reset_index()
+    t = t.merge(pend, on=["state", "district", "town"], how="left").fillna({"Pending": 0})
+    t["Pending"] = t["Pending"].astype(int)
+    return t.rename(columns={"zone": "Zone", "state": "State", "district": "District", "town": "City / town",
+                             "urban_status": "Urban status"}).sort_values("Complaints", ascending=False)
+
+
+def district_table(df, as_of, window=14):
+    """Complaints per district: total, last window vs the window before, pending."""
+    end = pd.Timestamp(as_of)
+    cur = df[(df["date"] > end - pd.Timedelta(days=window)) & (df["date"] <= end)]
+    prev = df[(df["date"] > end - pd.Timedelta(days=2 * window)) & (df["date"] <= end - pd.Timedelta(days=window))]
+    keys = ["zone", "state", "district"]
+    t = df.groupby(keys).size().rename("Complaints").reset_index()
+    for name, part in (("Last 14 days", cur), ("Previous 14 days", prev), ("Pending", df[df["status"] == "Pending"])):
+        t = t.merge(part.groupby(keys).size().rename(name).reset_index(), on=keys, how="left")
+    t = t.fillna(0)
+    for c in ("Last 14 days", "Previous 14 days", "Pending"):
+        t[c] = t[c].astype(int)
+    return t.rename(columns={"zone": "Zone", "state": "State", "district": "District"}).sort_values("Complaints", ascending=False)
 
 
 def trend(df):
@@ -81,19 +103,18 @@ def department_performance(df, as_of):
 
 
 def focus_areas(df, vil, alerts, as_of, top=5):
-    """Plain-language pointers: emerging issues, departments falling behind, villages with most complaints per person."""
+    """Plain-language pointers: emerging issues, departments falling behind, districts with most pending complaints."""
     pts = []
     for a in alerts:
-        pts.append(("Emerging issue", f"{a['issue_name']} in {a['block']}, {a.get('district', '')}: {a['current']} complaints "
-                    f"in {a['villages']} villages, up {a['change_pct']}% (priority {a['priority']})."))
+        pts.append(("Emerging issue", f"{a['issue_name']} in {a['district']} district, {a['state']}: {a['current']} complaints "
+                    f"in {a['towns']} towns, up {a['change_pct']}% (priority {a['priority']})."))
     perf = department_performance(df, as_of)
     for _, r in perf[perf["Overdue"] > 0].head(3).iterrows():
         pts.append(("Falling behind", f"{r['Department']}: {r['Overdue']} complaints past their due date."))
-    loc = location_table(df, vil)
-    loc = loc[loc["Complaints"] >= 5]
-    for _, r in loc.head(top).iterrows():
-        pts.append(("High complaint rate", f"{r['Village']} ({r['Block']}, {r['District']}): {r['Per 1,000 people']} "
-                    f"complaints per 1,000 people ({r['Complaints']} in total)."))
+    dist = district_table(df, as_of)
+    for _, r in dist.sort_values("Pending", ascending=False).head(top).iterrows():
+        pts.append(("Most pending", f"{r['District']} district, {r['State']}: {r['Pending']} complaints still pending "
+                    f"({r['Complaints']} received)."))
     return pd.DataFrame(pts, columns=["Focus", "What the figures show"])
 
 
@@ -105,10 +126,12 @@ def excel_report(df, vil, alerts, as_of):
         focus_areas(df, vil, alerts, as_of).to_excel(xl, sheet_name="Where to focus", index=False)
         department_performance(df, as_of).to_excel(xl, sheet_name="By department", index=False)
         by(df, ["Department", "Category"]).to_excel(xl, sheet_name="By category", index=False)
-        by(df, ["state", "district"]).rename(columns={"state": "State", "district": "District"}).to_excel(xl, sheet_name="By district", index=False)
-        location_table(df, vil).to_excel(xl, sheet_name="By village", index=False)
+        by(df, "zone").rename(columns={"zone": "Zone"}).to_excel(xl, sheet_name="By zone", index=False)
+        by(df, ["zone", "state"]).rename(columns={"zone": "Zone", "state": "State"}).to_excel(xl, sheet_name="By state", index=False)
+        district_table(df, as_of).to_excel(xl, sheet_name="By district", index=False)
+        location_table(df, vil).to_excel(xl, sheet_name="By city or town", index=False)
         by(df, "Language").to_excel(xl, sheet_name="By language", index=False)
-        cols = ["complaint_id", "date", "state", "district", "block", "village", "channel", "Language", "Department",
+        cols = ["complaint_id", "date", "zone", "state", "district", "town", "channel", "Language", "Department",
                 "Category", "status", "due_date", "resolved_date"]
         out = df[cols].copy()
         out["date"] = out["date"].dt.date

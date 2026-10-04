@@ -177,14 +177,15 @@ def run_early_warning(extra_rows=None, as_of=None):
 
 
 def trend_rows(groups):
-    rows = [{"Issue": g["issue_name"], "Block": g["block"], "Last 14 days": g["current"], "Previous 14 days": g["previous"],
-             "Change": "new" if g["change_pct"] is None else f'{g["change_pct"]:+d}%', "Villages": g["villages"],
+    rows = [{"Issue": g["issue_name"], "District": g["district"], "State": g["state"], "Last 14 days": g["current"],
+             "Previous 14 days": g["previous"],
+             "Change": "new" if g["change_pct"] is None else f'{g["change_pct"]:+d}%', "Towns": g["towns"],
              "Awaiting officer": f'{g["provisional_pct"]}%', "Alert": g.get("priority", "")} for g in groups]
     return sorted(rows, key=lambda r: (r["Alert"] == "", -r["Last 14 days"]))
 
 
-def village_rows(alert):
-    return [{"Village": v, "Complaints (last 14 days)": c} for v, c in alert["village_counts"].items()]
+def town_rows(alert):
+    return [{"City / town": v, "Complaints (last 14 days)": c} for v, c in alert["town_counts"].items()]
 
 
 def daily_rows(alert, cfg):

@@ -1,7 +1,6 @@
-# ---- Early-warning layer for use case 8 (grievance trends across villages) ----
+# ---- Early warning: grievance trends by district across India ----
 use_case: early_warning
-dataset: data/grievance/early_warning_complaints.csv     # one row per complaint, with date, block and village
-villages: data/grievance/villages.csv
+dataset: data/grievance/demo_complaints.csv             # synthetic complaints on real places (zone, state, district, town)
 routing_matrix: data/grievance/routing.yaml
 templates: data/grievance/templates.yaml
 languages: data/grievance/languages.yaml
@@ -11,22 +10,21 @@ output_dir: reports/early_warning
 as_of: 2026-10-03          # the day the alert is produced
 window_days: 14            # "last 2 weeks" compared with the 2 weeks before
 
-alert_rules:               # a group (issue x block) alerts only when BOTH are true
-  min_complaints: 20       # enough complaints to be more than noise
+alert_rules:               # a group (issue x district) alerts only when BOTH are true
+  min_complaints: 20       # enough complaints to be more than noise (per issue and district)
   min_rise_pct: 50         # rise compared with the previous window
 high_priority:             # alert is High when BOTH are true, otherwise Medium
   min_complaints: 50
   min_rise_pct: 50
-suppress_below: 5          # village counts below this are shown as "<5" (privacy)
+suppress_below: 5          # town counts below this are shown as "<5" (privacy)
 
 checks:
   robustness_drop_pct: 10  # alerts must survive losing this share of complaints at random
   robustness_runs: 5
   max_count_gap_pct: 10    # alert count vs true count (officer-confirmed) may differ by at most this
 
-generator:                 # python -m grievdesk ew-generate  rebuilds the synthetic data from these
+generator:                 # python -m grievdesk ew-generate  rebuilds the demo data from these
   seed: 26
-  total: 500                 # complaints in Demo District (with the planted patterns)
-  other_districts_total: 300 # background complaints in Hill District and River District
+  background: 1704           # complaints spread thinly across India (plus 296 in the planted patterns = 2,000)
 
 thresholds: {route_confidence: 0.55, language_confidence: 0.6, fuzzy_match: 0.85, max_chars: 2000}

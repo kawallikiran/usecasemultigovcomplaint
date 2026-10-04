@@ -74,6 +74,9 @@ strings:
     msg_registered: 'Complaint {ticket} registered. Sent to: {office}. Expected reply by {date}.'
     msg_resolved: 'Reply to complaint {ticket}: {reply}'
     msg_escalated: Complaint {ticket} has been sent to a senior officer.
+    state: State
+    town: City / town
+    locality: Village or locality (optional)
   hi:
     title: लोक शिकायत पोर्टल
     subtitle: जिला प्रशासन
@@ -129,6 +132,9 @@ strings:
     msg_registered: 'शिकायत {ticket} दर्ज हुई। भेजी गई: {office}। उत्तर की संभावित तिथि {date}।'
     msg_resolved: 'शिकायत {ticket} का उत्तर: {reply}'
     msg_escalated: शिकायत {ticket} वरिष्ठ अधिकारी को भेजी गई है।
+    state: राज्य
+    town: शहर / कस्बा
+    locality: गाँव या मोहल्ला (वैकल्पिक)
   bn:
     title: জনঅভিযোগ পোর্টাল
     subtitle: জেলা প্রশাসন
@@ -184,6 +190,9 @@ strings:
     msg_registered: 'অভিযোগ {ticket} নথিভুক্ত হয়েছে। পাঠানো হয়েছে: {office}। সম্ভাব্য উত্তরের তারিখ {date}।'
     msg_resolved: 'অভিযোগ {ticket}-এর উত্তর: {reply}'
     msg_escalated: অভিযোগ {ticket} ঊর্ধ্বতন আধিকারিকের কাছে পাঠানো হয়েছে।
+    state: রাজ্য
+    town: শহর / নগর
+    locality: গ্রাম বা পাড়া (ঐচ্ছিক)
   mr:
     title: लोक तक्रार पोर्टल
     subtitle: जिल्हा प्रशासन
@@ -239,6 +248,9 @@ strings:
     msg_registered: 'तक्रार {ticket} नोंदवली. पाठवली: {office}. उत्तराची अपेक्षित तारीख {date}.'
     msg_resolved: 'तक्रार {ticket} चे उत्तर: {reply}'
     msg_escalated: तक्रार {ticket} वरिष्ठ अधिकाऱ्यांकडे पाठवली आहे.
+    state: राज्य
+    town: शहर / नगर
+    locality: गाव किंवा परिसर (ऐच्छिक)
   gu:
     title: જાહેર ફરિયાદ પોર્ટલ
     subtitle: જિલ્લા વહીવટીતંત્ર
@@ -294,6 +306,9 @@ strings:
     msg_registered: 'ફરિયાદ {ticket} નોંધાઈ. મોકલી: {office}. જવાબની અપેક્ષિત તારીખ {date}.'
     msg_resolved: 'ફરિયાદ {ticket} નો જવાબ: {reply}'
     msg_escalated: ફરિયાદ {ticket} વરિષ્ઠ અધિકારીને મોકલવામાં આવી છે.
+    state: રાજ્ય
+    town: શહેર / નગર
+    locality: ગામ અથવા વિસ્તાર (વૈકલ્પિક)
   pa:
     title: ਜਨਤਕ ਸ਼ਿਕਾਇਤ ਪੋਰਟਲ
     subtitle: ਜ਼ਿਲ੍ਹਾ ਪ੍ਰਸ਼ਾਸਨ
@@ -349,6 +364,9 @@ strings:
     msg_registered: 'ਸ਼ਿਕਾਇਤ {ticket} ਦਰਜ ਹੋਈ। ਭੇਜੀ ਗਈ: {office}। ਜਵਾਬ ਦੀ ਸੰਭਾਵਿਤ ਮਿਤੀ {date}।'
     msg_resolved: 'ਸ਼ਿਕਾਇਤ {ticket} ਦਾ ਜਵਾਬ: {reply}'
     msg_escalated: ਸ਼ਿਕਾਇਤ {ticket} ਸੀਨੀਅਰ ਅਧਿਕਾਰੀ ਨੂੰ ਭੇਜੀ ਗਈ ਹੈ।
+    state: ਰਾਜ
+    town: ਸ਼ਹਿਰ / ਕਸਬਾ
+    locality: ਪਿੰਡ ਜਾਂ ਮੁਹੱਲਾ (ਵਿਕਲਪਿਕ)
   or:
     title: ଜନ ଅଭିଯୋଗ ପୋର୍ଟାଲ
     subtitle: ଜିଲ୍ଲା ପ୍ରଶାସନ
@@ -404,6 +422,9 @@ strings:
     msg_registered: 'ଅଭିଯୋଗ {ticket} ପଞ୍ଜିକୃତ। ପଠାଯାଇଛି: {office}। ଉତ୍ତରର ସମ୍ଭାବ୍ୟ ତାରିଖ {date}।'
     msg_resolved: 'ଅଭିଯୋଗ {ticket}ର ଉତ୍ତର: {reply}'
     msg_escalated: ଅଭିଯୋଗ {ticket} ବରିଷ୍ଠ ଅଧିକାରୀଙ୍କ ପାଖକୁ ପଠାଯାଇଛି।
+    state: ରାଜ୍ୟ
+    town: ସହର / ନଗର
+    locality: ଗାଁ କିମ୍ବା ଅଞ୍ଚଳ (ଇଚ୍ଛାଧୀନ)
   ta:
     title: பொது குறைதீர் இணையதளம்
     subtitle: மாவட்ட நிர்வாகம்
@@ -459,6 +480,9 @@ strings:
     msg_registered: 'புகார் {ticket} பதிவு செய்யப்பட்டது. அனுப்பப்பட்டது: {office}. பதில் எதிர்பார்க்கப்படும் தேதி {date}.'
     msg_resolved: 'புகார் {ticket}-க்கான பதில்: {reply}'
     msg_escalated: புகார் {ticket} மூத்த அலுவலருக்கு அனுப்பப்பட்டது.
+    state: மாநிலம்
+    town: நகரம் / ஊர்
+    locality: கிராமம் அல்லது பகுதி (விருப்பத்தேர்வு)
   te:
     title: ప్రజా ఫిర్యాదుల పోర్టల్
     subtitle: జిల్లా పరిపాలన
@@ -514,6 +538,9 @@ strings:
     msg_registered: 'ఫిర్యాదు {ticket} నమోదైంది. పంపబడింది: {office}. సమాధానం అంచనా తేదీ {date}.'
     msg_resolved: 'ఫిర్యాదు {ticket}కు సమాధానం: {reply}'
     msg_escalated: ఫిర్యాదు {ticket} సీనియర్ అధికారికి పంపబడింది.
+    state: రాష్ట్రం
+    town: నగరం / పట్టణం
+    locality: గ్రామం లేదా ప్రాంతం (ఐచ్ఛికం)
   kn:
     title: ಸಾರ್ವಜನಿಕ ಕುಂದುಕೊರತೆ ಪೋರ್ಟಲ್
     subtitle: ಜಿಲ್ಲಾ ಆಡಳಿತ
@@ -569,6 +596,9 @@ strings:
     msg_registered: 'ದೂರು {ticket} ದಾಖಲಾಗಿದೆ. ಕಳುಹಿಸಲಾಗಿದೆ: {office}. ಉತ್ತರದ ನಿರೀಕ್ಷಿತ ದಿನಾಂಕ {date}.'
     msg_resolved: 'ದೂರು {ticket}ಗೆ ಉತ್ತರ: {reply}'
     msg_escalated: ದೂರು {ticket} ಹಿರಿಯ ಅಧಿಕಾರಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ.
+    state: ರಾಜ್ಯ
+    town: ನಗರ / ಪಟ್ಟಣ
+    locality: ಗ್ರಾಮ ಅಥವಾ ಪ್ರದೇಶ (ಐಚ್ಛಿಕ)
   ml:
     title: പൊതു പരാതി പോർട്ടൽ
     subtitle: ജില്ലാ ഭരണകൂടം
@@ -624,6 +654,9 @@ strings:
     msg_registered: 'പരാതി {ticket} രജിസ്റ്റർ ചെയ്തു. അയച്ചത്: {office}. മറുപടി പ്രതീക്ഷിക്കുന്ന തീയതി {date}.'
     msg_resolved: 'പരാതി {ticket}-ന് മറുപടി: {reply}'
     msg_escalated: പരാതി {ticket} മുതിർന്ന ഉദ്യോഗസ്ഥന് അയച്ചു.
+    state: സംസ്ഥാനം
+    town: നഗരം / പട്ടണം
+    locality: ഗ്രാമം അല്ലെങ്കിൽ പ്രദേശം (ഐച്ഛികം)
   ur:
     title: عوامی شکایات پورٹل
     subtitle: ضلع انتظامیہ
@@ -679,6 +712,9 @@ strings:
     msg_registered: 'شکایت {ticket} درج ہو گئی۔ بھیجی گئی: {office}۔ جواب کی متوقع تاریخ {date}۔'
     msg_resolved: 'شکایت {ticket} کا جواب: {reply}'
     msg_escalated: شکایت {ticket} سینئر افسر کو بھیج دی گئی ہے۔
+    state: ریاست
+    town: شہر / قصبہ
+    locality: گاؤں یا محلہ (اختیاری)
   as:
     title: ৰাজহুৱা অভিযোগ পৰ্টেল
     subtitle: জিলা প্ৰশাসন
@@ -734,3 +770,6 @@ strings:
     msg_registered: 'অভিযোগ {ticket} পঞ্জীভুক্ত। পঠোৱা হৈছে: {office}। উত্তৰৰ সম্ভাব্য তাৰিখ {date}।'
     msg_resolved: 'অভিযোগ {ticket}ৰ উত্তৰ: {reply}'
     msg_escalated: অভিযোগ {ticket} জ্যেষ্ঠ বিষয়ালৈ পঠোৱা হৈছে।
+    state: ৰাজ্য
+    town: চহৰ / নগৰ
+    locality: গাঁও বা অঞ্চল (ঐচ্ছিক)
