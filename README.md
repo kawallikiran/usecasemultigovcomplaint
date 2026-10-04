@@ -66,44 +66,35 @@ The desk recognises complaints in **all 22 scheduled-language scripts** and rout
 
 ## Early warning: from single complaints to district alerts
 
-Suggested by a subject-matter expert in our group. The **Early warning** tab groups many complaints into alerts for the district administration, for example:
+The analytics page turns many complaints into alerts for the administration, for example:
 
-> **Emerging water-service issue, South Block**
-> 127 related complaints across 23 villages in the last 14 days
+> **Emerging water-service issue, Raipur district, Chhattisgarh (Central Zone)**
+> 127 related complaints across 14 towns in the last 14 days
 > up 65% compared with the previous 14 days (77)
-> Mostly Chhattisgarhi-language submissions (52%); 28% by voice
 > Priority: High. Field verification recommended.
 
 **How it works** (`grievdesk/early_warning.py`, settings in `config/early_warning.yaml`):
-1. Every complaint is sorted by the normal router. Complaints sent to an officer still count, using the suggested issue, and are marked "awaiting officer confirmation". Without them, the water alert above would show about 88 instead of 127, and local-language complaints would be under-counted.
-2. Complaints are grouped by issue and block, and the last 14 days are compared with the 14 days before.
+1. Every complaint is sorted by the normal router. Complaints still awaiting officer confirmation count, using the suggested issue, so that local-language complaints (which go to officers most often) are not under-counted.
+2. Complaints are grouped by **issue and district**, and the last 14 days are compared with the 14 days before.
 3. A group alerts only with **at least 20 complaints and a rise of at least 50%**. It is High priority at 50 or more.
-4. Alerts carry counts only, never complaint text. Village counts below 5 show as "<5". An alert recommends field verification and never triggers action by itself.
-
-**Data** (all synthetic, regenerate with `python -m grievdesk ew-generate`):
-- **Complaints:** `data/grievance/early_warning_complaints.csv` holds 500 complaints from 4 blocks and 62 invented villages over 28 days, with planted patterns:
-  - a water spike that should alert High;
-  - a health cluster that should alert Medium;
-  - a small rise and a tiny group, neither of which should alert.
-- **Villages:** `data/grievance/villages.csv` lists the 62 villages, with Devanagari names.
+4. Alerts carry counts only, never complaint text. Town counts below 5 show as "<5". An alert recommends field verification and never triggers action by itself.
 
 **Outputs:** `python -m grievdesk early-warning` writes to `reports/early_warning/`:
 - `alerts.txt`: the alert cards;
-- `issue_trends.csv`: every issue and block;
+- `issue_trends.csv`: every issue and district;
 - the check report;
-- `early_warning.xlsx`: a workbook whose counts and alerts are live formulas driven by a Settings sheet.
+- `early_warning.xlsx`: a workbook with live formulas driven by a Settings sheet. Change the date or thresholds in Excel and the alerts recalculate.
 
-**What the checks currently find:**
-- **Both planted patterns caught, no false alarms:** both planted patterns are caught and nothing else alerts.
-- **Counts:** counts match the true numbers exactly.
-- **Privacy:** small numbers are hidden and no complaint text appears in alerts.
-- **Language mix (failed):** the alert says 52% Chhattisgarhi, but the true figure is 72%. Chhattisgarhi written in English letters is misread as Hinglish.
-- **Borderline alert (failed):** the 22-complaint health alert disappears in 3 of 5 runs when 10% of complaints are missing.
+**What the checks find on the demo data:**
+- **Planted patterns:** both are caught, and there are no false alarms from the 1,700 complaints spread across India.
+- **Counts:** counts are exact.
+- **Privacy:** small numbers are hidden.
+- **Borderline alert (failed):** the 22-complaint health alert disappears when some complaints are missing.
 
 **Not covered yet:**
-- **Gondi:** there are no Gondi keywords. Devanagari Gondi would be read as Hindi, and the Gondi scripts are not recognised.
-- **Real voice:** only transcripts are handled; real speech needs speech-to-text (for example Bhashini).
-- **Grouping:** alerts are grouped by block, not by distance between villages.
+- **Gondi:** Gondi and other languages outside the 22 scheduled ones.
+- **Real voice:** real speech needs speech-to-text.
+- **Villages:** villages are typed by citizens rather than chosen from a list. The Census village directory could be added the same way as the towns list.
 
 ## AI engines: bundled open model and other AI services
 
