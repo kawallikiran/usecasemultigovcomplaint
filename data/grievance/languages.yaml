@@ -1,0 +1,121 @@
+# =====================================================================================================
+# Languages the grievance desk recognises.
+#   support: full           = recognised, routed with keywords, citizen gets a line in their language
+#            identify_only  = recognised by script, sent to a human desk for that language
+#   trust:   how much the offline language layer is trusted for this language (0-1). Lower values send
+#            more cases to officers. Set from evaluation with native speakers.
+#   lines:   short citizen-facing sentences placed above the English template (which carries the ticket,
+#            department and response time, so facts are stated once and can be checked).
+#
+# REVIEW STATUS: the non-English lines and the keyword lists in lexicon_indic.yaml were drafted for this
+# MVP and MUST be checked by native speakers before any real use. In a deployment, Bhashini translation
+# and an India-hosted language model would replace these lists (see grievdesk/adapters.py).
+#
+# Script limits (offline): Devanagari is shared by Hindi, Marathi, Chhattisgarhi, Nepali, Konkani, Maithili,
+# Bodo, Dogri and Sanskrit; only Hindi, Marathi and Chhattisgarhi are told apart (marker words), the others
+# are read as Hindi. Perso-Arabic script is read as Urdu (Kashmiri and Sindhi are not told apart).
+# =====================================================================================================
+languages:
+  en:       {name: English,        script: Latin,        support: full, trust: 0.95}
+  hinglish: {name: Hinglish,       script: Latin,        support: full, trust: 0.80}
+  mixed:    {name: Mixed Hindi and English, script: Devanagari + Latin, support: full, trust: 0.80}
+  hi:
+    name: Hindi
+    script: Devanagari
+    support: full
+    trust: 0.90
+    lines: {registered: "आपकी शिकायत दर्ज हो गई है।", officer: "एक अधिकारी आपसे संपर्क करेंगे।",
+            priority: "आपकी शिकायत को प्राथमिकता दी गई है। खतरे में हों तो 112 पर कॉल करें।"}
+  cg:
+    name: Chhattisgarhi
+    script: Devanagari
+    support: full
+    trust: 0.75
+    lines: {registered: "आपकी शिकायत दर्ज हो गई है।", officer: "एक अधिकारी आपसे संपर्क करेंगे।",
+            priority: "आपकी शिकायत को प्राथमिकता दी गई है। खतरे में हों तो 112 पर कॉल करें।"}
+  mr:
+    name: Marathi
+    script: Devanagari
+    support: full
+    trust: 0.80
+    lines: {registered: "तुमची तक्रार नोंदवली गेली आहे.", officer: "एक अधिकारी तुमच्याशी संपर्क साधतील.",
+            priority: "तुमच्या तक्रारीला प्राधान्य दिले आहे. धोका असल्यास 112 वर कॉल करा."}
+  bn:
+    name: Bengali
+    script: Bengali
+    support: full
+    trust: 0.80
+    lines: {registered: "আপনার অভিযোগ নথিভুক্ত হয়েছে।", officer: "একজন আধিকারিক আপনার সঙ্গে যোগাযোগ করবেন।",
+            priority: "আপনার অভিযোগকে অগ্রাধিকার দেওয়া হয়েছে। বিপদে থাকলে 112-এ ফোন করুন।"}
+  as:
+    name: Assamese
+    script: Bengali (Assamese letters ৰ ৱ)
+    support: full
+    trust: 0.75
+    lines: {registered: "আপোনাৰ অভিযোগ পঞ্জীভুক্ত কৰা হৈছে।", officer: "এজন বিষয়াই আপোনাৰ সৈতে যোগাযোগ কৰিব।",
+            priority: "আপোনাৰ অভিযোগক অগ্ৰাধিকাৰ দিয়া হৈছে। বিপদত থাকিলে 112 নম্বৰত ফোন কৰক।"}
+  gu:
+    name: Gujarati
+    script: Gujarati
+    support: full
+    trust: 0.80
+    lines: {registered: "તમારી ફરિયાદ નોંધાઈ ગઈ છે.", officer: "એક અધિકારી તમારો સંપર્ક કરશે.",
+            priority: "તમારી ફરિયાદને પ્રાથમિકતા આપવામાં આવી છે. જોખમમાં હો તો 112 પર કૉલ કરો."}
+  pa:
+    name: Punjabi
+    script: Gurmukhi
+    support: full
+    trust: 0.80
+    lines: {registered: "ਤੁਹਾਡੀ ਸ਼ਿਕਾਇਤ ਦਰਜ ਹੋ ਗਈ ਹੈ।", officer: "ਇੱਕ ਅਧਿਕਾਰੀ ਤੁਹਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੇਗਾ।",
+            priority: "ਤੁਹਾਡੀ ਸ਼ਿਕਾਇਤ ਨੂੰ ਪਹਿਲ ਦਿੱਤੀ ਗਈ ਹੈ। ਖ਼ਤਰੇ ਵਿੱਚ ਹੋ ਤਾਂ 112 'ਤੇ ਕਾਲ ਕਰੋ।"}
+  or:
+    name: Odia
+    script: Odia
+    support: full
+    trust: 0.75
+    lines: {registered: "ଆପଣଙ୍କ ଅଭିଯୋଗ ପଞ୍ଜିକୃତ ହୋଇଛି।", officer: "ଜଣେ ଅଧିକାରୀ ଆପଣଙ୍କ ସହ ଯୋଗାଯୋଗ କରିବେ।",
+            priority: "ଆପଣଙ୍କ ଅଭିଯୋଗକୁ ପ୍ରାଥମିକତା ଦିଆଯାଇଛି। ବିପଦରେ ଥିଲେ 112 କୁ କଲ କରନ୍ତୁ।"}
+  ta:
+    name: Tamil
+    script: Tamil
+    support: full
+    trust: 0.80
+    lines: {registered: "உங்கள் புகார் பதிவு செய்யப்பட்டது.", officer: "ஒரு அதிகாரி உங்களைத் தொடர்பு கொள்வார்.",
+            priority: "உங்கள் புகாருக்கு முன்னுரிமை அளிக்கப்பட்டுள்ளது. ஆபத்தில் இருந்தால் 112-ஐ அழைக்கவும்."}
+  te:
+    name: Telugu
+    script: Telugu
+    support: full
+    trust: 0.80
+    lines: {registered: "మీ ఫిర్యాదు నమోదు చేయబడింది.", officer: "ఒక అధికారి మిమ్మల్ని సంప్రదిస్తారు.",
+            priority: "మీ ఫిర్యాదుకు ప్రాధాన్యత ఇవ్వబడింది. ప్రమాదంలో ఉంటే 112కు కాల్ చేయండి."}
+  kn:
+    name: Kannada
+    script: Kannada
+    support: full
+    trust: 0.80
+    lines: {registered: "ನಿಮ್ಮ ದೂರು ದಾಖಲಾಗಿದೆ.", officer: "ಒಬ್ಬ ಅಧಿಕಾರಿ ನಿಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸುತ್ತಾರೆ.",
+            priority: "ನಿಮ್ಮ ದೂರಿಗೆ ಆದ್ಯತೆ ನೀಡಲಾಗಿದೆ. ಅಪಾಯದಲ್ಲಿದ್ದರೆ 112ಕ್ಕೆ ಕರೆ ಮಾಡಿ."}
+  ml:
+    name: Malayalam
+    script: Malayalam
+    support: full
+    trust: 0.80
+    lines: {registered: "നിങ്ങളുടെ പരാതി രജിസ്റ്റർ ചെയ്തു.", officer: "ഒരു ഉദ്യോഗസ്ഥൻ നിങ്ങളെ ബന്ധപ്പെടും.",
+            priority: "നിങ്ങളുടെ പരാതിക്ക് മുൻഗണന നൽകിയിട്ടുണ്ട്. അപകടത്തിലാണെങ്കിൽ 112-ൽ വിളിക്കുക."}
+  ur:
+    name: Urdu
+    script: Perso-Arabic
+    support: full
+    trust: 0.80
+    lines: {registered: "آپ کی شکایت درج کر لی گئی ہے۔", officer: "ایک افسر آپ سے رابطہ کرے گا۔",
+            priority: "آپ کی شکایت کو ترجیح دی گئی ہے۔ خطرے میں ہوں تو 112 پر کال کریں۔"}
+  sat:      {name: Santali,          script: Ol Chiki,     support: identify_only, trust: 0.0}
+  mni:      {name: Manipuri (Meitei), script: Meetei Mayek, support: identify_only, trust: 0.0}
+
+# Marker words that separate languages sharing a script (matched as whole words).
+markers:
+  cg: [हमर, हवय, नइ, मोर, अउ, घलो, म, ल, ह, बर, हे, कोनो, देथे, गे]
+  mr: [आहे, आहेत, नाही, आमच्या, आमचे, आमची, माझी, माझा, माझे, माझ्याकडे, झाला, झाली, गावात, मिळत, आम्हाला, तुमची]
+  hinglish: [hai, nahi, nahin, mera, meri, hamare, raha, rahe, ke, ka, ki, mein, se, wala, bahut]
+  as_letters: [ৰ, ৱ]          # letters used in Assamese but not in Bengali

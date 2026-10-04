@@ -39,12 +39,13 @@ with tab_use:
     if engine != "rules":
         st.warning("The complaint text is sent to the AI service selected above, with Aadhaar, phone numbers and emails masked first. Use synthetic data only.")
     active = get_router(engine)[0]
-    st.write("Write a complaint as a citizen would, in English, Hindi, Chhattisgarhi or a mix.")
+    st.write("Write a complaint as a citizen would, in English, Hindi, Chhattisgarhi, Hinglish or one of "
+             "11 more Indian languages (see 'Languages' below).")
     sample_ids = [""] + [r["id"] for r in samples]
     by_id = {r["id"]: r for r in samples}
     pick = st.selectbox("Fill in a sample complaint (optional)", sample_ids,
                         format_func=lambda k: "Choose a sample" if not k else
-                        f"{k} ({by_id[k]['language_group']}): {by_id[k]['text'][:70]}")
+                        f"{k} ({router.language_name(by_id[k]['language_group'])}): {by_id[k]['text'][:70]}")
     if pick and st.session_state.get("last_pick") != pick:
         st.session_state["complaint"] = by_id[pick]["text"]
         st.session_state["last_pick"] = pick
@@ -59,6 +60,12 @@ with tab_use:
                 st.session_state["g_result"] = active.process(ui.new_case(text))
             st.session_state.pop("g_saved", None)
 
+    with st.expander("Languages"):
+        st.write("Routed languages get keyword routing and a reply line in their language. Recognised-only "
+                 "languages go to a human desk for that language. Keyword lists and reply lines were drafted "
+                 "for the prototype and need review by native speakers.")
+        st.dataframe(pd.DataFrame(ui.language_table(router)), hide_index=True)
+
     out = st.session_state.get("g_result")
     if out:
         st.subheader("What the bot did")
@@ -66,7 +73,7 @@ with tab_use:
         st.write("Why:")
         st.markdown("\n".join(f"- {r}" for r in out["reasons"]))
         st.write("Message already sent to the citizen (approved template only):")
-        st.info(out["auto_reply"])
+        st.info(out["auto_reply"].replace("\n", "  \n"))
 
         st.subheader("Officer decision")
         if out["sensitive_categories"]:

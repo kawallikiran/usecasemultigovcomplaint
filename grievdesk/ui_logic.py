@@ -14,13 +14,14 @@ AI_CONFIG = os.path.join(ROOT, "config", "grievance_ai.yaml")
 TEST_SETS = {
     "Main test set (40 grievances)": os.path.join(ROOT, "config", "grievance.yaml"),
     "Held-out phrasing set (16 grievances)": os.path.join(ROOT, "config", "grievance_challenge.yaml"),
+    "Multilingual set (35 complaints, 11 more Indian languages)": os.path.join(ROOT, "config", "grievance_multilingual.yaml"),
     "AI engine on the main set (20 sampled)": AI_CONFIG,
     "AI engine on the held-out set (16)": os.path.join(ROOT, "config", "grievance_challenge_ai.yaml"),
+    "AI engine on the multilingual set (24 sampled)": os.path.join(ROOT, "config", "grievance_multilingual_ai.yaml"),
 }
+SAMPLE_FILES = ["grievances.csv", "multilingual.csv"]
 DECISIONS = {"Approve and send reply": "approve", "Send to another department": "reroute",
              "Escalate to senior officer": "escalate"}
-LANG_NAMES = {"en": "English", "hi": "Hindi", "cg": "Chhattisgarhi", "hinglish": "Hinglish",
-              "mixed": "Mixed Hindi and English", "unsupported": "Not supported", "unknown": "Unknown"}
 PLACEHOLDER = "[Officer: add the action taken"
 
 
@@ -57,8 +58,20 @@ def make_router(engine="rules"):
 
 
 def load_samples(cfg):
-    with open(cfg["dataset"], encoding="utf-8") as f:
-        return list(csv.DictReader(f))
+    """Sample complaints for the first tab: the main set plus the multilingual set."""
+    rows = []
+    for name in SAMPLE_FILES:
+        path = os.path.join(ROOT, "data", "grievance", name)
+        if os.path.exists(path):
+            with open(path, encoding="utf-8") as f:
+                rows += list(csv.DictReader(f))
+    return rows
+
+
+def language_table(router):
+    return [{"Code": k, "Language": v.get("name"), "Script": v.get("script"),
+             "Support": "Routed" if v.get("support") == "full" else "Recognised, sent to language desk",
+             "Trust": v.get("trust")} for k, v in router.languages.items()]
 
 
 def new_case(text):
@@ -77,7 +90,7 @@ def summary_rows(out):
     return [
         {"Item": "Ticket", "Value": out["ticket"]},
         {"Item": "Engine", "Value": out.get("engine", "rules")},
-        {"Item": "Language", "Value": f'{LANG_NAMES.get(out["language"], out["language"])} '
+        {"Item": "Language", "Value": f'{out.get("language_name") or out["language"]} '
                                       f'(confidence {out["language_confidence"]})'},
         {"Item": "Department", "Value": f'{out["department_name"] or "Not identified"} '
                                         f'(confidence {out["route_confidence"]})'},

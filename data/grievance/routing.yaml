@@ -78,7 +78,4 @@ data_request_patterns:
 
 abuse: [idiot, stupid, useless fellows, bewakoof, nalayak, बेवकूफ, नालायक]
 
-# Hindi / Chhattisgarhi / Hinglish markers for the offline language identifier
-language_markers:
-  cg: [हमर, हवय, नइ, मोर, अउ, घलो, म, ल, ह, बर, हे, कोनो, देथे, गे]   # matched as whole tokens
-  hinglish: [hai, nahi, nahin, mera, meri, hamare, raha, rahe, ke, ka, ki, mein, se, wala, bahut]
+# Language marker words now live in data/grievance/languages.yaml

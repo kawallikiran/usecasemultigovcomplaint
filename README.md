@@ -1,6 +1,6 @@
 # AIGP26 use case 8: Multilingual citizen grievance desk
 
-A prototype chatbot that registers citizen grievances in English, Hindi, Chhattisgarhi or Hinglish, plus a test harness that runs the eight tech-critic tests from the AIGP26 capstone brief.
+A prototype chatbot that registers citizen grievances in 15 Indian languages (see Languages supported below), plus a test harness that runs the eight tech-critic tests from the AIGP26 capstone brief.
 
 For each complaint, the bot:
 - identifies the language and routes the complaint to a department
@@ -39,6 +39,30 @@ docker compose up
 Then open http://localhost:8601.
 
 **If the browser says it cannot connect:** the "Local URL" and "Network URL" lines in the log come from inside the container, so ignore them. Run `docker compose ps` and open the host port shown on the left of `->8501` in the PORTS column, typed as `http://127.0.0.1:<port>`. If PORTS is empty, the container stopped; check `docker compose logs`.
+
+## Languages supported
+
+The desk recognises complaints in **all 22 scheduled-language scripts** and routes **15 languages** end to end.
+
+| Level | Languages | What happens |
+| --- | --- | --- |
+| Routed | English, Hindi, Chhattisgarhi, Hinglish, mixed Hindi-English, Marathi, Bengali, Assamese, Gujarati, Punjabi, Odia, Tamil, Telugu, Kannada, Malayalam, Urdu | Language identified, keyword routing, safety screen, and a reply line in the citizen's language above the English template |
+| Recognised only | Santali (Ol Chiki), Manipuri (Meetei Mayek) | Sent to a human desk for that language, flagged `language_desk` |
+| Not told apart offline | Nepali, Konkani, Maithili, Bodo, Dogri, Sanskrit (Devanagari, read as Hindi); Kashmiri, Sindhi (Perso-Arabic, read as Urdu) | Routed with the Hindi or Urdu keywords; the AI engine can label them properly |
+
+**How it works**
+- **Script identification:** `grievdesk/adapters.py` reads each character's Unicode script. Marker words then separate Hindi, Marathi and Chhattisgarhi, and the letters ৰ and ৱ separate Assamese from Bengali.
+- **Normalisation:** the normaliser keeps every Indic vowel sign and removes invisible zero-width characters, so words stay whole.
+- **Configuration files:**
+  - `data/grievance/languages.yaml`: each language's script, support level, trust score and reply lines.
+  - `data/grievance/lexicon_indic.yaml`: about 480 department, sensitive-content and urgency keywords for the 11 added languages, merged at start-up.
+- **Reply design:** the citizen's line says only "registered", "an officer will contact you" or "priority, call 112". The ticket, department and response time stay in the English template, so every fact appears once and test 7 (hallucinations) can still check it.
+- **Testing:** `config/grievance_multilingual.yaml` runs the 8 critic tests on 35 complaints in the 11 added languages. `grievance_multilingual_ai.yaml` runs the same set with an AI engine.
+
+**Review before real use (a governance control, not a footnote)**
+- **Native review:** the non-English keyword lists and reply lines were drafted for this prototype. Native speakers must check and extend them. Missing words fail safe to an officer; wrong words cause wrong routing, which the critic tests are there to catch.
+- **Same-author test set:** the multilingual test set was written by the same people as the keywords, so its 100% score proves the plumbing, not real-world accuracy. Ask native speakers or the partner group to write a held-out set per language.
+- **Deployment path:** in a deployment, Bhashini language detection, speech and translation, or an India-hosted model through the AI engine, would replace the keyword lists. The same tests then measure the change.
 
 ## AI engines: bundled open model and other AI services
 

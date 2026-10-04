@@ -3,6 +3,8 @@ use_case: grievance
 dataset: data/grievance/challenge.csv          # swap in any CSV with columns: id,text,expected,(language_group,channel,...)
 routing_matrix: data/grievance/routing.yaml
 templates: data/grievance/templates.yaml
+languages: data/grievance/languages.yaml      # recognised languages, trust and reply lines
+lexicon: data/grievance/lexicon_indic.yaml     # keywords for more Indian languages
 output_dir: reports/grievance_challenge_ai
 
 # ---- AI engine ----

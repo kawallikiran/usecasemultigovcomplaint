@@ -1,0 +1,36 @@
+id,channel,language_group,district,text,expected
+BN01,text,bn,District A,"আমাদের গ্রামের নলকূপ দশ দিন ধরে খারাপ, পানীয় জল পাচ্ছি না।",auto:water
+BN02,voice,bn,District B,"তিন দিন ধরে বিদ্যুৎ নেই, ট্রান্সফরমার পুড়ে গেছে।",auto:electricity
+BN03,text,bn,District C,রেশন ডিলার আমাদের রেশন কার্ডে চাল দিচ্ছে না।,auto:ration
+BN04,text,bn,District A,পঞ্চায়েত অফিসে সার্টিফিকেটের জন্য ঘুষ চাইছে।,sensitive
+AS01,voice,as,District B,"আমাৰ গাঁৱৰ নলকূপটো বেয়া হৈছে, খোৱাপানী পোৱা নাই।",auto:water
+AS02,text,as,District C,"দুদিনৰ পৰা বিদ্যুৎ নাই, ট্ৰান্সফৰ্মাৰ জ্বলি গৈছে।",auto:electricity
+AS03,text,as,District A,গাঁওবুঢ়াই মোক মাৰপিট কৰিলে আৰু ভাবুকি দিলে।,sensitive
+MR01,voice,mr,District B,"आमच्या गावात दहा दिवसांपासून पिण्याचे पाणी नाही, हातपंप बंद आहे.",auto:water
+MR02,text,mr,District C,"रस्त्यावर मोठे खड्डे आहेत, अपघात होत आहेत.",auto:roads
+MR03,text,mr,District A,ग्रामसेवकाने दाखल्यासाठी माझ्याकडे लाच मागितली आहे.,sensitive
+GU01,text,gu,District B,"અમારા ગામમાં પીવાનું પાણી નથી આવતું, નળ સુકાઈ ગયો છે.",auto:water
+GU02,voice,gu,District C,"રેશનની દુકાનમાં અનાજ ઓછું આપે છે, રેશનકાર્ડમાં નામ નથી.",auto:ration
+GU03,text,gu,District A,તલાટીએ જમીનના કામ માટે લાંચ માંગી.,sensitive
+PA01,text,pa,District B,"ਸਾਡੇ ਪਿੰਡ ਵਿੱਚ ਤਿੰਨ ਦਿਨਾਂ ਤੋਂ ਬਿਜਲੀ ਨਹੀਂ ਹੈ, ਟਰਾਂਸਫਾਰਮਰ ਸੜ ਗਿਆ।",auto:electricity
+PA02,voice,pa,District C,ਮੇਰੀ ਬੁਢਾਪਾ ਪੈਨਸ਼ਨ ਚਾਰ ਮਹੀਨਿਆਂ ਤੋਂ ਨਹੀਂ ਆਈ।,auto:pension
+PA03,text,pa,District A,ਸਰਪੰਚ ਨੇ ਮੈਨੂੰ ਜਾਤ ਦੇ ਨਾਂ 'ਤੇ ਗਾਲ੍ਹਾਂ ਕੱਢੀਆਂ ਅਤੇ ਧਮਕੀ ਦਿੱਤੀ।,sensitive
+OR01,text,or,District B,"ଆମ ଗାଁରେ ନଳକୂପ ଖରାପ ହୋଇଛି, ପିଇବା ପାଣି ମିଳୁନାହିଁ।",auto:water
+OR02,voice,or,District C,ମୋର ବାର୍ଦ୍ଧକ୍ୟ ଭତ୍ତା ଛଅ ମାସ ହେଲା ମିଳିନାହିଁ।,auto:pension
+OR03,text,or,District A,ଗାଁର ଲୋକମାନେ ମୋତେ ମାଡ ମାରିଲେ ଏବଂ ଧମକ ଦେଲେ।,sensitive
+TA01,voice,ta,District B,"எங்கள் கிராமத்தில் பத்து நாட்களாக குடிநீர் வரவில்லை, அடிகுழாய் பழுதாகிவிட்டது.",auto:water
+TA02,text,ta,District C,"சாலையில் பெரிய குழிகள் உள்ளன, விபத்துகள் நடக்கின்றன.",auto:roads
+TA03,text,ta,District A,ரேஷன் கடையில் அரிசி கொடுக்கவில்லை.,auto:ration
+TA04,text,ta,District B,கிராம நிர்வாக அலுவலர் பட்டா மாற்றத்திற்கு லஞ்சம் கேட்டார்.,sensitive
+TE01,text,te,District C,"మా గ్రామంలో మూడు రోజులుగా కరెంటు లేదు, ట్రాన్స్ఫార్మర్ కాలిపోయింది.",auto:electricity
+TE02,voice,te,District A,నా వృద్ధాప్య పింఛన్ నాలుగు నెలలుగా రాలేదు.,auto:pension
+TE03,text,te,District B,"నా భర్త నన్ను కొట్టాడు, చంపుతానని బెదిరిస్తున్నాడు.",sensitive
+KN01,voice,kn,District C,"ನಮ್ಮ ಊರಿನಲ್ಲಿ ಕುಡಿಯುವ ನೀರು ಬರುತ್ತಿಲ್ಲ, ಕೊಳವೆ ಬಾವಿ ಕೆಟ್ಟಿದೆ.",auto:water
+KN02,text,kn,District A,ಪಡಿತರ ಅಂಗಡಿಯಲ್ಲಿ ಅಕ್ಕಿ ಕೊಡುತ್ತಿಲ್ಲ.,auto:ration
+KN03,text,kn,District B,ಶಾಲೆಯ ಶಿಕ್ಷಕ ನನ್ನ ಮಗಳಿಗೆ ಕಿರುಕುಳ ನೀಡುತ್ತಿದ್ದಾನೆ.,sensitive
+ML01,text,ml,District C,"ഞങ്ങളുടെ പ്രദേശത്ത് മൂന്ന് ദിവസമായി വൈദ്യുതി ഇല്ല, ട്രാൻസ്ഫോർമർ കേടായി.",auto:electricity
+ML02,voice,ml,District A,"ആശുപത്രിയിൽ ഡോക്ടർ ഇല്ല, മരുന്ന് കിട്ടുന്നില്ല.",auto:health
+ML03,text,ml,District B,വില്ലേജ് ഓഫീസർ പോക്കുവരവിന് കൈക്കൂലി ചോദിച്ചു.,sensitive
+UR01,voice,ur,District C,ہمارے محلے میں چار دن سے پانی نہیں آ رہا، نلکا خراب ہے۔,auto:water
+UR02,text,ur,District A,ہسپتال میں ڈاکٹر نہیں ہے اور دوائی نہیں ملتی۔,auto:health
+UR03,text,ur,District B,پڑوسی نے مجھے مارا پیٹا اور دھمکی دی۔,sensitive

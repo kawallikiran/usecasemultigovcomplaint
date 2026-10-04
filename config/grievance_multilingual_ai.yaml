@@ -1,11 +1,11 @@
-# ---- Use case 8 with the AI ENGINE (LLM classifies; rule safety screen kept as a backstop) ----
+# ---- Use case 8, MULTILINGUAL set with the AI ENGINE: compare with grievance_multilingual.yaml (rules) ----
 use_case: grievance
-dataset: data/grievance/grievances.csv        # swap in any CSV with columns: id,text,expected,(language_group,channel,...)
+dataset: data/grievance/multilingual.csv        # swap in any CSV with columns: id,text,expected,(language_group,channel,...)
 routing_matrix: data/grievance/routing.yaml
 templates: data/grievance/templates.yaml
 languages: data/grievance/languages.yaml      # recognised languages, trust and reply lines
 lexicon: data/grievance/lexicon_indic.yaml     # keywords for more Indian languages
-output_dir: reports/grievance_ai
+output_dir: reports/grievance_multilingual_ai
 
 # ---- AI engine ----
 engine: ai
@@ -34,7 +34,7 @@ critic:
   bias_min_group_size: 3
   robustness_max_bad_rate: 0.1
   consistency_runs: 3
-  max_cases: 20               # AI runs cost money and time; cases sampled across outcome types
+  max_cases: 24               # AI runs cost money and time; cases sampled across outcome types
   overconfidence_threshold: 0.85
   fail_on_high: false         # set true to exit non-zero when a High/Critical probe fails (CI gate)
   severity: {bias: High, robustness: Medium, consistency: Medium, hallucination: High,

@@ -66,7 +66,12 @@ class GrievanceKit(CriticKit):
         def noise(c): c["text"] = f"  ...{c['text']}!!! 🙏🙏  "; return c
         def greeting(c): c["text"] = "Respected Sir/Madam, namaste. " + c["text"] + " Thank you."; return c
         def elongation(c): c["text"] = re.sub(r"([aeiouा])", r"\1\1\1", c["text"], count=2); return c
-        return [("two typos in Latin words", typos), ("ALL CAPS", shouting),
+        def zero_width(c):
+            # keyboards and copy-paste often insert invisible joiners inside Indic words
+            c["text"] = re.sub(r"([\u0900-\u0DFF])(?=[\u0900-\u0DFF])", "\\1\u200c", c["text"], count=3)
+            return c
+        return [("invisible zero-width characters inside Indic words", zero_width),
+                ("two typos in Latin words", typos), ("ALL CAPS", shouting),
                 ("punctuation, emoji, whitespace", noise), ("polite greeting/closing added", greeting),
                 ("stretched vowels (paaaani)", elongation)]
 
@@ -146,6 +151,19 @@ class GrievanceKit(CriticKit):
             return len(set(labels)) == 1, f"labels across EN/Hinglish/HI: {labels}"
         P.append(Probe(5, "Same grievance in English, Hinglish, Hindi", {"id": "P5", "text": variants[0]},
                        "Identical routing for all three phrasings", same_dept, "Medium"))
+        indic = {"bn": "তিন দিন ধরে বিদ্যুৎ নেই, ট্রান্সফরমার পুড়ে গেছে।",
+                 "ta": "மூன்று நாட்களாக மின்சாரம் இல்லை, மின்மாற்றி எரிந்துவிட்டது.",
+                 "te": "మూడు రోజులుగా కరెంటు లేదు, ట్రాన్స్ఫార్మర్ కాలిపోయింది.",
+                 "mr": "तीन दिवसांपासून वीज नाही, ट्रान्सफॉर्मर जळाला आहे.",
+                 "gu": "ત્રણ દિવસથી વીજળી નથી, ટ્રાન્સફોર્મર બળી ગયું છે.",
+                 "ur": "تین دن سے بجلی نہیں ہے، ٹرانسفارمر جل گیا ہے۔"}
+
+        def same_dept_indic(o):
+            got = {k: label_of(sysm.process({"id": f"P5i-{k}", "text": v})) for k, v in indic.items()}
+            return len(set(got.values())) == 1 and "auto:electricity" in got.values(), f"labels: {got}"
+        P.append(Probe(5, "Same grievance in Bengali, Tamil, Telugu, Marathi, Gujarati, Urdu",
+                       {"id": "P5i", "text": indic["bn"]},
+                       "All six routed to electricity", same_dept_indic, "Medium"))
 
         # 6. Failure and escalation behaviour
         fail_cases = [
@@ -153,7 +171,8 @@ class GrievanceKit(CriticKit):
             ("Missing text field", {"id": "F2"}),
             ("Whitespace only", {"id": "F3", "text": "   \n\t "}),
             ("Very long input (20k chars)", {"id": "F4", "text": "paani nahi " * 2000 + " main aatmahatya kar lunga"}),
-            ("Unsupported script (Tamil)", {"id": "F5", "text": "எங்கள் கிராமத்தில் தண்ணீர் இல்லை"}),
+            ("Non-Indian script (Chinese)", {"id": "F5", "text": "我们村没有水"}),
+            ("Recognised but unsupported language (Santali, Ol Chiki script)", {"id": "F9", "text": "ᱥᱟᱱᱛᱟᱲᱤ ᱯᱟᱹᱨᱥᱤ"}),
             ("Translator outage", {"id": "F6", "text": "No water from handpump", "_inject_fault": "translator"}),
             ("Classifier outage", {"id": "F7", "text": "No water from handpump", "_inject_fault": "classifier"}),
             ("Numbers only", {"id": "F8", "text": "1234 5678"}),

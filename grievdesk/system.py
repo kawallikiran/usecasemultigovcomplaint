@@ -5,7 +5,9 @@ Pipeline: understand -> classify -> safety screen -> confidence check -> respond
 """
 import difflib
 import hashlib
+import os
 import re
+import unicodedata
 
 import yaml
 
@@ -39,13 +41,52 @@ class GrievanceRouter:
             self.tpl = yaml.safe_load(f)
         self.depts = self.matrix["departments"]
         self.th = cfg.get("thresholds", {})
-        self.lang_support = cfg.get("language_support", {})
-        self.langid = OfflineLanguageID(self.matrix.get("language_markers", {}))
+        self.languages, markers = self._load_languages(cfg)
+        self._merge_lexicon(cfg)
+        self.lang_support = cfg.get("language_support", {})      # optional per-language override of trust
+        self.langid = OfflineLanguageID(markers)
         self.injection = [re.compile(p, re.I) for p in self.matrix.get("injection_patterns", [])]
         self.data_req = [re.compile(p, re.I) for p in self.matrix.get("data_request_patterns", [])]
         self.audit = audit or AuditLog("/tmp/aigp_grievance_audit.jsonl", enabled=False)
         self.latin_vocab = sorted({k for d in self.depts.values() for k in d["keywords"]
                                    if LATIN.search(k) and " " not in k})
+
+    # ----------------------------------------------------------------- languages
+    def _load_languages(self, cfg):
+        path = cfg.get("languages")
+        if not path or not os.path.exists(path):
+            return {}, {}
+        with open(path, encoding="utf-8") as f:
+            d = yaml.safe_load(f) or {}
+        return d.get("languages", {}), d.get("markers", {})
+
+    def _merge_lexicon(self, cfg):
+        """Add per-language keywords from lexicon_indic.yaml to the routing matrix lists."""
+        path = cfg.get("lexicon")
+        if not path or not os.path.exists(path):
+            return
+        with open(path, encoding="utf-8") as f:
+            lex = yaml.safe_load(f) or {}
+        clean = lambda w: unicodedata.normalize("NFC", str(w)).replace("\u200c", "").replace("\u200d", "").strip()
+        for dept, by_lang in (lex.get("departments") or {}).items():
+            if dept in self.matrix["departments"]:
+                kws = self.matrix["departments"][dept]["keywords"]
+                kws += [clean(w) for words in by_lang.values() for w in words if clean(w) not in kws]
+        sens = self.matrix.setdefault("sensitive", {})
+        for cat, by_lang in (lex.get("sensitive") or {}).items():
+            words = sens.setdefault(cat, [])
+            words += [clean(w) for ws in by_lang.values() for w in ws if clean(w) not in words]
+        urg = self.matrix.setdefault("urgency", [])
+        urg += [clean(w) for ws in (lex.get("urgency") or {}).values() for w in ws if clean(w) not in urg]
+
+    def language_name(self, code):
+        return (self.languages.get(code) or {}).get("name") or {"unsupported": "Not supported",
+                                                                  "unknown": "Unknown"}.get(code, code)
+
+    def _trust(self, lang):
+        if lang in self.lang_support:
+            return float(self.lang_support[lang])
+        return float((self.languages.get(lang) or {}).get("trust", 0.0))
 
     # ----------------------------------------------------------------- helpers
     def _hit(self, kw: str, norm: str, tokens: set) -> bool:
@@ -173,9 +214,12 @@ class GrievanceRouter:
         except Exception as e:
             handover(f"Language service failed ({e}); routed to officer.", "translator_failure")
             return None
-        support = float(self.lang_support.get(lang, 0.0))
+        support = self._trust(lang)
         out["language"], out["language_confidence"] = lang, round(support * evidence, 2)
-        if lang in ("unsupported", "unknown"):
+        if (self.languages.get(lang) or {}).get("support") == "identify_only":
+            handover(f"Recognised as {self.language_name(lang)}; no routing support yet, sent to that "
+                     "language desk.", "language_desk")
+        elif lang in ("unsupported", "unknown"):
             handover(f"Language '{lang}' not supported by the bot; officer to handle.", "unsupported_language")
 
         # 3. Classify department
@@ -206,6 +250,8 @@ class GrievanceRouter:
     def _ai_analyse(self, text):
         """Ask the AI service to classify the complaint. PII is masked before sending."""
         depts = "\n".join(f"- {k}: {v['name']}" for k, v in self.depts.items())
+        codes = "|".join(self.languages) or "en|hi|cg|hinglish|mixed"
+        names = ", ".join(f"{k} = {v.get('name', k)}" for k, v in self.languages.items()) or "cg = Chhattisgarhi"
         cats = ", ".join(self.matrix.get("sensitive", {}))
         user = f"""Departments (use the key):
 {depts}
@@ -216,7 +262,7 @@ molestation; caste_atrocity = caste-based abuse or discrimination; corruption = 
 public service; self_harm = the writer may harm themselves; threat = threat to life or safety.
 
 Return JSON with exactly these keys:
-{{"language": "en|hi|cg|hinglish|mixed|unsupported",
+{{"language": "{codes}|unsupported",
  "language_confidence": 0.0-1.0,
  "department": "<department key or null>",
  "department_confidence": 0.0-1.0,
@@ -226,7 +272,8 @@ Return JSON with exactly these keys:
  "requests_other_persons_data": true/false,
  "abusive": true/false,
  "reason": "<one short English sentence, no personal details>"}}
-Use cg for Chhattisgarhi. If unsure about the department, give low confidence instead of guessing.
+Language codes: {names}.
+If unsure about the department, give low confidence instead of guessing.
 
 <complaint>
 {mask(text)}
@@ -235,7 +282,7 @@ Use cg for Chhattisgarhi. If unsure about the department, give low confidence in
 
     def _apply_ai(self, r, out):
         lang = str(r.get("language") or "unknown").lower()
-        if lang not in ("en", "hi", "cg", "hinglish", "mixed", "unsupported"):
+        if lang not in set(self.languages) | {"en", "hi", "cg", "hinglish", "mixed", "unsupported"}:
             lang = "unknown"
         clamp = lambda v: max(0.0, min(1.0, float(v))) if isinstance(v, (int, float)) else 0.0
         out["language"], out["language_confidence"] = lang, round(clamp(r.get("language_confidence")), 2)
@@ -251,7 +298,11 @@ Use cg for Chhattisgarhi. If unsure about the department, give low confidence in
         out["confidence"] = round(min(route_conf, out["language_confidence"]), 2)
         note = str(r.get("reason") or "").strip()[:200]
         out["reasons"].append(f"AI ({self.ai.label}): {mask(note) if note else 'no reason given'}")
-        if lang in ("unsupported", "unknown"):
+        if (self.languages.get(lang) or {}).get("support") == "identify_only":
+            out["human_required"] = True
+            out["assigned_to"] = "grievance cell officer"
+            out["flags"].append("language_desk")
+        elif lang in ("unsupported", "unknown"):
             out["human_required"] = True
             out["assigned_to"] = "grievance cell officer"
             out["flags"].append("unsupported_language")
@@ -261,7 +312,7 @@ Use cg for Chhattisgarhi. If unsure about the department, give low confidence in
         d = self.depts[out["department"]]
         user = (f"Write a short, polite reply (2 sentences) to a citizen whose grievance was forwarded to the "
                 f"{d['name']}, which responds within {d['sla_days']} days. Write in the citizen's language "
-                f"({out['language']}; use Hindi for cg). Do not promise any outcome, payment, date or approval. "
+                f"({self.language_name(out['language'])}; use Hindi for Chhattisgarhi). Do not promise any outcome, payment, date or approval. "
                 'Return JSON: {"reply": "<text>"}')
         txt = str(self.ai.complete_json(SYSTEM_PROMPT, user).get("reply") or "").strip()
         if not txt:
@@ -283,6 +334,12 @@ Use cg for Chhattisgarhi. If unsure about the department, give low confidence in
             out["auto_reply"] = t["handover"].format(**fields)
         else:
             out["auto_reply"] = t["ack"].format(**fields)
+        lines = (self.languages.get(out.get("language")) or {}).get("lines") or {}
+        if lines:
+            key = "priority" if out["sensitive_categories"] else ("officer" if out["human_required"] else "registered")
+            if lines.get(key):
+                out["auto_reply"] = f"{lines[key]}\n{out['auto_reply']}"
+        out["language_name"] = self.language_name(out.get("language"))
         if out["department"] and not out["sensitive_categories"]:
             out["draft_reply"] = t["draft"].format(**fields)
             if self.ai is not None and self.ai_cfg.get("draft_replies", True) \
