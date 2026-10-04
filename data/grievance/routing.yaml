@@ -23,7 +23,7 @@ departments:
                वृद्धावस्था, विधवा, पेंसन]
   roads:
     name: Public Works Department
-    sla_days: 30
+    sla_days: 21
     keywords: [road, roads, pothole, potholes, bridge, sadak, gaddha, gaddhe, pul, सड़क, सडक, गड्ढ, पुल, रद्दा]
   health:
     name: Health and Family Welfare Department
@@ -32,7 +32,7 @@ departments:
                डॉक्टर, डाक्टर, दवाई, दवा, दवई, एम्बुलेंस, स्वास्थ्य केंद्र]
   revenue:
     name: Revenue Department (Land Records)
-    sla_days: 30
+    sla_days: 21
     keywords: [land, land record, mutation, patta, khasra, boundary, zameen, jameen, naksha, जमीन, ज़मीन,
                पट्टा, खसरा, नामांतरण, भूमि, भुइयां]
   education:

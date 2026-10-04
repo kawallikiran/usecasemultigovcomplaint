@@ -239,6 +239,26 @@ District names are as in 2011; some districts have since been split or renamed. 
 
 The early warning groups complaints by **issue and district** (district and state together, since names such as Bilaspur and Aurangabad repeat). Analytics filter by zone, state and district, with tables by district and by city/town.
 
+## Assurance page (for the critique)
+
+**Technical → Assurance** is for supervisors and the administrator. It answers the three critics on one page: three live figures each, with details folded away.
+
+| Section | Figures | Folded details |
+| --- | --- | --- |
+| 1. Does it work well, for everyone? (tech critic) | Quality checks passed; weakest language; approvals made in under 30 seconds (possible rubber-stamping) | Serious open problems, and a box to type any complaint and see how it is sorted (nothing is saved) |
+| 2. Is it lawful? (legal critic) | Requirements met; consent recorded; citizen data requests open | Compliance map (DPDP Act 2023, IT Act 2000 and CERT-In directions, DARPG guidelines, GIGW and RPwD Act) with status and how each is met; closing data requests |
+| 3. What happens to the citizen? (stakeholder critic) | Sent to the wrong office first; overdue now; appeals | "If this happens to me, this is what the system does", with live figures |
+
+The compliance map is our reading of the law for the demo; it should be confirmed by the group's legal member.
+
+**Safeguards behind it:**
+- **Privacy notice and consent** at filing, in the citizen's language. Consent is recorded with the notice version.
+- **"Are you satisfied?"** after a reply. "No" sends an appeal, with a reason, to the Additional Collector.
+- **Overdue escalation:** complaints still waiting after their due date move to the senior officer automatically, and the citizen is told.
+- **Deadlines:** no department deadline exceeds 21 days (DARPG guidelines).
+- **"Your data"** on the Track page: the citizen can ask for correction or deletion. Contact details and voice recordings are deleted automatically a set number of days after closing (90 by default, changeable in Settings).
+- **Review time:** recorded for every approval; approvals under 30 seconds are counted.
+
 ## Data files
 
 All in `data/grievance/`.

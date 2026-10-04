@@ -10,6 +10,7 @@ In Docker:     docker compose up      (then open http://127.0.0.1:8502)
 import datetime as dt
 import os
 import re
+import time
 
 import pandas as pd
 import streamlit as st
@@ -49,6 +50,14 @@ ROLE = OFFICERS.get(USER, {}).get("role", "")
 if "lang" not in st.session_state:
     q = st.query_params.get("lang", "en")
     st.session_state["lang"] = q if q in T.names else "en"
+
+
+def housekeeping():
+    today = dt.date.today().isoformat()
+    if st.session_state.get("housekeeping") != today:
+        P.auto_escalate_overdue(store, T, current_router().depts)
+        P.apply_retention(store, P.settings().get("retention_days", 90))
+        st.session_state["housekeeping"] = today
 
 
 def current_router():
@@ -155,10 +164,14 @@ def file_page():
     elif ch == "email":
         email = st.text_input(T(lang, "email"))
 
+    st.caption(T(lang, "privacy_notice").format(days=P.settings().get("retention_days", 90)))
+    agreed = st.checkbox(T(lang, "consent"))
     if st.button(T(lang, "submit"), type="primary"):
         mobile = re.sub(r"\D", "", mobile or "")
         if not typed.strip() and audio is None:
             st.error(T(lang, "empty_error"))
+        elif not agreed:
+            st.error(T(lang, "consent_needed"))
         elif (ch in ("sms", "whatsapp") and not re.fullmatch(r"[6-9]\d{9}", mobile)) or \
                 (ch == "email" and not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", email or "")):
             st.error(T(lang, "contact_needed"))
@@ -169,7 +182,7 @@ def file_page():
                                audio_name=getattr(audio, "name", "complaint.wav") or "complaint.wav",
                                state=state, district=district, town=town, locality=locality, notify_by=ch, mobile=mobile,
                                email=email, speech_profile=speech_profile() if audio is not None else None,
-                               template_category=template["category"] if template else None)
+                               template_category=template["category"] if template else None, consent=agreed)
             st.session_state["done"] = rec["ticket"]
             for k in ("complaint_text", "pick", "last_pick"):
                 st.session_state.pop(k, None)
@@ -190,6 +203,26 @@ def track_page():
         st.session_state["tracked"] = ticket
         st.caption(f"{T(lang, 'ticket')}: {rec['ticket']} · {rec['created'].replace('T', ' ')[:16]}")
         status_block(rec, lang, router)
+        if P.citizen_view(rec, T, lang, router.depts)["can_rate"]:
+            st.markdown(f"**{T(lang, 'rate_title')}**")
+            ans = st.radio(T(lang, "rate_title"), ["yes", "no"], horizontal=True, index=None, label_visibility="collapsed",
+                           format_func=lambda k: T(lang, "sat_yes" if k == "yes" else "sat_no"))
+            reason = st.text_area(T(lang, "appeal_reason"), height=80) if ans == "no" else ""
+            if ans and st.button(T(lang, "appeal_submit") if ans == "no" else T(lang, "check"), key="rate_btn"):
+                new, errs = P.rate(store, rec, ans == "yes", reason)
+                if errs:
+                    st.error(T(lang, "appeal_reason"))
+                else:
+                    st.success(T(lang, "thanks") if ans == "yes" else T(lang, "appeal_done"))
+        with st.expander(T(lang, "my_data")):
+            fix = st.text_input(T(lang, "dr_details"), key="dr_fix")
+            c1, c2 = st.columns(2)
+            if c1.button(T(lang, "dr_correct")) and fix.strip():
+                P.data_request(store, rec, "correct", fix)
+                st.success(T(lang, "dr_done"))
+            if c2.button(T(lang, "dr_delete")):
+                P.data_request(store, rec, "delete")
+                st.success(T(lang, "dr_done"))
 
 
 def login_page():
@@ -233,6 +266,7 @@ def place_text(rec):
 
 def review_panel(rec, router):
     s = rec.get("suggestion") or {}
+    opened = st.session_state.setdefault(f"opened_{rec['ticket']}", time.time())
     st.subheader(rec["ticket"])
     st.caption(f"Received {rec['created'].replace('T', ' ')[:16]} · "
                f"{place_text(rec)} · "
@@ -281,7 +315,8 @@ def review_panel(rec, router):
             if dept != rec.get("department"):
                 st.error("You changed the department. Use 'Reassign' so the right officer reviews it.")
             else:
-                res = P.approve(store, T, router.depts, rec, USER, reply, category=cat, priority=pr)
+                res = P.approve(store, T, router.depts, rec, USER, reply, category=cat, priority=pr,
+                                review_seconds=time.time() - opened)
                 for e in res[1]:
                     st.error(e)
                 if res[0]:
@@ -372,6 +407,62 @@ def analytics_page():
 
 
 # ====================================================================== technical
+def assurance_page():
+    st.title("Assurance")
+    st.caption("Answers to the three critics in one place. Figures are live; details are folded away.")
+    router = current_router()
+    sets = P.settings()
+    days = sets.get("retention_days", 90)
+    fig = P.assurance_figures(store)
+    tech = Q.tech_summary()
+    max_deadline = max(d["sla_days"] for d in router.depts.values())
+
+    st.subheader("1. Does it work well, for everyone?")
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Quality checks passed", f"{tech['passed']} of {tech['total']}" if tech["total"] else "Not run")
+    w = tech["weakest"]
+    c2.metric("Weakest language", f"{router.language_name(w['Language'])}: {w['Sorted correctly']}" if w else "-")
+    c3.metric("Approvals under 30 seconds", f"{fig['quick_approvals']} of {fig['approvals']}",
+              help="Very quick approvals may mean the officer did not really read the complaint.")
+    if not tech["total"]:
+        st.caption("Quality checks have not been run yet: run them on the Quality checks page.")
+    elif tech["serious"]:
+        st.warning(f"{len(tech['serious'])} serious problem(s) open. These are the Phase 2 fixes.")
+    elif tech["total"]:
+        st.success("No serious problems open.")
+    with st.expander("Details and try it yourself"):
+        if tech["serious"]:
+            st.dataframe(pd.DataFrame(tech["serious"]), hide_index=True)
+        trial = st.text_input("Type any complaint to see how it is sorted (nothing is saved)")
+        if trial.strip():
+            st.dataframe(pd.DataFrame(ui.summary_rows(router.process({"id": "TRY", "text": trial}))), hide_index=True)
+
+    st.subheader("2. Is it lawful?")
+    rows = Q.compliance_rows(days, max_deadline, fig)
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Requirements met", f"{sum(r['Status'] == 'Met' for r in rows)} of {len(rows)}")
+    c2.metric("Consent recorded", f"{fig['consent_share']}%" if fig["consent_share"] is not None else "-")
+    c3.metric("Citizen data requests open", fig["open_data_requests"])
+    with st.expander("Compliance map"):
+        st.dataframe(pd.DataFrame(rows), hide_index=True)
+        st.caption("Our reading of the law, for the demo; to be confirmed by the group's legal member.")
+        open_reqs = [q for q in P.data_requests(store) if q["status"] == "open"]
+        if open_reqs and ROLE == "admin":
+            st.dataframe(pd.DataFrame(open_reqs), hide_index=True)
+            rid = st.selectbox("Data request", [q["id"] for q in open_reqs])
+            if st.button("Mark as done (a deletion request erases the contact details)"):
+                P.close_data_request(store, rid, USER)
+                st.rerun()
+
+    st.subheader("3. What happens to the citizen when something goes wrong?")
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Sent to the wrong office first", fig["reassigned"])
+    c2.metric("Overdue now", fig["overdue_open"], help=f"{fig['auto_escalated']} moved to the senior officer automatically")
+    c3.metric("Appeals", fig["appeals"])
+    with st.expander("Citizen's view"):
+        st.dataframe(pd.DataFrame(Q.stakeholder_rows(fig, days)), hide_index=True)
+
+
 def quality_page():
     st.title("Quality checks")
     st.write("Each check tests one way the system could let citizens down. Run them after any change to keyword lists, "
@@ -474,8 +565,10 @@ def settings_page():
     sp_cur = s.get("speech") if s.get("speech") in sp_keys else (sp_ready[0] if sp_ready else "off")
     sp = st.selectbox("Speech-to-text for voice complaints", sp_keys, index=sp_keys.index(sp_cur),
                       format_func=lambda k: "Off (officers type voice complaints)" if k == "off" else profiles[k]["label"])
+    keep = st.number_input("Delete contact details and recordings this many days after a complaint is closed",
+                           min_value=7, max_value=365, value=int(s.get("retention_days", 90)))
     if st.button("Save settings", type="primary"):
-        P.save_settings({"engine": eng, "speech": sp})
+        P.save_settings({"engine": eng, "speech": sp, "retention_days": int(keep)})
         st.success("Saved.")
     with st.expander("AI services and their status"):
         st.dataframe(pd.DataFrame(ui.ai_status_rows()), hide_index=True)
@@ -494,6 +587,7 @@ def logout_page():
 
 
 # ====================================================================== navigation
+housekeeping()
 lang = st.session_state["lang"]
 citizen = [st.Page(file_page, title=T(lang, "nav_file"), url_path="file", default=True),
            st.Page(track_page, title=T(lang, "nav_track"), url_path="track")]
@@ -503,7 +597,7 @@ if USER:
         work.append(st.Page(all_page, title="All complaints", url_path="all"))
     pages = {"Citizen services": citizen, "Complaints": work,
              "Analytics": [st.Page(analytics_page, title="Analytics and early warning", url_path="analytics")]}
-    tech = []
+    tech = [st.Page(assurance_page, title="Assurance", url_path="assurance")] if ROLE in ("supervisor", "admin") else []
     if ROLE == "admin":
         tech += [st.Page(quality_page, title="Quality checks", url_path="quality"),
                  st.Page(performance_page, title="Model performance", url_path="performance")]

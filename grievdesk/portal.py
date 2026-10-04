@@ -26,6 +26,8 @@ VOICE_DIR = os.path.join(STORE_DIR, "voice")
 SETTINGS_PATH = os.path.join(STORE_DIR, "settings.json")
 _LOCK = threading.Lock()
 SLA_DEFAULT = 7
+NOTICE_VERSION = "2026-10"          # version of the privacy notice shown at filing
+RUBBER_STAMP_SECONDS = 30           # approvals faster than this are counted as possibly not reviewed
 SENSITIVE_OFFICER, CELL_OFFICER, SENIOR_OFFICER = "OFF-SC01", "OFF-GC01", "OFF-SR01"
 
 
@@ -78,9 +80,10 @@ def officer_label(oid):
 def settings():
     try:
         with open(SETTINGS_PATH, encoding="utf-8") as f:
-            return json.load(f)
+            s = json.load(f)
     except (OSError, ValueError):
-        return {"engine": "rules", "speech": ""}
+        s = {}
+    return {"engine": "rules", "speech": "", "retention_days": 90, **s}
 
 
 def save_settings(s):
@@ -184,7 +187,8 @@ def _notify(store, rec, kind, T, depts, reply=""):
 
 
 def submit(router, store, T, lang, channel, text=None, audio=None, audio_name="complaint.wav", state="", district="",
-           town="", locality="", notify_by="portal", mobile="", email="", speech_profile=None, template_category=None, now=None):
+           town="", locality="", notify_by="portal", mobile="", email="", speech_profile=None, template_category=None, now=None,
+           consent=True):
     """Registers a complaint, assigns it to an officer for review, and sends the acknowledgement."""
     now = now or dt.datetime.now()
     ticket = store.next_ticket(now.date())
@@ -216,6 +220,7 @@ def submit(router, store, T, lang, channel, text=None, audio=None, audio_name="c
         rec["category"] = template_category if template_category else categorize(rec["department"], text)
     rec["assigned_to"] = _assign(out, rec["transcript"] == "pending")
     rec["due_date"] = _due(rec["created"], rec["department"], router.depts)
+    rec["consent"] = {"given": bool(consent), "time": rec["created"], "notice_version": NOTICE_VERSION}
     rec["history"].append({"time": rec["created"], "action": "registered", "by": "citizen",
                            "assigned_to": rec["assigned_to"]})
     store.add(rec, {"notify_by": notify_by, "mobile": (mobile or "").strip(), "email": (email or "").strip()})
@@ -225,12 +230,13 @@ def submit(router, store, T, lang, channel, text=None, audio=None, audio_name="c
 
 # ------------------------------------------------------------------ citizen view
 STAGE_KEY = {"registered": "st_registered", "assigned": "st_review", "reassigned": "st_forwarded",
-             "transcribed": "st_review", "escalated": "st_escalated", "approved": "st_resolved"}
+             "transcribed": "st_review", "escalated": "st_escalated", "approved": "st_resolved",
+             "appealed": "st_appealed", "auto-escalated (overdue)": "st_escalated"}
 
 
 def citizen_view(rec, T, lang, depts):
     st = rec["status"]
-    status = T(lang, {"approved": "st_resolved", "escalated": "st_escalated"}.get(st, "st_review"))
+    status = T(lang, {"approved": "st_resolved", "escalated": "st_escalated", "appealed": "st_appealed"}.get(st, "st_review"))
     timeline = []
     for h in rec.get("history", []):
         key = STAGE_KEY.get(h.get("action"))
@@ -240,7 +246,8 @@ def citizen_view(rec, T, lang, depts):
             "department": depts.get(rec.get("department") or "", {}).get("name") or T(lang, "to_be_assigned"),
             "officer": officers().get(rec.get("assigned_to"), {}).get("designation", ""),
             "expected": dt.date.fromisoformat(rec["due_date"]).strftime("%d-%m-%Y"),
-            "reply": rec.get("reply") if st == "approved" else "", "timeline": timeline}
+            "reply": rec.get("reply") if st == "approved" else "", "timeline": timeline,
+            "can_rate": st == "approved" and not rec.get("rating")}
 
 
 def receipt_html(rec, T, lang, depts):
@@ -270,7 +277,7 @@ th{{background:#f0f0f0;width:40%}} .box{{border:1px solid #bbb;padding:8px;margi
 # ------------------------------------------------------------------ officer review
 PLACEHOLDER = "[Officer: add the action taken"
 STATUS_EN = {"pending_review": "Waiting for officer review", "escalated": "With senior officer",
-             "approved": "Approved and citizen informed"}
+             "appealed": "Appeal with senior officer", "approved": "Approved and citizen informed"}
 
 
 def can_act(officer_id, rec):
@@ -283,7 +290,7 @@ def queue(store, officer_id, scope="mine", show="Needs action"):
     if scope == "mine":
         recs = [r for r in recs if r.get("assigned_to") == officer_id]
     if show == "Needs action":
-        recs = [r for r in recs if r["status"] in ("pending_review", "escalated")]
+        recs = [r for r in recs if r["status"] in ("pending_review", "escalated", "appealed")]
     pr = {"critical": 0, "high": 1, "normal": 2}
     return sorted(recs, key=lambda r: (not ((r.get("suggestion") or {}).get("sensitive_categories") or r["transcript"] == "pending"),
                                        pr.get(r.get("priority"), 3), r["created"]))
@@ -321,7 +328,7 @@ def save_transcript(router, store, ticket, text, officer_id):
     return rec, []
 
 
-def approve(store, T, depts, rec, officer_id, reply, category=None, priority=None):
+def approve(store, T, depts, rec, officer_id, reply, category=None, priority=None, review_seconds=None):
     errors = _common_errors(officer_id, rec)
     s = rec.get("suggestion") or {}
     if s.get("sensitive_categories") and officer_id not in (SENSITIVE_OFFICER, SENIOR_OFFICER) \
@@ -334,7 +341,12 @@ def approve(store, T, depts, rec, officer_id, reply, category=None, priority=Non
     if errors:
         return None, errors
     edits = _edits(rec, category, priority)
-    new = store.update(rec["ticket"], {"action": "approved", "by": officer_id, **edits}, status="approved",
+    ev = {"action": "approved", "by": officer_id, **edits}
+    if review_seconds is not None:
+        ev["review_seconds"] = int(review_seconds)
+    if rec["status"] == "appealed":
+        ev["appeal_decided"] = True
+    new = store.update(rec["ticket"], ev, status="approved",
                        reply=mask(reply), **{k: v for k, v in edits.items() if k in ("category", "priority")})
     note = _notify(store, new, "approved", T, depts, reply=mask(reply))
     return new, [], note
@@ -466,3 +478,135 @@ def portal_rows_for_analytics(store):
                      "resolved_date": next((h["time"][:10] for h in r.get("history", []) if h.get("action") == "approved"), ""),
                      "days_to_resolve": "", "due_date": r.get("due_date", "")})
     return rows
+
+
+# ------------------------------------------------------------------ citizen rating and appeal
+def rate(store, rec, satisfied, reason=""):
+    """After a reply: the citizen says whether they are satisfied. 'No' sends an appeal to the senior officer."""
+    if rec["status"] != "approved" or rec.get("rating"):
+        return None, ["Rating is only possible once, after a reply."]
+    if satisfied:
+        return store.update(rec["ticket"], {"action": "rated satisfied", "by": "citizen"}, rating="satisfied"), []
+    if not (reason or "").strip():
+        return None, ["reason"]
+    return store.update(rec["ticket"], {"action": "appealed", "by": "citizen", "note": mask(reason)[:500],
+                                        "assigned_to": SENIOR_OFFICER},
+                        rating="not satisfied", status="appealed", assigned_to=SENIOR_OFFICER), []
+
+
+# ------------------------------------------------------------------ overdue complaints escalate themselves
+def auto_escalate_overdue(store, T, depts, today=None):
+    """Complaints waiting for review past their due date go to the senior officer, and the citizen is told."""
+    today = (today or dt.date.today()).isoformat()
+    moved = []
+    for r in store.all():
+        if r["status"] == "pending_review" and r.get("due_date", "9999") < today and r["transcript"] != "pending":
+            new = store.update(r["ticket"], {"action": "auto-escalated (overdue)", "by": "system",
+                                             "assigned_to": SENIOR_OFFICER, "note": f"due {r['due_date']}"},
+                               status="escalated", assigned_to=SENIOR_OFFICER)
+            _notify(store, new, "escalated", T, depts)
+            moved.append(r["ticket"])
+    return moved
+
+
+# ------------------------------------------------------------------ citizen data requests and retention
+def data_request(store, rec, kind, details=""):
+    """kind: 'correct' or 'delete'. Recorded for an officer to act on; the citizen is told it is recorded."""
+    if kind not in ("correct", "delete"):
+        return None
+    reqs = _requests(store)
+    entry = {"id": f"DR{len(reqs.read().get('items', [])) + 1:04d}", "time": dt.datetime.now().isoformat(timespec="seconds"),
+             "ticket": rec["ticket"], "kind": kind, "details": mask(details)[:300], "status": "open"}
+    with _LOCK:
+        d = reqs.read()
+        d.setdefault("items", []).append(entry)
+        reqs.write(d)
+    store.update(rec["ticket"], {"action": f"data request ({kind})", "by": "citizen"})
+    return entry
+
+
+def _requests(store):
+    return _JsonFile(os.path.join(os.path.dirname(store.db.path), "data_requests.json"))
+
+
+def data_requests(store):
+    return _requests(store).read().get("items", [])
+
+
+def close_data_request(store, req_id, officer_id, note=""):
+    with _LOCK:
+        d = _requests(store).read()
+        req = next((x for x in d.get("items", []) if x["id"] == req_id), None)
+        if not req or req["status"] != "open":
+            return None
+        if req["kind"] == "delete":
+            _erase_contact(store, req["ticket"], f"citizen request {req_id}")
+            erased = True
+        else:
+            erased = False
+        req.update(status="done", closed_by=officer_id, closed_at=dt.datetime.now().isoformat(timespec="seconds"),
+                   note=mask(note)[:300])
+        _requests(store).write(d)
+    extra = {"contact_erased": dt.date.today().isoformat()} if erased else {}
+    store.update(req["ticket"], {"action": f"data request {req_id} done", "by": officer_id, "note": mask(note)[:200]}, **extra)
+    return req
+
+
+def _erase_contact(store, ticket, why):
+    c = store.contacts.read()
+    if ticket in c:
+        c[ticket] = {"notify_by": "portal", "erased": dt.date.today().isoformat(), "why": why}
+        store.contacts.write(c)
+    rec = store.get(ticket)
+    if rec and rec.get("audio"):
+        path = os.path.join(ROOT, rec["audio"])
+        if os.path.exists(path):
+            os.remove(path)
+
+
+def apply_retention(store, days, today=None):
+    """Deletes contact details and voice recordings of complaints closed more than `days` days ago."""
+    today = today or dt.date.today()
+    done = []
+    for r in store.all():
+        if r["status"] != "approved" or r.get("contact_erased"):
+            continue
+        closed = next((h["time"][:10] for h in reversed(r.get("history", [])) if h.get("action") == "approved"), None)
+        if closed and (today - dt.date.fromisoformat(closed)).days > int(days):
+            _erase_contact(store, r["ticket"], f"retention {days} days")
+            store.update(r["ticket"], {"action": "contact details deleted (retention)", "by": "system"},
+                         contact_erased=today.isoformat(), audio="")
+            done.append(r["ticket"])
+    return done
+
+
+# ------------------------------------------------------------------ figures for the Assurance page
+def assurance_figures(store, today=None):
+    today = (today or dt.date.today()).isoformat()
+    recs = store.all()
+    approvals = [h for r in recs for h in r.get("history", []) if h.get("action") == "approved"]
+    timed = [h["review_seconds"] for h in approvals if "review_seconds" in h]
+    reassigned = [r for r in recs if any(h.get("action") == "reassigned" for h in r.get("history", []))]
+
+    def days_added(r):
+        first = next((h["time"] for h in r["history"] if h.get("action") == "reassigned"), None)
+        last = next((h["time"] for h in reversed(r["history"]) if h.get("action") == "reassigned"), None)
+        return 0 if not first else (dt.datetime.fromisoformat(last) - dt.datetime.fromisoformat(r["created"])).days
+
+    rated = [r for r in recs if r.get("rating")]
+    reqs = data_requests(store)
+    return {
+        "complaints": len(recs),
+        "consent_share": round(100 * sum(1 for r in recs if (r.get("consent") or {}).get("given")) / len(recs)) if recs else None,
+        "approvals": len(approvals),
+        "quick_approvals": sum(1 for t in timed if t < RUBBER_STAMP_SECONDS),
+        "median_review_seconds": sorted(timed)[len(timed) // 2] if timed else None,
+        "reassigned": len(reassigned),
+        "reassign_days": round(sum(days_added(r) for r in reassigned) / len(reassigned), 1) if reassigned else 0,
+        "overdue_open": sum(1 for r in recs if r["status"] == "pending_review" and r.get("due_date", "9999") < today),
+        "auto_escalated": sum(1 for r in recs if any(h.get("action") == "auto-escalated (overdue)" for h in r.get("history", []))),
+        "appeals": sum(1 for r in recs if r.get("rating") == "not satisfied"),
+        "satisfied_share": round(100 * sum(r["rating"] == "satisfied" for r in rated) / len(rated)) if rated else None,
+        "open_data_requests": sum(1 for q in reqs if q["status"] == "open"),
+        "data_requests": len(reqs),
+    }

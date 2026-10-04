@@ -27,7 +27,7 @@ STATE_LANG = {  # main language of complaints in each state (shares; the rest Hi
 }
 HINDI_BELT = {"Uttar Pradesh", "Bihar", "Madhya Pradesh", "Rajasthan", "Haryana", "Delhi", "Himachal Pradesh",
               "Uttarakhand", "Jharkhand", "Chhattisgarh", "Chandigarh"}
-SLA = {"water": 7, "electricity": 3, "ration": 7, "pension": 15, "roads": 30, "health": 3, "revenue": 30,
+SLA = {"water": 7, "electricity": 3, "ration": 7, "pension": 15, "roads": 21, "health": 3, "revenue": 21,
        "education": 15, "police": 1}
 OFFICER_FOR = {"water": "OFF-WAT01", "electricity": "OFF-ELE01", "ration": "OFF-RAT01", "pension": "OFF-PEN01",
                "roads": "OFF-ROA01", "health": "OFF-HEA01", "revenue": "OFF-REV01", "education": "OFF-EDU01",
