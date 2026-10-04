@@ -17,7 +17,6 @@ def get_router(engine):
     return ui.make_router(engine)
 
 
-ai_ok, ai_msg = ui.ai_ready()
 router, cfg = get_router("rules")
 samples = ui.load_samples(cfg)
 store = ui.decision_store()
@@ -31,14 +30,14 @@ tab_use, tab_report, tab_results, tab_audit = st.tabs(
 
 # ------------------------------------------------------------------ register a grievance
 with tab_use:
-    engines = ["Rules (offline)"] + ([f"AI service ({ai_msg})"] if ai_ok else [])
-    engine_label = st.radio("Engine", engines, horizontal=True)
-    engine = "ai" if engine_label.startswith("AI") else "rules"
-    if not ai_ok:
-        st.caption(f"AI engine not available: {ai_msg}")
-    if engine == "ai":
-        st.warning("The complaint text is sent to the AI service named above, with Aadhaar, phone numbers and "
-                   "emails masked first. Use synthetic data only.")
+    options = [("rules", "Rules (offline)")] + ui.ai_options()
+    chosen = st.selectbox("Engine", [label for _, label in options])
+    engine = dict((label, key) for key, label in options)[chosen]
+    if len(options) == 1:
+        st.caption("No AI service is ready, so only the offline rules engine is offered. "
+                   "See 'AI services and their status' on the Test report tab.")
+    if engine != "rules":
+        st.warning("The complaint text is sent to the AI service selected above, with Aadhaar, phone numbers and emails masked first. Use synthetic data only.")
     active = get_router(engine)[0]
     st.write("Write a complaint as a citizen would, in English, Hindi, Chhattisgarhi or a mix.")
     sample_ids = [""] + [r["id"] for r in samples]
@@ -110,16 +109,22 @@ def pick_set(key):
 
 with tab_report:
     set_name, cfg_path = pick_set("report_set")
-    blocked = ui.is_ai_set(cfg_path) and not ai_ok
-    if blocked:
-        st.warning(f"This set uses the AI engine, which is not configured: {ai_msg}")
-    elif ui.is_ai_set(cfg_path):
-        st.caption("This run makes a few hundred calls to the AI service. It takes several minutes and uses API credit.")
+    profile, blocked = None, False
+    if ui.is_ai_set(cfg_path):
+        opts = ui.ai_options()
+        if not opts:
+            blocked = True
+            st.warning("This set uses an AI engine and no AI service is ready. See the status table below.")
+        else:
+            lab = st.selectbox("AI service for this run", [label for _, label in opts], key="report_profile")
+            profile = dict((label, key) for key, label in opts)[lab].split(":", 1)[1]
+            st.caption("An AI run makes a few hundred calls. Cloud services take several minutes and use API "
+                       "credit; a local model on a laptop without a GPU can take 20 to 40 minutes.")
     if st.button("Run the 8 tests on this set", type="primary", disabled=blocked):
         with st.spinner("Running the tests."):
-            ui.run_tests(cfg_path)
+            ui.run_tests(cfg_path, profile)
         st.success(f"Tests finished for: {set_name}.")
-    data, when = rep.load_findings(ui.output_dir(cfg_path))
+    data, when = rep.load_findings(ui.output_dir(cfg_path, profile))
     if not data:
         st.info("No results for this set yet. Run the tests to create them.")
     else:
@@ -135,17 +140,26 @@ with tab_report:
         for group, rows in rep.subgroup_tables(m, "Wrongly treated as sensitive"):
             st.subheader(f"Results by {group}")
             st.dataframe(pd.DataFrame(rows), hide_index=True)
-        out_dir = ui.output_dir(cfg_path)
+        out_dir = ui.output_dir(cfg_path, profile)
         d1, d2 = st.columns(2)
         with open(f"{out_dir}/report.md", "rb") as fh:
             d1.download_button("Download report.md", fh.read(), file_name="grievance_report.md")
         with open(f"{out_dir}/findings.csv", "rb") as fh:
             d2.download_button("Download findings.csv", fh.read(), file_name="grievance_findings.csv")
 
+    with st.expander("AI services and their status"):
+        st.write("Services come from config/ai_providers.yaml; keys and model names from the .env file.")
+        st.dataframe(pd.DataFrame(ui.ai_status_rows()), hide_index=True)
+
 with tab_results:
     _, cfg_path2 = pick_set("results_set")
+    profile2 = None
+    if ui.is_ai_set(cfg_path2):
+        rows_s = ui.ai_status_rows()
+        lab2 = st.selectbox("AI service", [r["Service"] for r in rows_s], key="results_profile")
+        profile2 = next(r["Name"] for r in rows_s if r["Service"] == lab2)
     show = st.radio("Show", ["All", "Failed only", "Passed only"], horizontal=True)
-    data2, _ = rep.load_findings(ui.output_dir(cfg_path2))
+    data2, _ = rep.load_findings(ui.output_dir(cfg_path2, profile2))
     if not data2:
         st.info("No results yet. Run the tests from the Test report tab.")
     else:

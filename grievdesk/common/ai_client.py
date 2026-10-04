@@ -31,12 +31,20 @@ class AIError(RuntimeError):
 
 
 def ai_settings(cfg: dict) -> dict:
+    """Settings from the config's ai block (usually filled from a profile in ai_providers.yaml).
+    If the block names no provider, the single-service variables AI_PROVIDER / AI_MODEL / AI_BASE_URL /
+    AI_API_KEY from the environment are used instead."""
     a = dict(cfg.get("ai") or {})
-    for env, key in (("AI_PROVIDER", "provider"), ("AI_MODEL", "model"), ("AI_BASE_URL", "base_url")):
-        if os.environ.get(env):
-            a[key] = os.environ[env]
+    from_env = not (a.get("provider") or "").strip()
+    if from_env:
+        for env, key in (("AI_PROVIDER", "provider"), ("AI_MODEL", "model"), ("AI_BASE_URL", "base_url")):
+            if os.environ.get(env):
+                a[key] = os.environ[env]
+        a.setdefault("api_key_env", "AI_API_KEY")
     a["provider"] = (a.get("provider") or "").strip().lower()
-    a["api_key"] = os.environ.get("AI_API_KEY") or os.environ.get(a.get("api_key_env") or "", "")
+    a["api_key"] = os.environ.get(a.get("api_key_env") or "", "") if a.get("api_key_env") else ""
+    if os.environ.get("AI_TIMEOUT"):
+        a["timeout"] = os.environ["AI_TIMEOUT"]
     a.setdefault("timeout", 60)
     a.setdefault("max_tokens", 800)
     a.setdefault("temperature", 0)
@@ -49,10 +57,10 @@ def ai_status(cfg: dict):
     if a["provider"] not in DEFAULT_BASE:
         return False, "No AI service configured. Set AI_PROVIDER, AI_MODEL and AI_API_KEY (see .env.example)."
     if not a.get("model"):
-        return False, "AI_MODEL is not set."
-    local = "localhost" in str(a.get("base_url")) or "host.docker.internal" in str(a.get("base_url"))
+        return False, "No model set (add the model name to .env, see .env.example)."
+    local = str(a.get("base_url") or "").startswith("http://")      # local servers (Ollama etc.) need no key
     if not a["api_key"] and not local:
-        return False, f"AI_API_KEY is not set for provider '{a['provider']}'."
+        return False, f"{a.get('api_key_env') or 'API key'} is not set in .env."
     return True, f"{a['provider']} / {a['model']}"
 
 
@@ -119,7 +127,7 @@ class AIClient:
             {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b}"}} for b in b64]
         body = {"model": self.model, "temperature": self.s["temperature"], "max_tokens": self.s["max_tokens"],
                 "messages": [{"role": "system", "content": system}, {"role": "user", "content": content}]}
-        if self.s.get("json_mode", True):
+        if str(self.s.get("json_mode", True)).lower() not in ("false", "0", "no"):
             body["response_format"] = {"type": "json_object"}
         headers = {"Content-Type": "application/json"}
         if self.s["api_key"]:

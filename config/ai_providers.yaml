@@ -1,0 +1,72 @@
+# =====================================================================================================
+# AI services the prototype can use. Every entry that is ready (model set, key present, or local server
+# reachable) appears as an "Engine" option in the UI and can run the AI test sets.
+#
+#   provider:     openai     = any OpenAI-compatible Chat Completions API (OpenAI, Groq, OpenRouter,
+#                              Together, Azure-style gateways, vLLM, LM Studio, Ollama ...)
+#                 anthropic  = Anthropic Messages API (Claude)
+#                 gemini     = Google Gemini generateContent API
+#   model:        model name. Use a model that accepts images for use case 5.
+#   base_url:     endpoint; leave empty for the provider's default. http:// URLs are treated as local (no key).
+#   api_key_env:  NAME of the environment variable holding the key. Put the key itself in .env, never here.
+#   ${VAR:-default} reads a value from .env, so you can change models without editing this file.
+#   critic_max_cases / critic_consistency_runs: smaller AI test runs for slow (CPU-only) local models.
+#
+# To add another service: copy a block, give it a new name, set provider / base_url / model / api_key_env,
+# put the key in .env, then restart:  docker compose up -d --force-recreate
+# Model names change often; check your provider's current list.
+# =====================================================================================================
+providers:
+
+  local-open-model:
+    label: "Local open model (${LOCAL_MODEL:-gemma3:4b} via Ollama, runs on this computer)"
+    provider: openai
+    base_url: ${OLLAMA_URL:-http://ollama:11434/v1}
+    model: ${LOCAL_MODEL:-gemma3:4b}
+    api_key_env: ""
+    timeout: 300
+    max_tokens: 600
+    critic_max_cases: 8
+    critic_consistency_runs: 2
+
+  openai:
+    label: "OpenAI (${OPENAI_MODEL:-model not set})"
+    provider: openai
+    model: ${OPENAI_MODEL:-}
+    api_key_env: OPENAI_API_KEY
+
+  anthropic:
+    label: "Anthropic Claude (${ANTHROPIC_MODEL:-claude-haiku-4-5-20251001})"
+    provider: anthropic
+    model: ${ANTHROPIC_MODEL:-claude-haiku-4-5-20251001}
+    api_key_env: ANTHROPIC_API_KEY
+
+  gemini:
+    label: "Google Gemini (${GEMINI_MODEL:-model not set})"
+    provider: gemini
+    model: ${GEMINI_MODEL:-}
+    api_key_env: GEMINI_API_KEY
+
+  groq:
+    label: "Groq (${GROQ_MODEL:-model not set})"
+    provider: openai
+    base_url: https://api.groq.com/openai/v1
+    model: ${GROQ_MODEL:-}
+    api_key_env: GROQ_API_KEY
+
+  openrouter:
+    label: "OpenRouter (${OPENROUTER_MODEL:-model not set})"
+    provider: openai
+    base_url: https://openrouter.ai/api/v1
+    model: ${OPENROUTER_MODEL:-}
+    api_key_env: OPENROUTER_API_KEY
+
+  # Template for any other OpenAI-compatible service, e.g. an Indian provider or your own vLLM server.
+  # Check the provider's documentation for its endpoint and model names.
+  custom:
+    label: "Custom service (${CUSTOM_AI_MODEL:-not set})"
+    provider: openai
+    base_url: ${CUSTOM_AI_BASE_URL:-}
+    model: ${CUSTOM_AI_MODEL:-}
+    api_key_env: CUSTOM_AI_API_KEY
+    json_mode: ${CUSTOM_AI_JSON_MODE:-true}      # set false if the service rejects response_format

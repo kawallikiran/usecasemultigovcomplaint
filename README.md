@@ -40,29 +40,53 @@ Then open http://localhost:8601.
 
 **If the browser says it cannot connect:** the "Local URL" and "Network URL" lines in the log come from inside the container, so ignore them. Run `docker compose ps` and open the host port shown on the left of `->8501` in the PORTS column, typed as `http://127.0.0.1:<port>`. If PORTS is empty, the container stopped; check `docker compose logs`.
 
-## Optional: use a real AI service
+## AI engines: bundled open model and other AI services
 
-The prototype runs fully offline by default with the rule engine. You can switch on an **AI engine** that uses any well-known service: OpenAI, Anthropic Claude, Google Gemini, any OpenAI-compatible API (Groq, OpenRouter, Together, Azure-style gateways and others), or a local model through Ollama.
+By default the app uses the offline **rules engine**. You can also use AI engines, and every one that is ready appears in the **Engine** list on the first tab.
 
-1. Copy `.env.example` to `.env` in this folder and fill in **one** service: `AI_PROVIDER`, `AI_MODEL`, `AI_API_KEY` (and `AI_BASE_URL` for non-default endpoints). Any chat model works.
-2. Run `docker compose up -d --force-recreate`.
-3. On the first tab, choose **Engine: AI service**.
+### 1. Bundled open model (runs on this computer, no key)
 
-**What is sent and what is not.** The complaint text is sent with Aadhaar, phone numbers and emails masked first to the service you chose. Citizen messages still come only from approved templates. The AI writes only the officer's draft, which must be edited before approval. Use synthetic data only.
+```
+start-local-ai.bat          (Windows)
+./start-local-ai.sh         (macOS / Linux)
+```
 
-**How the AI engine is wired in:**
-- **The AI classifies:** language, department, sensitive categories, urgency, manipulation and data requests.
-- **The rule-based safety screen still runs as a backstop.** The AI can add sensitive flags but never remove one the rules found.
-- **Invented departments or categories are discarded.** Low confidence goes to an officer.
-- **If the service fails**, the rule engine is used and the case is sent to an officer with an `ai_service_failure` flag.
+This starts the app together with **Ollama** (an open-source model server) and downloads **Gemma 3 4B**. Gemma 3 4B is an open-weights model from Google that reads text and images and supports over 140 languages, so one model covers both use cases.
 
-**Before and after comparison.** The Test report tab now includes AI test sets (grievance_ai.yaml (20 sampled) and grievance_challenge_ai.yaml (all 16 held-out cases)). Run the same 8 tests on the rules engine and the AI engine, then compare the two reports. A full AI run makes a few hundred calls, takes several minutes and uses API credit.
+- **First start:** the download is about 3.3 GB. It goes into a Docker volume shared by both AIGP26 repos, so it happens once.
+- **After that:** the demo works with **no internet** and nothing leaves the computer.
+- **Watching the download:** `docker compose -f docker-compose.yml -f docker-compose.local-ai.yml logs -f model-pull`. Until it finishes, the Test report tab's status table shows "not downloaded yet".
+- **Stopping:** `stop-local-ai.bat` or `./stop-local-ai.sh`.
+- **Memory:** give Docker Desktop at least **8 GB** (Settings, then Resources).
+- **Speed:** without a GPU, one AI answer takes about 5 to 60 seconds, and photos are slower. For local models, AI test runs are cut to 8 cases. For a large speed-up on an NVIDIA GPU, uncomment the GPU lines in `docker-compose.local-ai.yml`.
+- **Other models:** set `LOCAL_MODEL` in `.env`, for example `qwen2.5vl:7b`, or a newer Gemma or Qwen-VL from the Ollama library. Use a model that accepts images for use case 5. Small models are weaker at Chhattisgarhi; that is a finding to report, not hide.
 
-**Key safety.** `.env` is excluded from git and from the Docker image. The key reaches the container only at runtime and never appears in logs or reports.
+### 2. Other AI services (cloud APIs)
 
-**Local Ollama.** `AI_BASE_URL=http://host.docker.internal:11434/v1` lets the container reach Ollama on your computer. No data leaves the machine.
+All services are listed in **`config/ai_providers.yaml`**, which is ready for OpenAI, Anthropic Claude, Google Gemini, Groq, OpenRouter and a **custom** slot for any other OpenAI-compatible API (for example an Indian provider or your own vLLM server). To use one:
 
-**Testing without a key.** `docker compose --profile tools run --rm tests` checks all three provider formats against a built-in mock server.
+1. Copy `.env.example` to `.env`.
+2. Fill in that service's key and model name, for example `GEMINI_API_KEY` and `GEMINI_MODEL`.
+3. Run `docker compose up -d --force-recreate`, or the start script again.
+
+**To add a new service,** copy a block in `ai_providers.yaml`, give it a name, set `provider` (`openai`, `anthropic` or `gemini` style), `base_url`, `model` and `api_key_env`, then put the key in `.env`. Keys never go in the YAML file. `.env` is excluded from git and from the Docker image.
+
+To check which services are ready:
+- `docker compose exec grievance-desk-ui python -m grievdesk ai-status`
+- or open the **AI services and their status** table on the Test report tab.
+
+### What is sent, and the safeguards
+The complaint text is sent with Aadhaar, phone numbers and emails masked first. With the bundled model, nothing leaves the computer. With cloud services, use synthetic data only.
+
+- **Safety backstop:** the rule-based safety screen always runs too, so the AI can add a sensitive flag but never remove one.
+- **Invented answers discarded:** departments or categories the AI makes up are thrown away.
+- **Failures:** on any error, the rules engine is used and the case goes to an officer.
+- **Replies:** citizen messages still come only from approved templates.
+
+### Before and after with the same 8 tests
+On the Test report tab, pick an AI test set and choose **AI service for this run**. Each service's results are saved separately, so you can compare the rules engine, the local open model and a cloud service on identical tests. That comparison is the evidence for the "after critique" part of the final presentation.
+
+**Testing without a key:** `docker compose --profile tools run --rm tests` checks all provider formats and the local-model states against a built-in mock server.
 
 ## Run without Docker
 

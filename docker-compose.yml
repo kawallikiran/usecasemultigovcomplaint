@@ -1,4 +1,6 @@
-# docker compose up --build     then open http://localhost:8502
+# Rules engine only:   docker compose up --build
+# With the bundled open model:  start-local-ai.bat (Windows) or ./start-local-ai.sh
+#     then open http://localhost:8502
 # Port busy? Pick another host port:  set GRIEVANCE_PORT=8601  (PowerShell: $env:GRIEVANCE_PORT=8601), then docker compose up
 services:
   grievance-desk-ui:
@@ -8,11 +10,9 @@ services:
     container_name: grievance-desk-ui
     ports:
       - "${GRIEVANCE_PORT:-8502}:8501"     # open http://127.0.0.1:8502 (or the port you set)
-    environment:                   # AI engine settings, read from .env (see .env.example); empty = rules only
-      AI_PROVIDER: ${AI_PROVIDER:-}
-      AI_MODEL: ${AI_MODEL:-}
-      AI_BASE_URL: ${AI_BASE_URL:-}
-      AI_API_KEY: ${AI_API_KEY:-}
+    env_file:                      # AI keys and model names (see .env.example); no .env = rules engine only
+      - path: .env
+        required: false
     extra_hosts:
       - "host.docker.internal:host-gateway"   # lets the container reach Ollama on your computer (Linux too)
     volumes:

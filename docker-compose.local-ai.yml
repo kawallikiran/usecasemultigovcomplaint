@@ -1,0 +1,41 @@
+# Bundled open model for the demo: Ollama + {LOCAL_MODEL, default gemma3:4b} running in Docker on this computer.
+# Start:  start-local-ai.bat (Windows)  or  ./start-local-ai.sh
+#   (same as: docker compose -f docker-compose.yml -f docker-compose.local-ai.yml up -d --build)
+# First start downloads the model once (about 3.3 GB for gemma3:4b) into a volume shared by both AIGP26
+# repos; after that the demo works with no internet. Give Docker Desktop at least 8 GB of memory.
+services:
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama-models:/root/.ollama
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+    # NVIDIA GPU (much faster): uncomment the four lines below; needs the NVIDIA Container Toolkit / WSL2 GPU support.
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices: [{driver: nvidia, count: all, capabilities: [gpu]}]
+
+  model-pull:                     # downloads the model once, then exits
+    image: ollama/ollama:latest
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    entrypoint: ["ollama"]
+    command: ["pull", "${LOCAL_MODEL:-gemma3:4b}"]
+    restart: "no"
+
+  grievance-desk-ui:
+    depends_on:
+      - ollama                    # the page starts at once; the local model appears when the download finishes
+
+volumes:
+  ollama-models:
+    name: aigp-ollama-models      # shared by both repos, so the model is downloaded only once

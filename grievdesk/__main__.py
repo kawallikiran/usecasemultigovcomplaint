@@ -29,12 +29,31 @@ def build(cfg):
     return sysm, GrievanceKit(sysm, cfg)
 
 
-def run_suite(cfg_path, quiet=False):
+def resolve_ai(cfg, profile=None):
+    """For AI test sets: pick the AI service (named profile, AIGP_AI_PROFILE, or the first ready one),
+    apply it, and give it its own report folder. Returns (cfg, profile_name or None, message)."""
+    from .common.ai_profiles import load_profiles, profile_status, apply_profile
+    profiles = load_profiles(ROOT)
+    wanted = profile or os.environ.get("AIGP_AI_PROFILE")
+    names = [wanted] if wanted else list(profiles)
+    for n in names:
+        if n in profiles:
+            ok, msg = profile_status(profiles[n], cfg)
+            if ok:
+                c = apply_profile(cfg, profiles[n])
+                c["output_dir"] = f"{cfg['output_dir']}_{n}"
+                return c, n, msg
+            if wanted:
+                return cfg, None, f"AI service '{n}' not ready: {msg}"
+    return cfg, None, (f"Unknown AI service '{wanted}'." if wanted and wanted not in profiles
+                       else "No AI service is ready (see config/ai_providers.yaml and .env.example).")
+
+
+def run_suite(cfg_path, quiet=False, profile=None):
     cfg = load_config(cfg_path)
     if cfg.get("engine") == "ai":
-        from .common.ai_client import ai_status
-        ready, msg = ai_status(cfg)
-        if not ready:
+        cfg, used, msg = resolve_ai(cfg, profile)
+        if not used:
             if not quiet:
                 print(f"\n=== skipped {os.path.basename(cfg_path)}: {msg}")
             return {"total": 0, "failed": 0, "failed_high": 0, "skipped": msg}, 0
@@ -42,7 +61,7 @@ def run_suite(cfg_path, quiet=False):
     findings, metrics = run_critic(kit, cfg)
     summary = write_reports(findings, cfg["output_dir"], kit.system_name, metrics)
     if not quiet:
-        print(f"\n=== {kit.system_name} | {os.path.basename(cfg_path)} ===")
+        print(f"\n=== {kit.system_name} | {os.path.basename(cfg_path)} | engine {sysm.engine_label} ===")
         print(f"accuracy {metrics['baseline_accuracy']} | probes {summary['total']} | failed {summary['failed']}")
         for f in sorted([f for f in findings if not f.passed], key=lambda f: f.severity):
             print(f"  FAIL [{f.severity}] {f.test_no}. {f.test_name} :: {f.probe} -> {f.actual[:100]}")
@@ -54,20 +73,30 @@ def run_suite(cfg_path, quiet=False):
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="grievdesk")
     sub = ap.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("run").add_argument("--config", required=True)
-    sub.add_parser("all")
+    r = sub.add_parser("run")
+    r.add_argument("--config", required=True)
+    r.add_argument("--ai-profile", help="AI service from config/ai_providers.yaml (for AI test sets)")
+    al = sub.add_parser("all")
+    al.add_argument("--ai-profile")
+    sub.add_parser("ai-status", help="list AI services and whether each is ready")
     d = sub.add_parser("demo")
     d.add_argument("--text", default="No water from the handpump for a week.")
     d.add_argument("--config", default=os.path.join(ROOT, "config", "grievance.yaml"))
     a = ap.parse_args(argv)
     if a.cmd == "run":
-        return run_suite(a.config)[1]
+        return run_suite(a.config, profile=a.ai_profile)[1]
+    if a.cmd == "ai-status":
+        from .common.ai_profiles import all_status
+        for name, label, ok, msg in all_status(ROOT):
+            print(f"{'READY ' if ok else 'not ready'}  {name:18} {label}  ({msg})")
+        return 0
     if a.cmd == "demo":
         from .system import GrievanceRouter
         print(json.dumps(GrievanceRouter(load_config(a.config)).process({"id": "DEMO", "text": a.text}),
                          indent=2, ensure_ascii=False))
         return 0
-    return max(run_suite(p)[1] for p in sorted(glob.glob(os.path.join(ROOT, "config", "*.yaml"))))
+    cfgs = [p for p in sorted(glob.glob(os.path.join(ROOT, "config", "*.yaml"))) if not p.endswith("ai_providers.yaml")]
+    return max(run_suite(p, profile=a.ai_profile)[1] for p in cfgs)
 
 
 if __name__ == "__main__":

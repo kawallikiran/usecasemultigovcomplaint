@@ -24,9 +24,22 @@ LANG_NAMES = {"en": "English", "hi": "Hindi", "cg": "Chhattisgarhi", "hinglish":
 PLACEHOLDER = "[Officer: add the action taken"
 
 
-def ai_ready():
-    from .common.ai_client import ai_status
-    return ai_status(load_config(AI_CONFIG))
+def ai_options():
+    """[(engine key, label)] for every AI service that is ready right now."""
+    from .common.ai_profiles import ready_profiles
+    return [(f"ai:{n}", label) for n, label, _ in ready_profiles(ROOT, load_config(AI_CONFIG))]
+
+
+def ai_status_rows():
+    from .common.ai_profiles import all_status
+    return [{"Service": label, "Name": n, "Ready": "Yes" if ok else "No", "Detail": msg}
+            for n, label, ok, msg in all_status(ROOT, load_config(AI_CONFIG))]
+
+
+def engine_config(engine):
+    from .common.ai_profiles import load_profiles, apply_profile
+    name = engine.split(":", 1)[1]
+    return apply_profile(load_config(AI_CONFIG), load_profiles(ROOT)[name])
 
 
 def is_ai_set(cfg_path):
@@ -34,10 +47,13 @@ def is_ai_set(cfg_path):
 
 
 def make_router(engine="rules"):
-    """engine 'rules' (offline) or 'ai' (configured AI service; raises AIError if not configured)."""
+    """engine 'rules' (offline) or 'ai:<service name>' from config/ai_providers.yaml."""
     from .system import GrievanceRouter
-    cfg = load_config(AI_CONFIG if engine == "ai" else MAIN_CONFIG)
-    return GrievanceRouter(cfg, AuditLog(os.path.join(UI_DIR, "ai_outputs.jsonl")), engine=engine), cfg
+    if engine == "rules":
+        cfg = load_config(MAIN_CONFIG)
+        return GrievanceRouter(cfg, AuditLog(os.path.join(UI_DIR, "ai_outputs.jsonl")), engine="rules"), cfg
+    cfg = engine_config(engine)
+    return GrievanceRouter(cfg, AuditLog(os.path.join(UI_DIR, "ai_outputs.jsonl")), engine="ai"), cfg
 
 
 def load_samples(cfg):
@@ -117,9 +133,10 @@ def audit_rows(router, store, limit=50):
     return rows
 
 
-def output_dir(cfg_path):
-    return load_config(cfg_path)["output_dir"]
+def output_dir(cfg_path, profile=None):
+    d = load_config(cfg_path)["output_dir"]
+    return f"{d}_{profile}" if profile and is_ai_set(cfg_path) else d
 
 
-def run_tests(cfg_path):
-    return run_suite(cfg_path, quiet=True)[0]
+def run_tests(cfg_path, profile=None):
+    return run_suite(cfg_path, quiet=True, profile=profile)[0]

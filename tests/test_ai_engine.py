@@ -11,6 +11,8 @@ sys.path.insert(0, ROOT)
 
 REPLY = {}          # JSON the mock "model" returns
 SEEN = []           # raw request bodies, to check what was sent
+MODELS = {"ids": ["gemma3:4b"]}
+AUTH = []
 FAIL = {"on": False}
 
 
@@ -18,14 +20,21 @@ class Mock(BaseHTTPRequestHandler):
     def log_message(self, *a):
         pass
 
+    def do_GET(self):                    # Ollama-style model list
+        b = json.dumps({"data": [{"id": i} for i in MODELS["ids"]]}).encode()
+        self.send_response(200 if self.path.endswith("/models") else 404)
+        self.end_headers()
+        self.wfile.write(b)
+
     def do_POST(self):
         raw = self.rfile.read(int(self.headers["Content-Length"])).decode()
         SEEN.append(raw)
         if FAIL["on"]:
             self.send_response(500); self.end_headers(); return
         t = json.dumps(REPLY)
+        AUTH.append(self.headers.get("Authorization"))
         if self.path.endswith("/chat/completions"):
-            ok, body = self.headers.get("Authorization") == "Bearer k", {"choices": [{"message": {"content": t}}]}
+            ok, body = self.headers.get("Authorization") in ("Bearer k", None), {"choices": [{"message": {"content": t}}]}
         elif self.path.endswith("/messages"):
             ok, body = self.headers.get("x-api-key") == "k", {"content": [{"type": "text", "text": "```json\n" + t + "\n```"}]}
         else:
@@ -108,6 +117,60 @@ class TestGrievanceAI(unittest.TestCase):
         clear_env()
         from grievdesk.common.ai_client import ai_status
         self.assertFalse(ai_status(load_config(CFG))[0])
+
+
+
+class TestProviderProfiles(unittest.TestCase):
+    def setUp(self):
+        from grievdesk.common import ai_profiles
+        self.p = ai_profiles
+        ai_profiles._CACHE.clear()
+
+    def tearDown(self):
+        for k in ("OLLAMA_URL", "LOCAL_MODEL", "OPENAI_MODEL", "OPENAI_API_KEY"):
+            os.environ.pop(k, None)
+
+    def test_expand_defaults(self):
+        os.environ.pop("LOCAL_MODEL", None)
+        self.assertEqual(self.p.expand("${LOCAL_MODEL:-gemma3:4b}"), "gemma3:4b")
+        os.environ["LOCAL_MODEL"] = "qwen2.5vl:7b"
+        self.assertEqual(self.p.expand("${LOCAL_MODEL:-gemma3:4b}"), "qwen2.5vl:7b")
+
+    def test_providers_file_lists_local_and_cloud(self):
+        names = set(self.p.load_profiles(ROOT))
+        self.assertTrue({"local-open-model", "openai", "anthropic", "gemini", "groq", "openrouter", "custom"} <= names)
+
+    def test_cloud_needs_key(self):
+        os.environ["OPENAI_MODEL"] = "some-model"
+        ok, msg = self.p.profile_status(self.p.load_profiles(ROOT)["openai"])
+        self.assertFalse(ok)
+        self.assertIn("OPENAI_API_KEY", msg)
+
+    def test_local_states(self):
+        os.environ["OLLAMA_URL"] = "http://127.0.0.1:9/v1"
+        self.assertFalse(self.p.profile_status(self.p.load_profiles(ROOT)["local-open-model"])[0])
+        os.environ["OLLAMA_URL"] = BASES["openai"]
+        self.p._CACHE.clear()
+        MODELS["ids"] = ["other:1b"]
+        ok, msg = self.p.profile_status(self.p.load_profiles(ROOT)["local-open-model"])
+        self.assertFalse(ok)
+        self.assertIn("not downloaded", msg)
+        MODELS["ids"] = ["gemma3:4b"]
+        self.p._CACHE.clear()
+        self.assertTrue(self.p.profile_status(self.p.load_profiles(ROOT)["local-open-model"])[0])
+
+    def test_profile_applied_with_small_critic_run_and_no_key_sent(self):
+        os.environ["OLLAMA_URL"] = BASES["openai"]
+        clear_env()
+        cfg = self.p.apply_profile(load_config(CFG), self.p.load_profiles(ROOT)["local-open-model"])
+        self.assertEqual(cfg["critic"]["max_cases"], 8)
+        self.assertEqual(cfg["ai"]["model"], "gemma3:4b")
+        from grievdesk.common.ai_client import AIClient
+        REPLY.clear(); REPLY.update(ok=True)
+        FAIL["on"] = False
+        AUTH.clear()
+        AIClient(cfg).complete_json("system", "hello")
+        self.assertEqual(AUTH[-1], None)
 
 
 if __name__ == "__main__":
