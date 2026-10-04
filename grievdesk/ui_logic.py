@@ -159,15 +159,18 @@ def run_tests(cfg_path, profile=None):
 EW_CONFIG = os.path.join(ROOT, "config", "early_warning.yaml")
 
 
-def run_early_warning():
-    """Runs the early-warning layer on the synthetic 500 complaints and writes its reports."""
+def run_early_warning(extra_rows=None, as_of=None):
+    """Runs the early-warning layer on the district data (plus portal complaints) and writes its reports.
+    as_of: report date (defaults to the date in config/early_warning.yaml)."""
     from . import early_warning as ew
     from .__main__ import early_warning_cmd
     from .system import GrievanceRouter
     cfg = load_config(EW_CONFIG)
     if not os.path.exists(cfg["dataset"]):
         early_warning_cmd("ew-generate", quiet=True)
-    rows, items, groups, alerts, findings = ew.run(cfg, GrievanceRouter(cfg))
+    if as_of:
+        cfg["as_of"] = str(as_of)
+    rows, items, groups, alerts, findings = ew.run(cfg, GrievanceRouter(cfg), extra_rows=extra_rows)
     ew.write_outputs(cfg, items, groups, alerts, findings)
     cards = [(a, *ew.alert_card(a, cfg)) for a in alerts]
     return cfg, items, groups, cards, findings

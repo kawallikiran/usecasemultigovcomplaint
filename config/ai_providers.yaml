@@ -70,3 +70,29 @@ providers:
     model: ${CUSTOM_AI_MODEL:-}
     api_key_env: CUSTOM_AI_API_KEY
     json_mode: ${CUSTOM_AI_JSON_MODE:-true}      # set false if the service rejects response_format
+
+# =====================================================================================================
+# Speech-to-text for voice complaints (OpenAI-style POST <base_url>/audio/transcriptions).
+# The first ready service is used unless another is chosen on the officer Settings page.
+# If none is ready, recordings are kept and an officer listens and types them in.
+# =====================================================================================================
+speech:
+
+  openai:
+    label: "OpenAI speech-to-text (${OPENAI_STT_MODEL:-whisper-1})"
+    base_url: https://api.openai.com/v1
+    model: ${OPENAI_STT_MODEL:-whisper-1}
+    api_key_env: OPENAI_API_KEY
+
+  groq:
+    label: "Groq speech-to-text (${GROQ_STT_MODEL:-whisper-large-v3})"
+    base_url: https://api.groq.com/openai/v1
+    model: ${GROQ_STT_MODEL:-whisper-large-v3}
+    api_key_env: GROQ_API_KEY
+
+  # A speech server on this computer or network that offers the same API (no key needed for http:// addresses).
+  local:
+    label: "Local speech server (${LOCAL_STT_MODEL:-not set})"
+    base_url: ${LOCAL_STT_URL:-}
+    model: ${LOCAL_STT_MODEL:-}
+    api_key_env: ""

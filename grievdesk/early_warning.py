@@ -236,15 +236,21 @@ def write_outputs(cfg, items, groups, alerts, findings):
     except ImportError:          # openpyxl missing: CSV outputs still written
         pass
     with open(os.path.join(out, "alerts.txt"), "w", encoding="utf-8") as f:
+        f.write(f"Report date {cfg.get('as_of')}, last {cfg.get('window_days')} days\n\n")
+        if not alerts:
+            f.write("No emerging issues in this period.\n")
         for a in alerts:
             lines, notes = alert_card(a, cfg)
             f.write("\n".join(lines + notes) + "\n\n")
     return summary
 
 
-def run(cfg, router):
+def run(cfg, router, extra_rows=None, checks=True):
+    """extra_rows: complaints from the portal, added to the dashboard (not to the checks, which need test labels)."""
     rows = load_rows(cfg)
     items = classify(router, rows)
+    if extra_rows:
+        items += classify(router, extra_rows)
     groups, alerts = aggregate(cfg, items)
-    findings = run_checks(cfg, rows, items, groups, alerts)
+    findings = run_checks(cfg, rows, items[:len(rows)], *aggregate(cfg, items[:len(rows)])) if checks else []
     return rows, items, groups, alerts, findings

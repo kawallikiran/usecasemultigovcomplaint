@@ -105,6 +105,8 @@ class GrievanceRouter:
         return [w for w in words if self._hit(w, norm, tokens)]
 
     def _ticket(self, case):
+        if case.get("ticket"):                       # portal supplies its own complaint number
+            return str(case["ticket"])
         h = hashlib.sha1(f"{case.get('id')}|{case.get('text')}".encode("utf-8")).hexdigest()[:8]
         return f"GRV-{h.upper()}"
 

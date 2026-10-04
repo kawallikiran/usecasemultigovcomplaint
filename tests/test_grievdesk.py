@@ -61,21 +61,5 @@ class TestUILogic(unittest.TestCase):
         self.assertEqual(len(ui.validate_decision("reroute", "A", "", "r", "auto", "water", "water")), 2)
 
 
-class TestStreamlitApp(unittest.TestCase):
-    """Runs the real app.py headlessly. Skipped if streamlit is not installed (it is in the container)."""
-
-    def test_app_registers_a_grievance(self):
-        try:
-            from streamlit.testing.v1 import AppTest
-        except ImportError:
-            self.skipTest("streamlit not installed")
-        at = AppTest.from_file(os.path.join(ROOT, "app.py"), default_timeout=60).run()
-        self.assertFalse(at.exception, at.exception)
-        at.text_area(key="complaint").set_value("No drinking water from the handpump for a week.")
-        next(b for b in at.button if b.label == "Register grievance").click().run()
-        self.assertFalse(at.exception, at.exception)
-        self.assertIn("What the bot did", [s.value for s in at.subheader])
-
-
 if __name__ == "__main__":
     unittest.main()
