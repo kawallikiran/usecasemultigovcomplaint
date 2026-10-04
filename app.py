@@ -223,11 +223,19 @@ def complaints_view(scope):
     review_panel(store.get(ticket), router)
 
 
+def place_text(rec):
+    parts = []
+    for x in (rec.get("locality"), rec.get("town"), rec.get("district"), rec.get("state"), rec.get("zone")):
+        if x and (not parts or parts[-1] != x):         # "Chennai, Chennai" -> "Chennai"
+            parts.append(x)
+    return ", ".join(parts)
+
+
 def review_panel(rec, router):
     s = rec.get("suggestion") or {}
     st.subheader(rec["ticket"])
     st.caption(f"Received {rec['created'].replace('T', ' ')[:16]} · "
-               f"{', '.join(x for x in (rec.get('locality'), rec.get('town'), rec.get('district'), rec.get('state'), rec.get('zone')) if x)} · "
+               f"{place_text(rec)} · "
                f"Inform by: {rec.get('notify_by', 'portal')} · Due {dt.date.fromisoformat(rec['due_date']).strftime('%d-%m-%Y')} · "
                f"Assigned to {P.officer_label(rec['assigned_to'])}")
     if rec.get("audio") and os.path.exists(os.path.join(ui.ROOT, rec["audio"])):
