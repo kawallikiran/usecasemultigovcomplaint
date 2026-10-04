@@ -189,10 +189,10 @@ After submitting, the citizen sees:
 
 Mobile numbers and emails are stored apart from the complaint register and appear masked everywhere else.
 
-**Analytics** (report date and filters for district, department and dates):
+**Analytics** (filters for zone, state, district, department and dates):
 - **Headline figures:** totals, resolved, pending, overdue, average days to resolve, and voice share.
-- **Where to focus:** emerging issues, departments falling behind, and villages with the most complaints per 1,000 people.
-- **Breakdowns:** by department, category, district, block, village, language and channel.
+- **Where to focus:** emerging issues, departments falling behind, and districts with the most pending complaints.
+- **Breakdowns:** by department, category, zone, state, district, city/town, language and channel.
 - **Service performance by department.**
 - **Download:** an Excel report.
 
