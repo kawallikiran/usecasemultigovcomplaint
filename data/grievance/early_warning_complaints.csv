@@ -1,0 +1,501 @@
+complaint_id,date,district,block,village,channel,language_group,written_as,text,true_issue,scenario
+EW0001,2026-09-06,Demo District,East Block,Chiranagar,text,hi,own script,"चिरानगर में 14 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,stable_electricity
+EW0002,2026-09-06,Demo District,East Block,Kesanagar,voice,cg,own script,"केसानगर के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,background
+EW0003,2026-09-06,Demo District,East Block,Mohlanagar,text,hinglish,Latin letters,"Mohlanagar ke aspatal mein doctor nahi hai, dawai bhi nahi mil rahi.",health,background
+EW0004,2026-09-06,Demo District,North Block,Jharipur,voice,cg,own script,झरीपुर के रद्दा म बड़े-बड़े गड्ढा हवय।,roads,small_roads
+EW0005,2026-09-06,Demo District,South Block,Kesadi,text,cg,own script,हमर पारा के हैंडपंप 13 दिन ले बंद हवय।,water,spike_water
+EW0006,2026-09-06,Demo District,South Block,Kosadi,text,hinglish,Latin letters,Kosadi ki ration dukan wala chawal nahi de raha.,ration,background
+EW0007,2026-09-06,Demo District,South Block,Nawadi,text,cg,own script,"नवाडीह म नल ले पानी नइ आवत हे, 15 दिन होगे।",water,spike_water
+EW0008,2026-09-06,Demo District,South Block,Pandridi,text,hi,own script,"पंडरीडीह गाँव में नल से पानी नहीं आ रहा है, 3 दिन हो गए।",water,spike_water
+EW0009,2026-09-06,Demo District,South Block,Sajadi,text,cg,own script,"हमर गाँव सजाडीह के हैंडपंप 15 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0010,2026-09-06,Demo District,West Block,Nawagaon,text,cg,own script,"नवागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0011,2026-09-07,Demo District,East Block,Jharinagar,text,hi,own script,"हमारे गाँव झरीनगर का हैंडपंप 14 दिन से खराब है, पीने का पानी नहीं है।",water,background
+EW0012,2026-09-07,Demo District,East Block,Latanagar,text,hi,own script,लतानगर के स्कूल में शिक्षक नहीं आते हैं।,education,background
+EW0013,2026-09-07,Demo District,North Block,Dongripur,text,hi,own script,डोंगरीपुर के स्कूल में शिक्षक नहीं आते हैं।,education,background
+EW0014,2026-09-07,Demo District,North Block,Kesapur,voice,cg,own script,"केसापुर के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,background
+EW0015,2026-09-07,Demo District,North Block,Pandripur,text,cg,own script,हमर पारा के हैंडपंप 11 दिन ले बंद हवय।,water,background
+EW0016,2026-09-07,Demo District,North Block,Ranipur,text,hinglish,Latin letters,"Ranipur ke aspatal mein doctor nahi hai, dawai bhi nahi mil rahi.",health,background
+EW0017,2026-09-07,Demo District,South Block,Garhidi,text,cg,Latin letters,"Garhidi me paani nai aawat he, 9 din hoge.",water,spike_water
+EW0018,2026-09-07,Demo District,South Block,Hardidi,text,cg,own script,"हरदीडीह म नल ले पानी नइ आवत हे, 9 दिन होगे।",water,spike_water
+EW0019,2026-09-07,Demo District,South Block,Hardidi,text,en,Latin letters,"No drinking water in Hardidi for 7 days, the handpump is broken.",water,spike_water
+EW0020,2026-09-07,Demo District,South Block,Latadi,text,cg,own script,लताडीह के इस्कूल म गुरुजी नइ आवत हे।,education,background
+EW0021,2026-09-07,Demo District,South Block,Mahudi,text,cg,own script,"महुडीह के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,background
+EW0022,2026-09-07,Demo District,South Block,Parudi,text,cg,own script,"परुडीह म नल ले पानी नइ आवत हे, 6 दिन होगे।",water,spike_water
+EW0023,2026-09-07,Demo District,South Block,Toladi,voice,cg,own script,"टोलाडीह म नल ले पानी नइ आवत हे, 8 दिन होगे।",water,spike_water
+EW0024,2026-09-07,Demo District,West Block,Kesagaon,text,cg,own script,केसागाँव के सरपंच ह जाति के नाम ले के गारी देथे अउ धमकी देथे।,sensitive,background
+EW0025,2026-09-07,Demo District,West Block,Mohlagaon,text,cg,own script,"मोहलागाँव म 10 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,background
+EW0026,2026-09-07,Demo District,West Block,Nawagaon,text,cg,own script,"नवागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0027,2026-09-07,Demo District,West Block,Nawagaon,text,cg,own script,"नवागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0028,2026-09-08,Demo District,East Block,Chiranagar,text,hinglish,Latin letters,"Chiranagar mein bijli nahi hai 14 din se, meter kharab hai.",electricity,stable_electricity
+EW0029,2026-09-08,Demo District,East Block,Jharinagar,text,hi,own script,"झरीनगर में 7 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,stable_electricity
+EW0030,2026-09-08,Demo District,North Block,Dongripur,text,cg,own script,मोर वृद्धावस्था पेंशन 11 दिन ले नइ मिले हे।,pension,background
+EW0031,2026-09-08,Demo District,North Block,Kesapur,text,hi,own script,केसापुर के स्कूल में शिक्षक नहीं आते हैं।,education,background
+EW0032,2026-09-08,Demo District,South Block,Bhanudi,text,cg,Latin letters,Hamaar gaon Bhanudi ke handpump 12 din se kharab hai.,water,spike_water
+EW0033,2026-09-08,Demo District,South Block,Mahudi,text,hinglish,Latin letters,Water supply nahi aa rahi since 3 days in Mahudi.,water,spike_water
+EW0034,2026-09-08,Demo District,South Block,Nawadi,text,cg,own script,हमर पारा के हैंडपंप 15 दिन ले बंद हवय।,water,spike_water
+EW0035,2026-09-08,Demo District,South Block,Sajadi,text,cg,own script,"हमर गाँव सजाडीह के हैंडपंप 5 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0036,2026-09-08,Demo District,South Block,Telidi,voice,cg,Latin letters,Hamaar gaon Telidi ke handpump 15 din se kharab hai.,water,spike_water
+EW0037,2026-09-08,Demo District,West Block,Garhigaon,text,hinglish,Latin letters,Garhigaon ke school mein teacher nahi aate.,education,background
+EW0038,2026-09-08,Demo District,West Block,Nawagaon,text,cg,own script,हमर बात कोनो नइ सुनय।,unclear,background
+EW0039,2026-09-09,Demo District,East Block,Dongrinagar,text,cg,own script,मोर वृद्धावस्था पेंशन 8 दिन ले नइ मिले हे।,pension,background
+EW0040,2026-09-09,Demo District,East Block,Latanagar,text,hi,own script,लतानगर में मेरी जमीन का नामांतरण लंबित है।,revenue,background
+EW0041,2026-09-09,Demo District,North Block,Latapur,voice,cg,own script,"लतापुर म नल ले पानी नइ आवत हे, 10 दिन होगे।",water,background
+EW0042,2026-09-09,Demo District,South Block,Chiradi,text,hi,own script,चिराडीह के स्कूल में शिक्षक नहीं आते हैं।,education,background
+EW0043,2026-09-09,Demo District,South Block,Garhidi,voice,cg,Latin letters,Hamaar gaon Garhidi ke handpump 4 din se kharab hai.,water,spike_water
+EW0044,2026-09-09,Demo District,South Block,Garhidi,voice,cg,own script,गढ़ीडीह के इस्कूल म गुरुजी नइ आवत हे।,education,background
+EW0045,2026-09-09,Demo District,South Block,Hardidi,text,cg,own script,"हमर गाँव हरदीडीह के हैंडपंप 10 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0046,2026-09-09,Demo District,South Block,Nawadi,text,hinglish,Latin letters,"Nawadi mein 15 din se paani nahi aa raha, nal sukha hai.",water,spike_water
+EW0047,2026-09-09,Demo District,South Block,Sirsidi,text,cg,own script,"सिरसीडीह म नल ले पानी नइ आवत हे, 3 दिन होगे।",water,spike_water
+EW0048,2026-09-09,Demo District,West Block,Nawagaon,text,hinglish,Latin letters,"Nawagaon ke aspatal mein doctor nahi hai, dawai bhi nahi mil rahi.",health,cluster_health
+EW0049,2026-09-09,Demo District,West Block,Nawagaon,text,cg,own script,"नवागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0050,2026-09-10,Demo District,East Block,Dongrinagar,text,hi,own script,डोंगरीनगर में पड़ोसी ने मेरे साथ मारपीट की और धमकी दी।,sensitive,background
+EW0051,2026-09-10,Demo District,East Block,Jharinagar,text,cg,own script,"झरीनगर म 14 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,stable_electricity
+EW0052,2026-09-10,Demo District,East Block,Mohlanagar,voice,hinglish,Latin letters,"Mohlanagar mein bijli nahi hai 5 din se, meter kharab hai.",electricity,stable_electricity
+EW0053,2026-09-10,Demo District,East Block,Nawanagar,text,hinglish,Latin letters,Meri vridha pension 8 din se band hai.,pension,background
+EW0054,2026-09-10,Demo District,East Block,Raninagar,text,hinglish,Latin letters,"Raninagar mein bijli nahi hai 9 din se, meter kharab hai.",electricity,stable_electricity
+EW0055,2026-09-10,Demo District,North Block,Mohlapur,text,cg,own script,मोहलापुर म मोर भुइयां के पट्टा अभी तक नइ मिले हे।,revenue,background
+EW0056,2026-09-10,Demo District,North Block,Mohlapur,text,hinglish,Latin letters,Meri vridha pension 14 din se band hai.,pension,background
+EW0057,2026-09-10,Demo District,South Block,Beladi,text,hinglish,Latin letters,Water supply nahi aa rahi since 12 days in Beladi.,water,spike_water
+EW0058,2026-09-10,Demo District,South Block,Garhidi,text,cg,own script,"गढ़ीडीह म नल ले पानी नइ आवत हे, 11 दिन होगे।",water,spike_water
+EW0059,2026-09-10,Demo District,South Block,Pandridi,text,hi,own script,"पंडरीडीह गाँव में नल से पानी नहीं आ रहा है, 12 दिन हो गए।",water,spike_water
+EW0060,2026-09-10,Demo District,South Block,Pandridi,text,cg,own script,हमर पारा के हैंडपंप 4 दिन ले बंद हवय।,water,spike_water
+EW0061,2026-09-10,Demo District,South Block,Parudi,text,cg,own script,हमर पारा के हैंडपंप 15 दिन ले बंद हवय।,water,spike_water
+EW0062,2026-09-10,Demo District,South Block,Telidi,text,hinglish,Latin letters,"Telidi mein 6 din se paani nahi aa raha, nal sukha hai.",water,spike_water
+EW0063,2026-09-10,Demo District,South Block,Toladi,voice,cg,own script,"टोलाडीह म नल ले पानी नइ आवत हे, 9 दिन होगे।",water,spike_water
+EW0064,2026-09-10,Demo District,West Block,Amagaon,text,en,Latin letters,"No drinking water in Amagaon for 6 days, the handpump is broken.",water,background
+EW0065,2026-09-10,Demo District,West Block,Dongrigaon,text,en,Latin letters,"No drinking water in Dongrigaon for 5 days, the handpump is broken.",water,background
+EW0066,2026-09-10,Demo District,West Block,Kesagaon,text,hinglish,Latin letters,Kesagaon ki sadak pe bahut gaddhe hai.,roads,background
+EW0067,2026-09-10,Demo District,West Block,Mohlagaon,text,cg,own script,"मोहलागाँव म 3 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,background
+EW0068,2026-09-10,Demo District,West Block,Nawagaon,text,cg,own script,"नवागाँव म 14 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,background
+EW0069,2026-09-10,Demo District,West Block,Ranigaon,text,cg,own script,रानीगाँव के रद्दा म बड़े-बड़े गड्ढा हवय।,roads,background
+EW0070,2026-09-11,Demo District,East Block,Bhanunagar,text,hinglish,Latin letters,Water supply nahi aa rahi since 9 days in Bhanunagar.,water,background
+EW0071,2026-09-11,Demo District,East Block,Chiranagar,text,cg,own script,"चिरानगर म 11 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,stable_electricity
+EW0072,2026-09-11,Demo District,East Block,Dongrinagar,text,hi,own script,"हमारे गाँव डोंगरीनगर का हैंडपंप 6 दिन से खराब है, पीने का पानी नहीं है।",water,background
+EW0073,2026-09-11,Demo District,East Block,Garhinagar,text,hinglish,Latin letters,Garhinagar mein zameen ka patta nahi mila.,revenue,background
+EW0074,2026-09-11,Demo District,North Block,Kesapur,text,cg,own script,केसापुर के राशन दुकान म चाउर नइ देवत हे।,ration,background
+EW0075,2026-09-11,Demo District,North Block,Mohlapur,voice,hi,own script,"मोहलापुर गाँव में नल से पानी नहीं आ रहा है, 6 दिन हो गए।",water,background
+EW0076,2026-09-11,Demo District,South Block,Beladi,text,hi,own script,"बेलाडीह गाँव में नल से पानी नहीं आ रहा है, 8 दिन हो गए।",water,spike_water
+EW0077,2026-09-11,Demo District,South Block,Nawadi,voice,cg,own script,नवाडीह के राशन दुकान म चाउर नइ देवत हे।,ration,background
+EW0078,2026-09-11,Demo District,South Block,Parudi,text,cg,Latin letters,"Parudi me paani nai aawat he, 11 din hoge.",water,spike_water
+EW0079,2026-09-11,Demo District,South Block,Parudi,text,cg,Latin letters,"Parudi me paani nai aawat he, 15 din hoge.",water,spike_water
+EW0080,2026-09-11,Demo District,South Block,Ranidi,text,cg,own script,हमर पारा के हैंडपंप 6 दिन ले बंद हवय।,water,spike_water
+EW0081,2026-09-11,Demo District,South Block,Telidi,voice,cg,own script,हमर पारा के हैंडपंप 14 दिन ले बंद हवय।,water,spike_water
+EW0082,2026-09-11,Demo District,South Block,Toladi,text,hinglish,Latin letters,Water supply nahi aa rahi since 15 days in Toladi.,water,spike_water
+EW0083,2026-09-11,Demo District,West Block,Kesagaon,text,hinglish,Latin letters,Meri vridha pension 4 din se band hai.,pension,background
+EW0084,2026-09-11,Demo District,West Block,Nawagaon,text,cg,own script,"नवागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0085,2026-09-11,Demo District,West Block,Nawagaon,text,hi,own script,नवागाँव के स्वास्थ्य केंद्र में डॉक्टर नहीं है और दवाई नहीं मिल रही।,health,cluster_health
+EW0086,2026-09-11,Demo District,West Block,Pandrigaon,text,cg,own script,"हमर गाँव पंडरीगाँव के हैंडपंप 6 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,background
+EW0087,2026-09-11,Demo District,West Block,Ranigaon,text,hi,own script,"हमारे गाँव रानीगाँव का हैंडपंप 13 दिन से खराब है, पीने का पानी नहीं है।",water,background
+EW0088,2026-09-12,Demo District,East Block,Chiranagar,text,hinglish,Latin letters,"Chiranagar mein bijli nahi hai 11 din se, meter kharab hai.",electricity,stable_electricity
+EW0089,2026-09-12,Demo District,East Block,Dongrinagar,text,cg,own script,"डोंगरीनगर म 11 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,stable_electricity
+EW0090,2026-09-12,Demo District,East Block,Jharinagar,text,en,Latin letters,"No electricity in Jharinagar for 14 days, the transformer is burnt.",electricity,stable_electricity
+EW0091,2026-09-12,Demo District,East Block,Kesanagar,text,hi,own script,केसानगर की सड़क पर बड़े गड्ढे हैं।,roads,background
+EW0092,2026-09-12,Demo District,North Block,Nawapur,text,cg,own script,"नवापुर के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,background
+EW0093,2026-09-12,Demo District,North Block,Ranipur,text,hi,own script,"रानीपुर गाँव में नल से पानी नहीं आ रहा है, 8 दिन हो गए।",water,background
+EW0094,2026-09-12,Demo District,South Block,Beladi,text,cg,own script,"हमर गाँव बेलाडीह के हैंडपंप 5 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0095,2026-09-12,Demo District,South Block,Beladi,text,en,Latin letters,"No drinking water in Beladi for 4 days, the handpump is broken.",water,spike_water
+EW0096,2026-09-12,Demo District,South Block,Bhanudi,text,cg,Latin letters,Hamaar gaon Bhanudi ke handpump 5 din se kharab hai.,water,spike_water
+EW0097,2026-09-12,Demo District,South Block,Dongridi,text,hinglish,Latin letters,Dongridi mein zameen ka patta nahi mila.,revenue,background
+EW0098,2026-09-12,Demo District,South Block,Hardidi,voice,cg,own script,"हमर गाँव हरदीडीह के हैंडपंप 5 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0099,2026-09-12,Demo District,South Block,Mahudi,text,cg,own script,महुडीह के रद्दा म बड़े-बड़े गड्ढा हवय।,roads,background
+EW0100,2026-09-12,Demo District,South Block,Ranidi,text,cg,own script,"हमर गाँव रानीडीह के हैंडपंप 15 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0101,2026-09-12,Demo District,South Block,Ranidi,text,cg,own script,हमर पारा के हैंडपंप 4 दिन ले बंद हवय।,water,spike_water
+EW0102,2026-09-12,Demo District,South Block,Sajadi,text,hi,own script,"हमारे गाँव सजाडीह का हैंडपंप 12 दिन से खराब है, पीने का पानी नहीं है।",water,spike_water
+EW0103,2026-09-12,Demo District,West Block,Bhanugaon,voice,cg,own script,भानुगाँव के राशन दुकान म चाउर नइ देवत हे।,ration,background
+EW0104,2026-09-12,Demo District,West Block,Chiragaon,text,cg,own script,"चिरागाँव म 12 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,background
+EW0105,2026-09-12,Demo District,West Block,Jharigaon,voice,hi,own script,झरीगाँव की राशन दुकान वाला चावल नहीं दे रहा।,ration,background
+EW0106,2026-09-12,Demo District,West Block,Latagaon,voice,en,Latin letters,The land record for my land in Latagaon shows the wrong boundary after mutation.,revenue,background
+EW0107,2026-09-12,Demo District,West Block,Nawagaon,text,cg,own script,"नवागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0108,2026-09-13,Demo District,East Block,Jharinagar,text,en,Latin letters,"No drinking water in Jharinagar for 6 days, the handpump is broken.",water,background
+EW0109,2026-09-13,Demo District,East Block,Mohlanagar,text,en,Latin letters,"Big potholes on the road to Mohlanagar, the road is unsafe.",roads,background
+EW0110,2026-09-13,Demo District,East Block,Pandrinagar,text,cg,Latin letters,Hamaar gaon Pandrinagar ke handpump 6 din se kharab hai.,water,background
+EW0111,2026-09-13,Demo District,East Block,Raninagar,text,hi,own script,"रानीनगर में 7 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,stable_electricity
+EW0112,2026-09-13,Demo District,North Block,Kesapur,text,hi,own script,"मेरा काम नहीं हो रहा, कोई सुनता नहीं है।",unclear,background
+EW0113,2026-09-13,Demo District,North Block,Pandripur,text,hi,own script,पंडरीपुर के स्वास्थ्य केंद्र में डॉक्टर नहीं है और दवाई नहीं मिल रही।,health,background
+EW0114,2026-09-13,Demo District,South Block,Bhanudi,text,hi,own script,"भानुडीह गाँव में नल से पानी नहीं आ रहा है, 13 दिन हो गए।",water,spike_water
+EW0115,2026-09-13,Demo District,South Block,Garhidi,text,cg,own script,"गढ़ीडीह म नल ले पानी नइ आवत हे, 7 दिन होगे।",water,spike_water
+EW0116,2026-09-13,Demo District,South Block,Hardidi,text,cg,own script,हमर पारा के हैंडपंप 7 दिन ले बंद हवय।,water,spike_water
+EW0117,2026-09-13,Demo District,South Block,Kesadi,text,cg,Latin letters,"Kesadi me paani nai aawat he, 4 din hoge.",water,spike_water
+EW0118,2026-09-13,Demo District,South Block,Pandridi,text,cg,own script,"हमर गाँव पंडरीडीह के हैंडपंप 13 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0119,2026-09-13,Demo District,South Block,Pandridi,text,cg,Latin letters,"Pandridi me paani nai aawat he, 9 din hoge.",water,spike_water
+EW0120,2026-09-13,Demo District,South Block,Ranidi,text,cg,Latin letters,Hamaar gaon Ranidi ke handpump 11 din se kharab hai.,water,spike_water
+EW0121,2026-09-13,Demo District,South Block,Toladi,text,hi,own script,"हमारे गाँव टोलाडीह का हैंडपंप 11 दिन से खराब है, पीने का पानी नहीं है।",water,spike_water
+EW0122,2026-09-13,Demo District,West Block,Garhigaon,text,hi,own script,"गढ़ीगाँव में 13 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,background
+EW0123,2026-09-13,Demo District,West Block,Kesagaon,text,cg,own script,केसागाँव के राशन दुकान म चाउर नइ देवत हे।,ration,background
+EW0124,2026-09-14,Demo District,East Block,Dongrinagar,text,cg,own script,"डोंगरीनगर म 15 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,stable_electricity
+EW0125,2026-09-14,Demo District,East Block,Latanagar,text,cg,own script,"लतानगर म नल ले पानी नइ आवत हे, 15 दिन होगे।",water,background
+EW0126,2026-09-14,Demo District,East Block,Mohlanagar,voice,hi,own script,मोहलानगर की राशन दुकान वाला चावल नहीं दे रहा।,ration,background
+EW0127,2026-09-14,Demo District,East Block,Nawanagar,text,hinglish,Latin letters,Nawanagar mein zameen ka patta nahi mila.,revenue,background
+EW0128,2026-09-14,Demo District,East Block,Pandrinagar,voice,cg,own script,पंडरीनगर के इस्कूल म गुरुजी नइ आवत हे।,education,background
+EW0129,2026-09-14,Demo District,North Block,Chirapur,text,cg,own script,हमर पारा के हैंडपंप 10 दिन ले बंद हवय।,water,background
+EW0130,2026-09-14,Demo District,North Block,Latapur,text,cg,own script,लतापुर के राशन दुकान म चाउर नइ देवत हे।,ration,background
+EW0131,2026-09-14,Demo District,South Block,Beladi,text,hinglish,Latin letters,Water supply nahi aa rahi since 3 days in Beladi.,water,spike_water
+EW0132,2026-09-14,Demo District,South Block,Dongridi,text,cg,own script,"डोंगरीडीह के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,background
+EW0133,2026-09-14,Demo District,South Block,Jharidi,text,hi,own script,"झरीडीह में 10 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,background
+EW0134,2026-09-14,Demo District,South Block,Mahudi,text,hi,own script,"हमारे गाँव महुडीह का हैंडपंप 8 दिन से खराब है, पीने का पानी नहीं है।",water,spike_water
+EW0135,2026-09-14,Demo District,South Block,Pandridi,text,cg,own script,"पंडरीडीह म नल ले पानी नइ आवत हे, 15 दिन होगे।",water,spike_water
+EW0136,2026-09-14,Demo District,South Block,Parudi,text,cg,own script,"परुडीह म नल ले पानी नइ आवत हे, 8 दिन होगे।",water,spike_water
+EW0137,2026-09-14,Demo District,South Block,Sajadi,text,hinglish,Latin letters,Sajadi ki ration dukan wala chawal nahi de raha.,ration,background
+EW0138,2026-09-14,Demo District,South Block,Sirsidi,text,hi,own script,सिरसीडीह की राशन दुकान वाला चावल नहीं दे रहा।,ration,background
+EW0139,2026-09-14,Demo District,South Block,Telidi,text,hi,own script,"तेलीडीह में 7 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,background
+EW0140,2026-09-14,Demo District,South Block,Toladi,text,hi,own script,"हमारे गाँव टोलाडीह का हैंडपंप 14 दिन से खराब है, पीने का पानी नहीं है।",water,spike_water
+EW0141,2026-09-14,Demo District,West Block,Amagaon,text,cg,own script,आमागाँव के इस्कूल म गुरुजी नइ आवत हे।,education,background
+EW0142,2026-09-14,Demo District,West Block,Amagaon,text,cg,own script,हमर पारा के हैंडपंप 7 दिन ले बंद हवय।,water,background
+EW0143,2026-09-14,Demo District,West Block,Nawagaon,text,hi,own script,नवागाँव के स्वास्थ्य केंद्र में डॉक्टर नहीं है और दवाई नहीं मिल रही।,health,cluster_health
+EW0144,2026-09-15,Demo District,East Block,Bhanunagar,text,hinglish,Latin letters,Bhanunagar mein zameen ka patta nahi mila.,revenue,background
+EW0145,2026-09-15,Demo District,East Block,Dongrinagar,text,hinglish,Latin letters,Dongrinagar ke ration dealer ne rishwat maangi.,sensitive,background
+EW0146,2026-09-15,Demo District,East Block,Mohlanagar,text,hi,own script,"मोहलानगर में 12 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,stable_electricity
+EW0147,2026-09-15,Demo District,East Block,Mohlanagar,text,hinglish,Latin letters,"Mohlanagar mein bijli nahi hai 7 din se, meter kharab hai.",electricity,stable_electricity
+EW0148,2026-09-15,Demo District,East Block,Pandrinagar,text,hi,own script,मेरी विधवा पेंशन 12 दिन से नहीं आई है।,pension,background
+EW0149,2026-09-15,Demo District,East Block,Raninagar,text,hinglish,Latin letters,"Raninagar mein bijli nahi hai 15 din se, meter kharab hai.",electricity,stable_electricity
+EW0150,2026-09-15,Demo District,South Block,Beladi,voice,cg,own script,"बेलाडीह म नल ले पानी नइ आवत हे, 14 दिन होगे।",water,spike_water
+EW0151,2026-09-15,Demo District,South Block,Dongridi,text,cg,own script,डोंगरीडीह म मोर भुइयां के पट्टा अभी तक नइ मिले हे।,revenue,background
+EW0152,2026-09-15,Demo District,South Block,Garhidi,text,cg,own script,"गढ़ीडीह म नल ले पानी नइ आवत हे, 15 दिन होगे।",water,spike_water
+EW0153,2026-09-15,Demo District,South Block,Hardidi,text,cg,own script,"हरदीडीह म नल ले पानी नइ आवत हे, 7 दिन होगे।",water,spike_water
+EW0154,2026-09-15,Demo District,South Block,Hardidi,text,cg,own script,"हरदीडीह म नल ले पानी नइ आवत हे, 9 दिन होगे।",water,spike_water
+EW0155,2026-09-15,Demo District,South Block,Parudi,voice,cg,own script,"परुडीह म नल ले पानी नइ आवत हे, 5 दिन होगे।",water,spike_water
+EW0156,2026-09-15,Demo District,South Block,Sajadi,voice,cg,own script,"हमर गाँव सजाडीह के हैंडपंप 13 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0157,2026-09-15,Demo District,South Block,Sirsidi,text,cg,own script,हमर पारा के हैंडपंप 14 दिन ले बंद हवय।,water,spike_water
+EW0158,2026-09-15,Demo District,South Block,Sonadi,text,cg,own script,सोनाडीह के राशन दुकान म चाउर नइ देवत हे।,ration,background
+EW0159,2026-09-15,Demo District,South Block,Telidi,voice,cg,own script,तेलीडीह के सरपंच ह जाति के नाम ले के गारी देथे अउ धमकी देथे।,sensitive,background
+EW0160,2026-09-15,Demo District,West Block,Bhanugaon,text,cg,own script,हमर बात कोनो नइ सुनय।,unclear,background
+EW0161,2026-09-15,Demo District,West Block,Pandrigaon,text,cg,own script,पंडरीगाँव के इस्कूल म गुरुजी नइ आवत हे।,education,background
+EW0162,2026-09-16,Demo District,East Block,Chiranagar,text,hi,own script,चिरानगर की सड़क पर बड़े गड्ढे हैं।,roads,background
+EW0163,2026-09-16,Demo District,East Block,Chiranagar,voice,cg,own script,चिरानगर के सरपंच ह जाति के नाम ले के गारी देथे अउ धमकी देथे।,sensitive,background
+EW0164,2026-09-16,Demo District,East Block,Dongrinagar,text,en,Latin letters,The ration shop dealer in Dongrinagar refuses to give rice.,ration,background
+EW0165,2026-09-16,Demo District,East Block,Jharinagar,text,hi,own script,"झरीनगर में 3 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,stable_electricity
+EW0166,2026-09-16,Demo District,North Block,Chirapur,text,cg,own script,चिरापुर के इस्कूल म गुरुजी नइ आवत हे।,education,background
+EW0167,2026-09-16,Demo District,North Block,Kesapur,text,hi,own script,केसापुर की राशन दुकान वाला चावल नहीं दे रहा।,ration,background
+EW0168,2026-09-16,Demo District,South Block,Garhidi,text,cg,own script,हमर पारा के हैंडपंप 10 दिन ले बंद हवय।,water,spike_water
+EW0169,2026-09-16,Demo District,South Block,Nawadi,text,cg,own script,"हमर गाँव नवाडीह के हैंडपंप 7 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0170,2026-09-16,Demo District,South Block,Sajadi,text,cg,own script,"सजाडीह म नल ले पानी नइ आवत हे, 9 दिन होगे।",water,spike_water
+EW0171,2026-09-16,Demo District,South Block,Sirsidi,text,cg,own script,"सिरसीडीह म नल ले पानी नइ आवत हे, 12 दिन होगे।",water,spike_water
+EW0172,2026-09-16,Demo District,South Block,Telidi,text,hi,own script,"तेलीडीह में 6 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,background
+EW0173,2026-09-16,Demo District,West Block,Nawagaon,text,cg,own script,"नवागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0174,2026-09-16,Demo District,West Block,Nawagaon,text,cg,own script,"नवागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0175,2026-09-16,Demo District,West Block,Ranigaon,voice,hi,own script,रानीगाँव की सड़क पर बड़े गड्ढे हैं।,roads,background
+EW0176,2026-09-17,Demo District,East Block,Bhanunagar,text,hinglish,Latin letters,Bhanunagar ki sadak pe bahut gaddhe hai.,roads,background
+EW0177,2026-09-17,Demo District,East Block,Chiranagar,text,hinglish,Latin letters,"Chiranagar mein bijli nahi hai 13 din se, meter kharab hai.",electricity,stable_electricity
+EW0178,2026-09-17,Demo District,East Block,Chiranagar,text,en,Latin letters,"No electricity in Chiranagar for 12 days, the transformer is burnt.",electricity,stable_electricity
+EW0179,2026-09-17,Demo District,East Block,Chiranagar,text,hi,own script,"मेरा काम नहीं हो रहा, कोई सुनता नहीं है।",unclear,background
+EW0180,2026-09-17,Demo District,East Block,Mohlanagar,text,hinglish,Latin letters,"Mohlanagar mein bijli nahi hai 4 din se, meter kharab hai.",electricity,stable_electricity
+EW0181,2026-09-17,Demo District,East Block,Nawanagar,text,hinglish,Latin letters,Nawanagar ke school mein teacher nahi aate.,education,background
+EW0182,2026-09-17,Demo District,North Block,Amapur,text,en,Latin letters,The ration dealer in Amapur asked for a bribe to give my quota.,sensitive,background
+EW0183,2026-09-17,Demo District,North Block,Nawapur,text,cg,own script,नवापुर के रद्दा म बड़े-बड़े गड्ढा हवय।,roads,small_roads
+EW0184,2026-09-17,Demo District,South Block,Bhanudi,text,cg,own script,हमर पारा के हैंडपंप 12 दिन ले बंद हवय।,water,spike_water
+EW0185,2026-09-17,Demo District,South Block,Garhidi,text,hi,own script,"हमारे गाँव गढ़ीडीह का हैंडपंप 6 दिन से खराब है, पीने का पानी नहीं है।",water,spike_water
+EW0186,2026-09-17,Demo District,South Block,Garhidi,text,cg,own script,"हमर गाँव गढ़ीडीह के हैंडपंप 12 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0187,2026-09-17,Demo District,South Block,Pandridi,text,hi,own script,"पंडरीडीह गाँव में नल से पानी नहीं आ रहा है, 7 दिन हो गए।",water,spike_water
+EW0188,2026-09-17,Demo District,South Block,Pandridi,text,hi,own script,"हमारे गाँव पंडरीडीह का हैंडपंप 14 दिन से खराब है, पीने का पानी नहीं है।",water,spike_water
+EW0189,2026-09-17,Demo District,South Block,Toladi,text,cg,Latin letters,"Toladi me paani nai aawat he, 3 din hoge.",water,spike_water
+EW0190,2026-09-17,Demo District,West Block,Bhanugaon,text,cg,own script,भानुगाँव के राशन दुकान म चाउर नइ देवत हे।,ration,background
+EW0191,2026-09-17,Demo District,West Block,Nawagaon,text,hi,own script,नवागाँव के स्वास्थ्य केंद्र में डॉक्टर नहीं है और दवाई नहीं मिल रही।,health,cluster_health
+EW0192,2026-09-18,Demo District,East Block,Chiranagar,text,hi,own script,"चिरानगर गाँव में नल से पानी नहीं आ रहा है, 4 दिन हो गए।",water,background
+EW0193,2026-09-18,Demo District,East Block,Dongrinagar,voice,hinglish,Latin letters,Meri vridha pension 12 din se band hai.,pension,background
+EW0194,2026-09-18,Demo District,East Block,Jharinagar,text,hi,own script,"झरीनगर में 15 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,stable_electricity
+EW0195,2026-09-18,Demo District,North Block,Latapur,voice,cg,own script,"लतापुर म 4 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,background
+EW0196,2026-09-18,Demo District,South Block,Beladi,text,hi,own script,बेलाडीह की राशन दुकान वाला चावल नहीं दे रहा।,ration,background
+EW0197,2026-09-18,Demo District,South Block,Garhidi,text,hi,own script,"गढ़ीडीह गाँव में नल से पानी नहीं आ रहा है, 11 दिन हो गए।",water,spike_water
+EW0198,2026-09-18,Demo District,South Block,Nawadi,text,cg,own script,नवाडीह के इस्कूल म गुरुजी नइ आवत हे।,education,background
+EW0199,2026-09-18,Demo District,South Block,Telidi,text,cg,own script,"हमर गाँव तेलीडीह के हैंडपंप 6 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0200,2026-09-18,Demo District,West Block,Latagaon,voice,cg,own script,"लतागाँव म 4 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,background
+EW0201,2026-09-18,Demo District,West Block,Latagaon,text,cg,own script,लतागाँव के इस्कूल म गुरुजी नइ आवत हे।,education,background
+EW0202,2026-09-19,Demo District,East Block,Kesanagar,text,en,Latin letters,My old age pension has not come for 9 days.,pension,background
+EW0203,2026-09-19,Demo District,East Block,Pandrinagar,text,hi,own script,पंडरीनगर में मेरी जमीन का नामांतरण लंबित है।,revenue,background
+EW0204,2026-09-19,Demo District,North Block,Jharipur,text,hi,own script,झरीपुर की सड़क पर बड़े गड्ढे हैं।,roads,small_roads
+EW0205,2026-09-19,Demo District,South Block,Beladi,voice,cg,Latin letters,Hamaar gaon Beladi ke handpump 9 din se kharab hai.,water,spike_water
+EW0206,2026-09-19,Demo District,South Block,Kesadi,text,cg,own script,हमर पारा के हैंडपंप 14 दिन ले बंद हवय।,water,spike_water
+EW0207,2026-09-19,Demo District,South Block,Kesadi,voice,hi,own script,"केसाडीह गाँव में नल से पानी नहीं आ रहा है, 7 दिन हो गए।",water,spike_water
+EW0208,2026-09-19,Demo District,South Block,Nawadi,text,cg,own script,हमर पारा के हैंडपंप 3 दिन ले बंद हवय।,water,spike_water
+EW0209,2026-09-19,Demo District,South Block,Pandridi,text,cg,Latin letters,"Pandridi me paani nai aawat he, 11 din hoge.",water,spike_water
+EW0210,2026-09-19,Demo District,South Block,Telidi,voice,hi,own script,"तेलीडीह गाँव में नल से पानी नहीं आ रहा है, 8 दिन हो गए।",water,spike_water
+EW0211,2026-09-19,Demo District,South Block,Telidi,voice,hinglish,Latin letters,"Telidi mein 4 din se paani nahi aa raha, nal sukha hai.",water,spike_water
+EW0212,2026-09-19,Demo District,West Block,Nawagaon,text,en,Latin letters,The ration shop dealer in Nawagaon refuses to give rice.,ration,background
+EW0213,2026-09-20,Demo District,East Block,Jharinagar,text,hinglish,Latin letters,"Jharinagar mein bijli nahi hai 15 din se, meter kharab hai.",electricity,stable_electricity
+EW0214,2026-09-20,Demo District,East Block,Nawanagar,voice,hi,own script,नवानगर के स्कूल में शिक्षक नहीं आते हैं।,education,background
+EW0215,2026-09-20,Demo District,East Block,Pandrinagar,voice,cg,own script,"पंडरीनगर म 11 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,stable_electricity
+EW0216,2026-09-20,Demo District,North Block,Chirapur,voice,cg,own script,"चिरापुर म 10 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,background
+EW0217,2026-09-20,Demo District,North Block,Jharipur,text,cg,own script,झरीपुर के रद्दा म बड़े-बड़े गड्ढा हवय।,roads,small_roads
+EW0218,2026-09-20,Demo District,North Block,Ranipur,text,cg,own script,"रानीपुर म नल ले पानी नइ आवत हे, 3 दिन होगे।",water,background
+EW0219,2026-09-20,Demo District,South Block,Bhanudi,voice,cg,Latin letters,Hamaar gaon Bhanudi ke handpump 15 din se kharab hai.,water,spike_water
+EW0220,2026-09-20,Demo District,South Block,Bhanudi,text,cg,own script,"भानुडीह म 15 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,background
+EW0221,2026-09-20,Demo District,South Block,Dhamnidi,text,hi,own script,धमनीडीह के स्कूल में शिक्षक नहीं आते हैं।,education,background
+EW0222,2026-09-20,Demo District,South Block,Dongridi,text,cg,own script,"हमर गाँव डोंगरीडीह के हैंडपंप 4 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0223,2026-09-20,Demo District,South Block,Garhidi,voice,cg,own script,"हमर गाँव गढ़ीडीह के हैंडपंप 4 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0224,2026-09-20,Demo District,South Block,Kesadi,text,hi,own script,"हमारे गाँव केसाडीह का हैंडपंप 11 दिन से खराब है, पीने का पानी नहीं है।",water,spike_water
+EW0225,2026-09-20,Demo District,South Block,Kurudi,text,cg,Latin letters,Hamaar gaon Kurudi ke handpump 15 din se kharab hai.,water,spike_water
+EW0226,2026-09-20,Demo District,South Block,Kurudi,text,hinglish,Latin letters,Water supply nahi aa rahi since 8 days in Kurudi.,water,spike_water
+EW0227,2026-09-20,Demo District,South Block,Nawadi,text,cg,own script,"हमर गाँव नवाडीह के हैंडपंप 3 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0228,2026-09-20,Demo District,South Block,Ranidi,text,cg,own script,"रानीडीह म 4 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,background
+EW0229,2026-09-20,Demo District,South Block,Sajadi,text,cg,own script,"सजाडीह म 8 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,background
+EW0230,2026-09-20,Demo District,South Block,Sirsidi,text,cg,own script,"सिरसीडीह म 5 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,background
+EW0231,2026-09-20,Demo District,South Block,Telidi,text,cg,own script,मोर वृद्धावस्था पेंशन 13 दिन ले नइ मिले हे।,pension,background
+EW0232,2026-09-20,Demo District,West Block,Amagaon,text,cg,own script,"आमागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0233,2026-09-20,Demo District,West Block,Kesagaon,text,cg,own script,केसागाँव के राशन दुकान म चाउर नइ देवत हे।,ration,background
+EW0234,2026-09-20,Demo District,West Block,Mohlagaon,text,cg,own script,मोहलागाँव के सरपंच ह जाति के नाम ले के गारी देथे अउ धमकी देथे।,sensitive,background
+EW0235,2026-09-21,Demo District,East Block,Jharinagar,text,hinglish,Latin letters,"Jharinagar mein bijli nahi hai 14 din se, meter kharab hai.",electricity,stable_electricity
+EW0236,2026-09-21,Demo District,East Block,Jharinagar,text,hi,own script,"झरीनगर में 5 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,stable_electricity
+EW0237,2026-09-21,Demo District,East Block,Mohlanagar,text,hi,own script,"मोहलानगर में 12 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,stable_electricity
+EW0238,2026-09-21,Demo District,North Block,Jharipur,text,cg,own script,"हमर गाँव झरीपुर के हैंडपंप 11 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,background
+EW0239,2026-09-21,Demo District,South Block,Hardidi,text,cg,own script,"हमर गाँव हरदीडीह के हैंडपंप 7 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0240,2026-09-21,Demo District,South Block,Kesadi,text,cg,own script,"केसाडीह म नल ले पानी नइ आवत हे, 3 दिन होगे।",water,spike_water
+EW0241,2026-09-21,Demo District,South Block,Toladi,text,hinglish,Latin letters,"Toladi mein 15 din se paani nahi aa raha, nal sukha hai.",water,spike_water
+EW0242,2026-09-21,Demo District,South Block,Toladi,text,cg,Latin letters,"Toladi me paani nai aawat he, 10 din hoge.",water,spike_water
+EW0243,2026-09-21,Demo District,South Block,Toladi,text,cg,own script,हमर पारा के हैंडपंप 4 दिन ले बंद हवय।,water,spike_water
+EW0244,2026-09-21,Demo District,West Block,Amagaon,text,hi,own script,आमागाँव के स्वास्थ्य केंद्र में डॉक्टर नहीं है और दवाई नहीं मिल रही।,health,cluster_health
+EW0245,2026-09-21,Demo District,West Block,Amagaon,voice,cg,own script,"आमागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0246,2026-09-22,Demo District,East Block,Dongrinagar,text,hinglish,Latin letters,"Dongrinagar mein bijli nahi hai 6 din se, meter kharab hai.",electricity,stable_electricity
+EW0247,2026-09-22,Demo District,East Block,Dongrinagar,text,en,Latin letters,The teacher does not come to the Dongrinagar primary school.,education,background
+EW0248,2026-09-22,Demo District,East Block,Garhinagar,voice,hi,own script,"मेरा काम नहीं हो रहा, कोई सुनता नहीं है।",unclear,background
+EW0249,2026-09-22,Demo District,North Block,Bhanupur,voice,cg,Latin letters,"Bhanupur me paani nai aawat he, 5 din hoge.",water,background
+EW0250,2026-09-22,Demo District,North Block,Bhanupur,text,hi,own script,भानुपुर में मेरी जमीन का नामांतरण लंबित है।,revenue,background
+EW0251,2026-09-22,Demo District,South Block,Dongridi,text,cg,own script,हमर पारा के हैंडपंप 13 दिन ले बंद हवय।,water,spike_water
+EW0252,2026-09-22,Demo District,South Block,Jharidi,text,cg,own script,"झरीडीह म नल ले पानी नइ आवत हे, 11 दिन होगे।",water,spike_water
+EW0253,2026-09-22,Demo District,South Block,Latadi,text,cg,own script,"हमर गाँव लताडीह के हैंडपंप 4 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0254,2026-09-22,Demo District,South Block,Ranidi,voice,hi,own script,"हमारे गाँव रानीडीह का हैंडपंप 6 दिन से खराब है, पीने का पानी नहीं है।",water,spike_water
+EW0255,2026-09-22,Demo District,South Block,Sajadi,text,hinglish,Latin letters,Water supply nahi aa rahi since 15 days in Sajadi.,water,spike_water
+EW0256,2026-09-22,Demo District,West Block,Amagaon,text,cg,own script,"आमागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0257,2026-09-22,Demo District,West Block,Bhanugaon,voice,cg,own script,भानुगाँव के इस्कूल म गुरुजी नइ आवत हे।,education,background
+EW0258,2026-09-22,Demo District,West Block,Chiragaon,text,cg,own script,चिरागाँव के रद्दा म बड़े-बड़े गड्ढा हवय।,roads,background
+EW0259,2026-09-22,Demo District,West Block,Chiragaon,text,cg,own script,मोर वृद्धावस्था पेंशन 3 दिन ले नइ मिले हे।,pension,background
+EW0260,2026-09-22,Demo District,West Block,Nawagaon,text,hi,own script,नवागाँव के स्वास्थ्य केंद्र में डॉक्टर नहीं है और दवाई नहीं मिल रही।,health,cluster_health
+EW0261,2026-09-22,Demo District,West Block,Pandrigaon,text,hi,own script,पंडरीगाँव की राशन दुकान वाला चावल नहीं दे रहा।,ration,background
+EW0262,2026-09-23,Demo District,East Block,Kesanagar,voice,en,Latin letters,"No drinking water in Kesanagar for 8 days, the handpump is broken.",water,background
+EW0263,2026-09-23,Demo District,East Block,Latanagar,text,en,Latin letters,"No electricity in Latanagar for 11 days, the transformer is burnt.",electricity,stable_electricity
+EW0264,2026-09-23,Demo District,North Block,Amapur,text,hi,own script,आमापुर में पड़ोसी ने मेरे साथ मारपीट की और धमकी दी।,sensitive,background
+EW0265,2026-09-23,Demo District,North Block,Bhanupur,text,cg,own script,मोर वृद्धावस्था पेंशन 7 दिन ले नइ मिले हे।,pension,background
+EW0266,2026-09-23,Demo District,North Block,Chirapur,text,hi,own script,चिरापुर की सड़क पर बड़े गड्ढे हैं।,roads,small_roads
+EW0267,2026-09-23,Demo District,North Block,Chirapur,text,cg,own script,मोर वृद्धावस्था पेंशन 8 दिन ले नइ मिले हे।,pension,background
+EW0268,2026-09-23,Demo District,North Block,Garhipur,text,en,Latin letters,No doctor at the Garhipur health centre and no medicine for 9 days.,health,background
+EW0269,2026-09-23,Demo District,North Block,Jharipur,voice,cg,own script,झरीपुर के रद्दा म बड़े-बड़े गड्ढा हवय।,roads,small_roads
+EW0270,2026-09-23,Demo District,South Block,Beladi,text,cg,own script,"बेलाडीह म नल ले पानी नइ आवत हे, 14 दिन होगे।",water,spike_water
+EW0271,2026-09-23,Demo District,South Block,Jharidi,text,hinglish,Latin letters,Water supply nahi aa rahi since 8 days in Jharidi.,water,spike_water
+EW0272,2026-09-23,Demo District,South Block,Jharidi,voice,cg,own script,हमर पारा के हैंडपंप 15 दिन ले बंद हवय।,water,spike_water
+EW0273,2026-09-23,Demo District,South Block,Kesadi,voice,cg,Latin letters,"Kesadi me paani nai aawat he, 11 din hoge.",water,spike_water
+EW0274,2026-09-23,Demo District,South Block,Latadi,voice,cg,own script,हमर पारा के हैंडपंप 10 दिन ले बंद हवय।,water,spike_water
+EW0275,2026-09-23,Demo District,South Block,Mahudi,voice,cg,own script,"महुडीह म नल ले पानी नइ आवत हे, 13 दिन होगे।",water,spike_water
+EW0276,2026-09-23,Demo District,South Block,Pandridi,voice,cg,own script,"पंडरीडीह म नल ले पानी नइ आवत हे, 5 दिन होगे।",water,spike_water
+EW0277,2026-09-23,Demo District,South Block,Parudi,text,hi,own script,परुडीह की सड़क पर बड़े गड्ढे हैं।,roads,background
+EW0278,2026-09-23,Demo District,South Block,Sirsidi,text,cg,Latin letters,Hamaar gaon Sirsidi ke handpump 10 din se kharab hai.,water,spike_water
+EW0279,2026-09-23,Demo District,South Block,Toladi,text,cg,own script,"हमर गाँव टोलाडीह के हैंडपंप 3 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0280,2026-09-23,Demo District,West Block,Jharigaon,voice,cg,own script,झरीगाँव के इस्कूल म गुरुजी नइ आवत हे।,education,background
+EW0281,2026-09-23,Demo District,West Block,Mohlagaon,text,hi,own script,मोहलागाँव के स्कूल में शिक्षक नहीं आते हैं।,education,background
+EW0282,2026-09-23,Demo District,West Block,Mohlagaon,text,hinglish,Latin letters,Mohlagaon mein zameen ka patta nahi mila.,revenue,background
+EW0283,2026-09-24,Demo District,East Block,Garhinagar,text,en,Latin letters,"No electricity in Garhinagar for 9 days, the transformer is burnt.",electricity,stable_electricity
+EW0284,2026-09-24,Demo District,East Block,Garhinagar,text,hinglish,Latin letters,"Garhinagar mein bijli nahi hai 12 din se, meter kharab hai.",electricity,stable_electricity
+EW0285,2026-09-24,Demo District,East Block,Latanagar,voice,hinglish,Latin letters,"Latanagar mein bijli nahi hai 13 din se, meter kharab hai.",electricity,stable_electricity
+EW0286,2026-09-24,Demo District,East Block,Pandrinagar,text,cg,own script,"पंडरीनगर म 3 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,stable_electricity
+EW0287,2026-09-24,Demo District,North Block,Jharipur,text,hi,own script,"झरीपुर गाँव में नल से पानी नहीं आ रहा है, 13 दिन हो गए।",water,background
+EW0288,2026-09-24,Demo District,South Block,Dongridi,text,hi,own script,"डोंगरीडीह गाँव में नल से पानी नहीं आ रहा है, 12 दिन हो गए।",water,spike_water
+EW0289,2026-09-24,Demo District,South Block,Jharidi,voice,hi,own script,"झरीडीह गाँव में नल से पानी नहीं आ रहा है, 10 दिन हो गए।",water,spike_water
+EW0290,2026-09-24,Demo District,South Block,Jharidi,voice,hinglish,Latin letters,"Jharidi mein 9 din se paani nahi aa raha, nal sukha hai.",water,spike_water
+EW0291,2026-09-24,Demo District,South Block,Jharidi,text,cg,Latin letters,"Jharidi me paani nai aawat he, 4 din hoge.",water,spike_water
+EW0292,2026-09-24,Demo District,South Block,Kesadi,voice,cg,own script,"हमर गाँव केसाडीह के हैंडपंप 11 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0293,2026-09-24,Demo District,South Block,Latadi,text,cg,own script,हमर पारा के हैंडपंप 9 दिन ले बंद हवय।,water,spike_water
+EW0294,2026-09-24,Demo District,South Block,Mahudi,voice,cg,Latin letters,"Mahudi me paani nai aawat he, 6 din hoge.",water,spike_water
+EW0295,2026-09-24,Demo District,South Block,Pandridi,voice,cg,own script,"पंडरीडीह म नल ले पानी नइ आवत हे, 12 दिन होगे।",water,spike_water
+EW0296,2026-09-24,Demo District,South Block,Ranidi,text,hi,own script,"रानीडीह गाँव में नल से पानी नहीं आ रहा है, 7 दिन हो गए।",water,spike_water
+EW0297,2026-09-24,Demo District,West Block,Amagaon,text,cg,own script,"आमागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0298,2026-09-24,Demo District,West Block,Amagaon,text,cg,own script,"आमागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0299,2026-09-24,Demo District,West Block,Kesagaon,text,cg,own script,हमर पारा के हैंडपंप 7 दिन ले बंद हवय।,water,background
+EW0300,2026-09-24,Demo District,West Block,Kesagaon,voice,cg,own script,"केसागाँव म 8 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,background
+EW0301,2026-09-25,Demo District,East Block,Jharinagar,text,cg,own script,"झरीनगर म 4 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,stable_electricity
+EW0302,2026-09-25,Demo District,East Block,Latanagar,text,en,Latin letters,"No electricity in Latanagar for 5 days, the transformer is burnt.",electricity,stable_electricity
+EW0303,2026-09-25,Demo District,East Block,Latanagar,text,hi,own script,लतानगर के स्कूल में शिक्षक नहीं आते हैं।,education,background
+EW0304,2026-09-25,Demo District,East Block,Raninagar,text,en,Latin letters,"No electricity in Raninagar for 15 days, the transformer is burnt.",electricity,stable_electricity
+EW0305,2026-09-25,Demo District,North Block,Amapur,voice,cg,own script,आमापुर के इस्कूल म गुरुजी नइ आवत हे।,education,background
+EW0306,2026-09-25,Demo District,North Block,Chirapur,text,en,Latin letters,The ration shop dealer in Chirapur refuses to give rice.,ration,background
+EW0307,2026-09-25,Demo District,North Block,Nawapur,text,hi,own script,मेरी विधवा पेंशन 15 दिन से नहीं आई है।,pension,background
+EW0308,2026-09-25,Demo District,South Block,Amadi,text,cg,own script,आमाडीह के सरपंच ह जाति के नाम ले के गारी देथे अउ धमकी देथे।,sensitive,background
+EW0309,2026-09-25,Demo District,South Block,Dongridi,text,cg,own script,"डोंगरीडीह म नल ले पानी नइ आवत हे, 11 दिन होगे।",water,spike_water
+EW0310,2026-09-25,Demo District,South Block,Hardidi,voice,cg,Latin letters,"Hardidi me paani nai aawat he, 6 din hoge.",water,spike_water
+EW0311,2026-09-25,Demo District,South Block,Kesadi,text,cg,own script,"हमर गाँव केसाडीह के हैंडपंप 10 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0312,2026-09-25,Demo District,South Block,Kesadi,text,cg,Latin letters,Hamaar gaon Kesadi ke handpump 10 din se kharab hai.,water,spike_water
+EW0313,2026-09-25,Demo District,South Block,Kurudi,text,cg,own script,"कुरुडीह म नल ले पानी नइ आवत हे, 10 दिन होगे।",water,spike_water
+EW0314,2026-09-25,Demo District,South Block,Mahudi,voice,cg,Latin letters,"Mahudi me paani nai aawat he, 6 din hoge.",water,spike_water
+EW0315,2026-09-25,Demo District,South Block,Pandridi,voice,cg,own script,पंडरीडीह के रद्दा म बड़े-बड़े गड्ढा हवय।,roads,background
+EW0316,2026-09-25,Demo District,South Block,Parudi,text,cg,own script,"परुडीह म नल ले पानी नइ आवत हे, 5 दिन होगे।",water,spike_water
+EW0317,2026-09-25,Demo District,South Block,Parudi,voice,cg,own script,"परुडीह म नल ले पानी नइ आवत हे, 7 दिन होगे।",water,spike_water
+EW0318,2026-09-25,Demo District,South Block,Ranidi,voice,cg,own script,हमर पारा के हैंडपंप 3 दिन ले बंद हवय।,water,spike_water
+EW0319,2026-09-25,Demo District,South Block,Ranidi,text,cg,own script,हमर बात कोनो नइ सुनय।,unclear,background
+EW0320,2026-09-25,Demo District,South Block,Sirsidi,text,hi,own script,"सिरसीडीह गाँव में नल से पानी नहीं आ रहा है, 13 दिन हो गए।",water,spike_water
+EW0321,2026-09-25,Demo District,South Block,Sirsidi,voice,cg,own script,"सिरसीडीह म 6 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,background
+EW0322,2026-09-25,Demo District,South Block,Telidi,voice,cg,own script,"तेलीडीह म नल ले पानी नइ आवत हे, 8 दिन होगे।",water,spike_water
+EW0323,2026-09-25,Demo District,West Block,Bhanugaon,text,cg,own script,भानुगाँव के इस्कूल म गुरुजी नइ आवत हे।,education,background
+EW0324,2026-09-25,Demo District,West Block,Nawagaon,text,cg,own script,"नवागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0325,2026-09-25,Demo District,West Block,Ranigaon,text,cg,own script,रानीगाँव के रद्दा म बड़े-बड़े गड्ढा हवय।,roads,background
+EW0326,2026-09-26,Demo District,East Block,Amanagar,text,hi,own script,आमानगर की राशन दुकान वाला चावल नहीं दे रहा।,ration,background
+EW0327,2026-09-26,Demo District,East Block,Dongrinagar,text,cg,own script,डोंगरीनगर म मोर भुइयां के पट्टा अभी तक नइ मिले हे।,revenue,background
+EW0328,2026-09-26,Demo District,East Block,Kesanagar,text,hi,own script,केसानगर की सड़क पर बड़े गड्ढे हैं।,roads,background
+EW0329,2026-09-26,Demo District,East Block,Pandrinagar,text,cg,own script,"पंडरीनगर म 15 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,stable_electricity
+EW0330,2026-09-26,Demo District,North Block,Ranipur,voice,en,Latin letters,"Big potholes on the road to Ranipur, the road is unsafe.",roads,small_roads
+EW0331,2026-09-26,Demo District,South Block,Amadi,text,hinglish,Latin letters,Water supply nahi aa rahi since 5 days in Amadi.,water,spike_water
+EW0332,2026-09-26,Demo District,South Block,Amadi,text,cg,own script,"आमाडीह म नल ले पानी नइ आवत हे, 12 दिन होगे।",water,spike_water
+EW0333,2026-09-26,Demo District,South Block,Kosadi,text,cg,own script,हमर पारा के हैंडपंप 8 दिन ले बंद हवय।,water,spike_water
+EW0334,2026-09-26,Demo District,South Block,Kurudi,text,hi,own script,"कुरुडीह गाँव में नल से पानी नहीं आ रहा है, 9 दिन हो गए।",water,spike_water
+EW0335,2026-09-26,Demo District,South Block,Mahudi,text,cg,own script,"महुडीह म नल ले पानी नइ आवत हे, 3 दिन होगे।",water,spike_water
+EW0336,2026-09-26,Demo District,South Block,Mohladi,text,hi,own script,"मोहलाडीह गाँव में नल से पानी नहीं आ रहा है, 3 दिन हो गए।",water,spike_water
+EW0337,2026-09-26,Demo District,South Block,Nawadi,text,cg,own script,हमर पारा के हैंडपंप 7 दिन ले बंद हवय।,water,spike_water
+EW0338,2026-09-26,Demo District,South Block,Nawadi,text,cg,own script,"हमर गाँव नवाडीह के हैंडपंप 15 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0339,2026-09-26,Demo District,South Block,Parudi,text,cg,own script,"परुडीह म नल ले पानी नइ आवत हे, 10 दिन होगे।",water,spike_water
+EW0340,2026-09-26,Demo District,South Block,Ranidi,text,hinglish,Latin letters,"Ranidi mein 13 din se paani nahi aa raha, nal sukha hai.",water,spike_water
+EW0341,2026-09-26,Demo District,South Block,Sajadi,text,cg,own script,"सजाडीह म नल ले पानी नइ आवत हे, 13 दिन होगे।",water,spike_water
+EW0342,2026-09-26,Demo District,West Block,Amagaon,text,cg,own script,"आमागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0343,2026-09-26,Demo District,West Block,Dongrigaon,voice,cg,own script,"डोंगरीगाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0344,2026-09-26,Demo District,West Block,Pandrigaon,text,cg,own script,पंडरीगाँव के रद्दा म बड़े-बड़े गड्ढा हवय।,roads,background
+EW0345,2026-09-27,Demo District,East Block,Chiranagar,text,cg,own script,"चिरानगर म 8 दिन ले बिजली नइ हे, ट्रांसफार्मर जर गे हे।",electricity,stable_electricity
+EW0346,2026-09-27,Demo District,East Block,Garhinagar,text,hinglish,Latin letters,"Garhinagar mein bijli nahi hai 13 din se, meter kharab hai.",electricity,stable_electricity
+EW0347,2026-09-27,Demo District,East Block,Garhinagar,text,hi,own script,"गढ़ीनगर में 7 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,stable_electricity
+EW0348,2026-09-27,Demo District,East Block,Raninagar,text,hinglish,Latin letters,Meri vridha pension 13 din se band hai.,pension,background
+EW0349,2026-09-27,Demo District,North Block,Dongripur,text,en,Latin letters,The teacher does not come to the Dongripur primary school.,education,background
+EW0350,2026-09-27,Demo District,North Block,Jharipur,text,cg,own script,हमर पारा के हैंडपंप 12 दिन ले बंद हवय।,water,background
+EW0351,2026-09-27,Demo District,North Block,Nawapur,text,hi,own script,नवापुर की सड़क पर बड़े गड्ढे हैं।,roads,small_roads
+EW0352,2026-09-27,Demo District,South Block,Amadi,text,cg,own script,"आमाडीह म नल ले पानी नइ आवत हे, 15 दिन होगे।",water,spike_water
+EW0353,2026-09-27,Demo District,South Block,Amadi,text,cg,own script,हमर पारा के हैंडपंप 5 दिन ले बंद हवय।,water,spike_water
+EW0354,2026-09-27,Demo District,South Block,Bhanudi,voice,cg,own script,"हमर गाँव भानुडीह के हैंडपंप 13 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0355,2026-09-27,Demo District,South Block,Garhidi,text,cg,Latin letters,"Garhidi me paani nai aawat he, 13 din hoge.",water,spike_water
+EW0356,2026-09-27,Demo District,South Block,Kesadi,text,cg,Latin letters,"Kesadi me paani nai aawat he, 15 din hoge.",water,spike_water
+EW0357,2026-09-27,Demo District,South Block,Nawadi,text,hinglish,Latin letters,"Nawadi mein 11 din se paani nahi aa raha, nal sukha hai.",water,spike_water
+EW0358,2026-09-27,Demo District,South Block,Ranidi,text,en,Latin letters,"No drinking water in Ranidi for 9 days, the handpump is broken.",water,spike_water
+EW0359,2026-09-27,Demo District,South Block,Sirsidi,text,hi,own script,"हमारे गाँव सिरसीडीह का हैंडपंप 6 दिन से खराब है, पीने का पानी नहीं है।",water,spike_water
+EW0360,2026-09-27,Demo District,South Block,Sonadi,text,hi,own script,"सोनाडीह गाँव में नल से पानी नहीं आ रहा है, 12 दिन हो गए।",water,spike_water
+EW0361,2026-09-27,Demo District,West Block,Chiragaon,voice,en,Latin letters,The ration shop dealer in Chiragaon refuses to give rice.,ration,background
+EW0362,2026-09-27,Demo District,West Block,Dongrigaon,text,hi,own script,डोंगरीगाँव के स्वास्थ्य केंद्र में डॉक्टर नहीं है और दवाई नहीं मिल रही।,health,cluster_health
+EW0363,2026-09-27,Demo District,West Block,Dongrigaon,text,hi,own script,डोंगरीगाँव के स्कूल में शिक्षक नहीं आते हैं।,education,background
+EW0364,2026-09-27,Demo District,West Block,Jharigaon,text,hi,own script,मेरी विधवा पेंशन 15 दिन से नहीं आई है।,pension,background
+EW0365,2026-09-27,Demo District,West Block,Nawagaon,text,cg,own script,"नवागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0366,2026-09-28,Demo District,East Block,Chiranagar,text,hinglish,Latin letters,"Chiranagar mein bijli nahi hai 6 din se, meter kharab hai.",electricity,stable_electricity
+EW0367,2026-09-28,Demo District,East Block,Nawanagar,text,hi,own script,नवानगर में मेरी जमीन का नामांतरण लंबित है।,revenue,background
+EW0368,2026-09-28,Demo District,East Block,Raninagar,text,hi,own script,"रानीनगर में 8 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,stable_electricity
+EW0369,2026-09-28,Demo District,East Block,Raninagar,text,hi,own script,"रानीनगर में 3 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,stable_electricity
+EW0370,2026-09-28,Demo District,North Block,Jharipur,text,hi,own script,झरीपुर में पड़ोसी ने मेरे साथ मारपीट की और धमकी दी।,sensitive,background
+EW0371,2026-09-28,Demo District,South Block,Beladi,text,cg,Latin letters,Hamaar gaon Beladi ke handpump 10 din se kharab hai.,water,spike_water
+EW0372,2026-09-28,Demo District,South Block,Jharidi,text,cg,own script,"हमर गाँव झरीडीह के हैंडपंप 9 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0373,2026-09-28,Demo District,South Block,Kesadi,text,cg,Latin letters,Hamaar gaon Kesadi ke handpump 13 din se kharab hai.,water,spike_water
+EW0374,2026-09-28,Demo District,South Block,Kesadi,text,cg,Latin letters,"Kesadi me paani nai aawat he, 4 din hoge.",water,spike_water
+EW0375,2026-09-28,Demo District,South Block,Mohladi,voice,cg,own script,"हमर गाँव मोहलाडीह के हैंडपंप 12 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0376,2026-09-28,Demo District,South Block,Nawadi,text,cg,Latin letters,Hamaar gaon Nawadi ke handpump 13 din se kharab hai.,water,spike_water
+EW0377,2026-09-28,Demo District,South Block,Nawadi,text,hi,own script,"नवाडीह गाँव में नल से पानी नहीं आ रहा है, 8 दिन हो गए।",water,spike_water
+EW0378,2026-09-28,Demo District,South Block,Parudi,text,hi,own script,"परुडीह गाँव में नल से पानी नहीं आ रहा है, 6 दिन हो गए।",water,spike_water
+EW0379,2026-09-28,Demo District,South Block,Sajadi,text,hinglish,Latin letters,Water supply nahi aa rahi since 8 days in Sajadi.,water,spike_water
+EW0380,2026-09-28,Demo District,South Block,Sajadi,voice,cg,own script,हमर पारा के हैंडपंप 13 दिन ले बंद हवय।,water,spike_water
+EW0381,2026-09-28,Demo District,West Block,Amagaon,text,cg,own script,"आमागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0382,2026-09-28,Demo District,West Block,Dongrigaon,text,hinglish,Latin letters,Dongrigaon ke school mein teacher nahi aate.,education,background
+EW0383,2026-09-28,Demo District,West Block,Latagaon,text,hi,own script,लतागाँव की राशन दुकान वाला चावल नहीं दे रहा।,ration,background
+EW0384,2026-09-28,Demo District,West Block,Pandrigaon,text,hinglish,Latin letters,Pandrigaon ke school mein teacher nahi aate.,education,background
+EW0385,2026-09-29,Demo District,East Block,Bhanunagar,text,en,Latin letters,"No drinking water in Bhanunagar for 4 days, the handpump is broken.",water,background
+EW0386,2026-09-29,Demo District,East Block,Dongrinagar,text,hi,own script,डोंगरीनगर के स्कूल में शिक्षक नहीं आते हैं।,education,background
+EW0387,2026-09-29,Demo District,East Block,Garhinagar,voice,hi,own script,"गढ़ीनगर गाँव में नल से पानी नहीं आ रहा है, 3 दिन हो गए।",water,background
+EW0388,2026-09-29,Demo District,North Block,Amapur,text,hi,own script,आमापुर में पड़ोसी ने मेरे साथ मारपीट की और धमकी दी।,sensitive,background
+EW0389,2026-09-29,Demo District,North Block,Chirapur,text,en,Latin letters,"Big potholes on the road to Chirapur, the road is unsafe.",roads,small_roads
+EW0390,2026-09-29,Demo District,South Block,Chiradi,text,en,Latin letters,"No drinking water in Chiradi for 3 days, the handpump is broken.",water,spike_water
+EW0391,2026-09-29,Demo District,South Block,Hardidi,text,hinglish,Latin letters,"Hardidi mein 12 din se paani nahi aa raha, nal sukha hai.",water,spike_water
+EW0392,2026-09-29,Demo District,South Block,Kesadi,voice,cg,own script,"केसाडीह म नल ले पानी नइ आवत हे, 6 दिन होगे।",water,spike_water
+EW0393,2026-09-29,Demo District,South Block,Latadi,voice,cg,own script,"हमर गाँव लताडीह के हैंडपंप 6 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0394,2026-09-29,Demo District,South Block,Latadi,text,cg,own script,"लताडीह म नल ले पानी नइ आवत हे, 6 दिन होगे।",water,spike_water
+EW0395,2026-09-29,Demo District,South Block,Nawadi,voice,cg,own script,"नवाडीह म नल ले पानी नइ आवत हे, 13 दिन होगे।",water,spike_water
+EW0396,2026-09-29,Demo District,South Block,Nawadi,voice,hi,own script,नवाडीह की सड़क पर बड़े गड्ढे हैं।,roads,background
+EW0397,2026-09-29,Demo District,South Block,Parudi,text,cg,Latin letters,Hamaar gaon Parudi ke handpump 4 din se kharab hai.,water,spike_water
+EW0398,2026-09-29,Demo District,South Block,Sirsidi,text,cg,Latin letters,"Sirsidi me paani nai aawat he, 14 din hoge.",water,spike_water
+EW0399,2026-09-29,Demo District,South Block,Sirsidi,text,cg,own script,"सिरसीडीह म नल ले पानी नइ आवत हे, 11 दिन होगे।",water,spike_water
+EW0400,2026-09-29,Demo District,South Block,Sonadi,voice,cg,Latin letters,"Sonadi me paani nai aawat he, 14 din hoge.",water,spike_water
+EW0401,2026-09-29,Demo District,South Block,Sonadi,voice,en,Latin letters,"No drinking water in Sonadi for 8 days, the handpump is broken.",water,spike_water
+EW0402,2026-09-29,Demo District,South Block,Telidi,voice,cg,own script,तेलीडीह के इस्कूल म गुरुजी नइ आवत हे।,education,background
+EW0403,2026-09-29,Demo District,South Block,Toladi,text,cg,own script,"टोलाडीह म नल ले पानी नइ आवत हे, 9 दिन होगे।",water,spike_water
+EW0404,2026-09-29,Demo District,South Block,Toladi,voice,cg,own script,"टोलाडीह म नल ले पानी नइ आवत हे, 10 दिन होगे।",water,spike_water
+EW0405,2026-09-29,Demo District,West Block,Amagaon,text,hi,own script,आमागाँव के स्वास्थ्य केंद्र में डॉक्टर नहीं है और दवाई नहीं मिल रही।,health,cluster_health
+EW0406,2026-09-29,Demo District,West Block,Amagaon,text,cg,own script,"आमागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0407,2026-09-29,Demo District,West Block,Dongrigaon,voice,hi,own script,डोंगरीगाँव के स्वास्थ्य केंद्र में डॉक्टर नहीं है और दवाई नहीं मिल रही।,health,cluster_health
+EW0408,2026-09-29,Demo District,West Block,Dongrigaon,text,hinglish,Latin letters,"Koi sunta nahi hai, kaam nahi ho raha.",unclear,background
+EW0409,2026-09-29,Demo District,West Block,Jharigaon,voice,hi,own script,झरीगाँव की राशन दुकान वाला चावल नहीं दे रहा।,ration,background
+EW0410,2026-09-30,Demo District,East Block,Chiranagar,text,cg,own script,"चिरानगर के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,background
+EW0411,2026-09-30,Demo District,East Block,Dongrinagar,text,en,Latin letters,"No electricity in Dongrinagar for 3 days, the transformer is burnt.",electricity,stable_electricity
+EW0412,2026-09-30,Demo District,East Block,Dongrinagar,text,hinglish,Latin letters,"Dongrinagar mein 15 din se paani nahi aa raha, nal sukha hai.",water,background
+EW0413,2026-09-30,Demo District,East Block,Latanagar,text,hinglish,Latin letters,Latanagar ke school mein teacher nahi aate.,education,background
+EW0414,2026-09-30,Demo District,East Block,Nawanagar,voice,cg,own script,नवानगर के सरपंच ह जाति के नाम ले के गारी देथे अउ धमकी देथे।,sensitive,background
+EW0415,2026-09-30,Demo District,East Block,Pandrinagar,text,en,Latin letters,The teacher does not come to the Pandrinagar primary school.,education,background
+EW0416,2026-09-30,Demo District,North Block,Chirapur,text,cg,own script,चिरापुर म मोर भुइयां के पट्टा अभी तक नइ मिले हे।,revenue,background
+EW0417,2026-09-30,Demo District,North Block,Dongripur,text,cg,own script,डोंगरीपुर के इस्कूल म गुरुजी नइ आवत हे।,education,background
+EW0418,2026-09-30,Demo District,North Block,Dongripur,text,hinglish,Latin letters,Meri vridha pension 9 din se band hai.,pension,background
+EW0419,2026-09-30,Demo District,North Block,Mohlapur,text,hi,own script,"मोहलापुर में 13 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,background
+EW0420,2026-09-30,Demo District,North Block,Mohlapur,voice,hi,own script,मेरी विधवा पेंशन 14 दिन से नहीं आई है।,pension,background
+EW0421,2026-09-30,Demo District,North Block,Nawapur,text,cg,own script,हमर पारा के हैंडपंप 9 दिन ले बंद हवय।,water,background
+EW0422,2026-09-30,Demo District,North Block,Ranipur,voice,hi,own script,रानीपुर की सड़क पर बड़े गड्ढे हैं।,roads,small_roads
+EW0423,2026-09-30,Demo District,South Block,Amadi,text,hinglish,Latin letters,"Amadi mein bijli nahi hai 14 din se, meter kharab hai.",electricity,background
+EW0424,2026-09-30,Demo District,South Block,Chiradi,text,cg,own script,"चिराडीह म नल ले पानी नइ आवत हे, 10 दिन होगे।",water,spike_water
+EW0425,2026-09-30,Demo District,South Block,Dongridi,text,cg,Latin letters,Hamaar gaon Dongridi ke handpump 12 din se kharab hai.,water,spike_water
+EW0426,2026-09-30,Demo District,South Block,Hardidi,text,cg,own script,"हरदीडीह म नल ले पानी नइ आवत हे, 13 दिन होगे।",water,spike_water
+EW0427,2026-09-30,Demo District,South Block,Jharidi,text,cg,own script,"हमर गाँव झरीडीह के हैंडपंप 14 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0428,2026-09-30,Demo District,South Block,Kesadi,text,cg,own script,हमर पारा के हैंडपंप 11 दिन ले बंद हवय।,water,spike_water
+EW0429,2026-09-30,Demo District,South Block,Kurudi,text,cg,own script,कुरुडीह के इस्कूल म गुरुजी नइ आवत हे।,education,background
+EW0430,2026-09-30,Demo District,South Block,Latadi,voice,cg,own script,"लताडीह म नल ले पानी नइ आवत हे, 15 दिन होगे।",water,spike_water
+EW0431,2026-09-30,Demo District,South Block,Mahudi,text,cg,own script,"हमर गाँव महुडीह के हैंडपंप 11 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0432,2026-09-30,Demo District,South Block,Pandridi,text,cg,own script,हमर पारा के हैंडपंप 15 दिन ले बंद हवय।,water,spike_water
+EW0433,2026-09-30,Demo District,South Block,Sonadi,text,cg,own script,हमर पारा के हैंडपंप 9 दिन ले बंद हवय।,water,spike_water
+EW0434,2026-09-30,Demo District,South Block,Sonadi,text,cg,own script,हमर बात कोनो नइ सुनय।,unclear,background
+EW0435,2026-09-30,Demo District,West Block,Amagaon,voice,hi,own script,आमागाँव के स्वास्थ्य केंद्र में डॉक्टर नहीं है और दवाई नहीं मिल रही।,health,cluster_health
+EW0436,2026-09-30,Demo District,West Block,Nawagaon,text,cg,own script,"नवागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0437,2026-10-01,Demo District,East Block,Jharinagar,text,hi,own script,"झरीनगर में 9 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,stable_electricity
+EW0438,2026-10-01,Demo District,East Block,Latanagar,text,hinglish,Latin letters,Latanagar ke ration dealer ne rishwat maangi.,sensitive,background
+EW0439,2026-10-01,Demo District,East Block,Nawanagar,text,hi,own script,नवानगर की राशन दुकान वाला चावल नहीं दे रहा।,ration,background
+EW0440,2026-10-01,Demo District,East Block,Pandrinagar,text,hinglish,Latin letters,"Pandrinagar mein 4 din se paani nahi aa raha, nal sukha hai.",water,background
+EW0441,2026-10-01,Demo District,North Block,Amapur,text,hinglish,Latin letters,"Amapur mein bijli nahi hai 15 din se, meter kharab hai.",electricity,background
+EW0442,2026-10-01,Demo District,North Block,Garhipur,voice,hinglish,Latin letters,Meri vridha pension 5 din se band hai.,pension,background
+EW0443,2026-10-01,Demo District,North Block,Latapur,text,cg,own script,लतापुर म मोर भुइयां के पट्टा अभी तक नइ मिले हे।,revenue,background
+EW0444,2026-10-01,Demo District,South Block,Amadi,text,cg,own script,"आमाडीह म नल ले पानी नइ आवत हे, 11 दिन होगे।",water,spike_water
+EW0445,2026-10-01,Demo District,South Block,Amadi,voice,cg,own script,आमाडीह के रद्दा म बड़े-बड़े गड्ढा हवय।,roads,background
+EW0446,2026-10-01,Demo District,South Block,Beladi,text,hi,own script,"बेलाडीह गाँव में नल से पानी नहीं आ रहा है, 11 दिन हो गए।",water,spike_water
+EW0447,2026-10-01,Demo District,South Block,Bhanudi,text,cg,Latin letters,Hamaar gaon Bhanudi ke handpump 10 din se kharab hai.,water,spike_water
+EW0448,2026-10-01,Demo District,South Block,Jharidi,text,cg,own script,हमर पारा के हैंडपंप 3 दिन ले बंद हवय।,water,spike_water
+EW0449,2026-10-01,Demo District,South Block,Latadi,text,hinglish,Latin letters,Water supply nahi aa rahi since 15 days in Latadi.,water,spike_water
+EW0450,2026-10-01,Demo District,South Block,Mahudi,text,cg,own script,महुडीह के राशन दुकान म चाउर नइ देवत हे।,ration,background
+EW0451,2026-10-01,Demo District,South Block,Nawadi,text,cg,Latin letters,Hamaar gaon Nawadi ke handpump 3 din se kharab hai.,water,spike_water
+EW0452,2026-10-01,Demo District,South Block,Nawadi,text,cg,Latin letters,Hamaar gaon Nawadi ke handpump 10 din se kharab hai.,water,spike_water
+EW0453,2026-10-01,Demo District,South Block,Pandridi,text,cg,own script,"पंडरीडीह म नल ले पानी नइ आवत हे, 6 दिन होगे।",water,spike_water
+EW0454,2026-10-01,Demo District,South Block,Ranidi,text,hi,own script,"हमारे गाँव रानीडीह का हैंडपंप 6 दिन से खराब है, पीने का पानी नहीं है।",water,spike_water
+EW0455,2026-10-01,Demo District,South Block,Sirsidi,text,hinglish,Latin letters,"Sirsidi mein 10 din se paani nahi aa raha, nal sukha hai.",water,spike_water
+EW0456,2026-10-01,Demo District,South Block,Telidi,voice,cg,own script,हमर पारा के हैंडपंप 4 दिन ले बंद हवय।,water,spike_water
+EW0457,2026-10-01,Demo District,West Block,Amagaon,text,hi,own script,आमागाँव के स्वास्थ्य केंद्र में डॉक्टर नहीं है और दवाई नहीं मिल रही।,health,cluster_health
+EW0458,2026-10-02,Demo District,East Block,Dongrinagar,text,hi,own script,डोंगरीनगर की राशन दुकान वाला चावल नहीं दे रहा।,ration,background
+EW0459,2026-10-02,Demo District,East Block,Garhinagar,text,en,Latin letters,"No electricity in Garhinagar for 4 days, the transformer is burnt.",electricity,stable_electricity
+EW0460,2026-10-02,Demo District,East Block,Jharinagar,text,hi,own script,"झरीनगर में 11 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,stable_electricity
+EW0461,2026-10-02,Demo District,East Block,Mohlanagar,voice,cg,own script,"मोहलानगर के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,background
+EW0462,2026-10-02,Demo District,North Block,Amapur,text,hi,own script,आमापुर में पड़ोसी ने मेरे साथ मारपीट की और धमकी दी।,sensitive,background
+EW0463,2026-10-02,Demo District,North Block,Nawapur,text,hi,own script,नवापुर की सड़क पर बड़े गड्ढे हैं।,roads,small_roads
+EW0464,2026-10-02,Demo District,North Block,Ranipur,text,cg,own script,रानीपुर के रद्दा म बड़े-बड़े गड्ढा हवय।,roads,small_roads
+EW0465,2026-10-02,Demo District,South Block,Amadi,text,cg,own script,हमर पारा के हैंडपंप 6 दिन ले बंद हवय।,water,spike_water
+EW0466,2026-10-02,Demo District,South Block,Chiradi,text,cg,Latin letters,"Chiradi me paani nai aawat he, 5 din hoge.",water,spike_water
+EW0467,2026-10-02,Demo District,South Block,Dongridi,voice,cg,Latin letters,Hamaar gaon Dongridi ke handpump 5 din se kharab hai.,water,spike_water
+EW0468,2026-10-02,Demo District,South Block,Hardidi,text,cg,Latin letters,"Hardidi me paani nai aawat he, 6 din hoge.",water,spike_water
+EW0469,2026-10-02,Demo District,South Block,Jharidi,voice,cg,own script,"हमर गाँव झरीडीह के हैंडपंप 6 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0470,2026-10-02,Demo District,South Block,Mohladi,text,cg,own script,"मोहलाडीह म नल ले पानी नइ आवत हे, 15 दिन होगे।",water,spike_water
+EW0471,2026-10-02,Demo District,South Block,Nawadi,voice,cg,own script,"नवाडीह म नल ले पानी नइ आवत हे, 12 दिन होगे।",water,spike_water
+EW0472,2026-10-02,Demo District,South Block,Parudi,text,cg,own script,हमर पारा के हैंडपंप 12 दिन ले बंद हवय।,water,spike_water
+EW0473,2026-10-02,Demo District,South Block,Sonadi,text,cg,own script,हमर पारा के हैंडपंप 15 दिन ले बंद हवय।,water,spike_water
+EW0474,2026-10-02,Demo District,South Block,Toladi,text,cg,own script,हमर पारा के हैंडपंप 6 दिन ले बंद हवय।,water,spike_water
+EW0475,2026-10-02,Demo District,West Block,Amagaon,text,cg,own script,"आमागाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0476,2026-10-02,Demo District,West Block,Amagaon,text,hinglish,Latin letters,Amagaon ki sadak pe bahut gaddhe hai.,roads,background
+EW0477,2026-10-02,Demo District,West Block,Nawagaon,text,hi,own script,नवागाँव के स्वास्थ्य केंद्र में डॉक्टर नहीं है और दवाई नहीं मिल रही।,health,cluster_health
+EW0478,2026-10-02,Demo District,West Block,Pandrigaon,text,hi,own script,पंडरीगाँव की सड़क पर बड़े गड्ढे हैं।,roads,background
+EW0479,2026-10-03,Demo District,East Block,Bhanunagar,text,hi,own script,मेरी विधवा पेंशन 11 दिन से नहीं आई है।,pension,background
+EW0480,2026-10-03,Demo District,East Block,Dongrinagar,text,hinglish,Latin letters,"Dongrinagar ke aspatal mein doctor nahi hai, dawai bhi nahi mil rahi.",health,background
+EW0481,2026-10-03,Demo District,East Block,Garhinagar,text,hinglish,Latin letters,Garhinagar mein zameen ka patta nahi mila.,revenue,background
+EW0482,2026-10-03,Demo District,East Block,Kesanagar,voice,hi,own script,"केसानगर गाँव में नल से पानी नहीं आ रहा है, 8 दिन हो गए।",water,background
+EW0483,2026-10-03,Demo District,East Block,Latanagar,text,hi,own script,लतानगर के स्वास्थ्य केंद्र में डॉक्टर नहीं है और दवाई नहीं मिल रही।,health,background
+EW0484,2026-10-03,Demo District,East Block,Raninagar,text,hi,own script,"रानीनगर में 11 दिन से बिजली नहीं है, ट्रांसफार्मर जल गया है।",electricity,stable_electricity
+EW0485,2026-10-03,Demo District,North Block,Dongripur,text,hinglish,Latin letters,"Dongripur mein bijli nahi hai 15 din se, meter kharab hai.",electricity,background
+EW0486,2026-10-03,Demo District,South Block,Chiradi,text,hinglish,Latin letters,"Chiradi mein 12 din se paani nahi aa raha, nal sukha hai.",water,spike_water
+EW0487,2026-10-03,Demo District,South Block,Dhamnidi,voice,cg,own script,धमनीडीह के रद्दा म बड़े-बड़े गड्ढा हवय।,roads,background
+EW0488,2026-10-03,Demo District,South Block,Dongridi,text,cg,own script,हमर पारा के हैंडपंप 13 दिन ले बंद हवय।,water,spike_water
+EW0489,2026-10-03,Demo District,South Block,Garhidi,text,hinglish,Latin letters,"Garhidi mein 7 din se paani nahi aa raha, nal sukha hai.",water,spike_water
+EW0490,2026-10-03,Demo District,South Block,Kesadi,text,hi,own script,"केसाडीह गाँव में नल से पानी नहीं आ रहा है, 8 दिन हो गए।",water,spike_water
+EW0491,2026-10-03,Demo District,South Block,Kesadi,voice,hi,own script,"केसाडीह गाँव में नल से पानी नहीं आ रहा है, 9 दिन हो गए।",water,spike_water
+EW0492,2026-10-03,Demo District,South Block,Kosadi,voice,cg,own script,"हमर गाँव कोसाडीह के हैंडपंप 3 दिन ले खराब हवय, पीए बर पानी नइ मिलत हे।",water,spike_water
+EW0493,2026-10-03,Demo District,South Block,Kosadi,text,cg,own script,कोसाडीह के इस्कूल म गुरुजी नइ आवत हे।,education,background
+EW0494,2026-10-03,Demo District,South Block,Kurudi,voice,hi,own script,"कुरुडीह गाँव में नल से पानी नहीं आ रहा है, 14 दिन हो गए।",water,spike_water
+EW0495,2026-10-03,Demo District,South Block,Latadi,text,hinglish,Latin letters,Water supply nahi aa rahi since 6 days in Latadi.,water,spike_water
+EW0496,2026-10-03,Demo District,West Block,Chiragaon,text,cg,own script,हमर बात कोनो नइ सुनय।,unclear,background
+EW0497,2026-10-03,Demo District,West Block,Dongrigaon,text,cg,own script,"डोंगरीगाँव के अस्पताल म डाक्टर नइ हे, दवई घलो नइ मिलत।",health,cluster_health
+EW0498,2026-10-03,Demo District,West Block,Jharigaon,text,hi,own script,मेरी विधवा पेंशन 11 दिन से नहीं आई है।,pension,background
+EW0499,2026-10-03,Demo District,West Block,Kesagaon,text,cg,own script,मोर वृद्धावस्था पेंशन 8 दिन ले नइ मिले हे।,pension,background
+EW0500,2026-10-03,Demo District,West Block,Nawagaon,text,cg,own script,मोर वृद्धावस्था पेंशन 15 दिन ले नइ मिले हे।,pension,background

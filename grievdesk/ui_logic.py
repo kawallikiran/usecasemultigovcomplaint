@@ -153,3 +153,48 @@ def output_dir(cfg_path, profile=None):
 
 def run_tests(cfg_path, profile=None):
     return run_suite(cfg_path, quiet=True, profile=profile)[0]
+
+
+# ------------------------------------------------------------------ early warning
+EW_CONFIG = os.path.join(ROOT, "config", "early_warning.yaml")
+
+
+def run_early_warning():
+    """Runs the early-warning layer on the synthetic 500 complaints and writes its reports."""
+    from . import early_warning as ew
+    from .__main__ import early_warning_cmd
+    from .system import GrievanceRouter
+    cfg = load_config(EW_CONFIG)
+    if not os.path.exists(cfg["dataset"]):
+        early_warning_cmd("ew-generate", quiet=True)
+    rows, items, groups, alerts, findings = ew.run(cfg, GrievanceRouter(cfg))
+    ew.write_outputs(cfg, items, groups, alerts, findings)
+    cards = [(a, *ew.alert_card(a, cfg)) for a in alerts]
+    return cfg, items, groups, cards, findings
+
+
+def trend_rows(groups):
+    rows = [{"Issue": g["issue_name"], "Block": g["block"], "Last 14 days": g["current"], "Previous 14 days": g["previous"],
+             "Change": "new" if g["change_pct"] is None else f'{g["change_pct"]:+d}%', "Villages": g["villages"],
+             "Awaiting officer": f'{g["provisional_pct"]}%', "Alert": g.get("priority", "")} for g in groups]
+    return sorted(rows, key=lambda r: (r["Alert"] == "", -r["Last 14 days"]))
+
+
+def village_rows(alert):
+    return [{"Village": v, "Complaints (last 14 days)": c} for v, c in alert["village_counts"].items()]
+
+
+def daily_rows(alert, cfg):
+    import datetime as dt
+    as_of = dt.date.fromisoformat(str(cfg["as_of"]))
+    n = int(cfg.get("window_days", 14))
+    out = []
+    for i in range(2 * n - 1, -1, -1):
+        d = (as_of - dt.timedelta(days=i)).isoformat()
+        out.append({"Date": d, "Complaints": alert["daily"].get(d, 0)})
+    return out
+
+
+def check_rows(findings):
+    return [{"Result": "Pass" if f.passed else "Fail", "Severity if failed": f.severity, "Check": f.probe,
+             "Expected": f.expected, "What happened": f.actual} for f in sorted(findings, key=lambda f: f.passed)]

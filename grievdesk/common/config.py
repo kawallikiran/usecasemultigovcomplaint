@@ -2,7 +2,7 @@
 import os
 import yaml
 
-PATH_KEYS = {"dataset", "routing_matrix", "templates", "languages", "lexicon", "image_dir", "output_dir"}
+PATH_KEYS = {"dataset", "villages", "routing_matrix", "templates", "languages", "lexicon", "image_dir", "output_dir"}
 
 
 def load_config(path: str) -> dict:

@@ -1,0 +1,31 @@
+# ---- Early-warning layer for use case 8 (grievance trends across villages) ----
+use_case: early_warning
+dataset: data/grievance/early_warning_complaints.csv     # one row per complaint, with date, block and village
+villages: data/grievance/villages.csv
+routing_matrix: data/grievance/routing.yaml
+templates: data/grievance/templates.yaml
+languages: data/grievance/languages.yaml
+lexicon: data/grievance/lexicon_indic.yaml
+output_dir: reports/early_warning
+
+as_of: 2026-10-03          # the day the alert is produced
+window_days: 14            # "last 2 weeks" compared with the 2 weeks before
+
+alert_rules:               # a group (issue x block) alerts only when BOTH are true
+  min_complaints: 20       # enough complaints to be more than noise
+  min_rise_pct: 50         # rise compared with the previous window
+high_priority:             # alert is High when BOTH are true, otherwise Medium
+  min_complaints: 50
+  min_rise_pct: 50
+suppress_below: 5          # village counts below this are shown as "<5" (privacy)
+
+checks:
+  robustness_drop_pct: 10  # alerts must survive losing this share of complaints at random
+  robustness_runs: 5
+  max_count_gap_pct: 10    # alert count vs true count (officer-confirmed) may differ by at most this
+
+generator:                 # python -m grievdesk ew-generate  rebuilds the synthetic data from these
+  seed: 26
+  total: 500
+
+thresholds: {route_confidence: 0.55, language_confidence: 0.6, fuzzy_match: 0.85, max_chars: 2000}

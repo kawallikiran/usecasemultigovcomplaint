@@ -70,6 +70,33 @@ def run_suite(cfg_path, quiet=False, profile=None):
     return summary, (1 if gate and summary["failed_high"] else 0)
 
 
+EW_CONFIG = os.path.join(ROOT, "config", "early_warning.yaml")
+
+
+def early_warning_cmd(cmd, quiet=False):
+    from . import early_warning as ew
+    from .ew_datagen import generate
+    from .system import GrievanceRouter
+    cfg = load_config(EW_CONFIG)
+    if cmd == "ew-generate" or not os.path.exists(cfg["dataset"]):
+        n = generate(cfg)
+        if not quiet:
+            print(f"Generated {n} synthetic complaints -> {cfg['dataset']}")
+        if cmd == "ew-generate":
+            return 0
+    rows, items, groups, alerts, findings = ew.run(cfg, GrievanceRouter(cfg))
+    ew.write_outputs(cfg, items, groups, alerts, findings)
+    if not quiet:
+        print(f"\n=== Early-warning layer | {len(items)} complaints | {len(alerts)} alert(s) ===")
+        for al in alerts:
+            print("  " + " | ".join(ew.alert_card(al, cfg)[0]))
+        for f in findings:
+            if not f.passed:
+                print(f"  CHECK FAILED [{f.severity}] {f.probe} -> {f.actual[:100]}")
+        print(f"reports: {cfg['output_dir']}")
+    return 0
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="grievdesk")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -79,12 +106,16 @@ def main(argv=None):
     al = sub.add_parser("all")
     al.add_argument("--ai-profile")
     sub.add_parser("ai-status", help="list AI services and whether each is ready")
+    sub.add_parser("early-warning", help="group complaints into district alerts and run the early-warning checks")
+    sub.add_parser("ew-generate", help="rebuild the synthetic early-warning data (500 complaints, 62 villages)")
     d = sub.add_parser("demo")
     d.add_argument("--text", default="No water from the handpump for a week.")
     d.add_argument("--config", default=os.path.join(ROOT, "config", "grievance.yaml"))
     a = ap.parse_args(argv)
     if a.cmd == "run":
         return run_suite(a.config, profile=a.ai_profile)[1]
+    if a.cmd in ("early-warning", "ew-generate"):
+        return early_warning_cmd(a.cmd)
     if a.cmd == "ai-status":
         from .common.ai_profiles import all_status
         for name, label, ok, msg in all_status(ROOT):
@@ -95,8 +126,11 @@ def main(argv=None):
         print(json.dumps(GrievanceRouter(load_config(a.config)).process({"id": "DEMO", "text": a.text}),
                          indent=2, ensure_ascii=False))
         return 0
-    cfgs = [p for p in sorted(glob.glob(os.path.join(ROOT, "config", "*.yaml"))) if not p.endswith("ai_providers.yaml")]
-    return max(run_suite(p, profile=a.ai_profile)[1] for p in cfgs)
+    cfgs = [p for p in sorted(glob.glob(os.path.join(ROOT, "config", "*.yaml")))
+            if os.path.basename(p) not in ("ai_providers.yaml", "early_warning.yaml")]
+    code = max(run_suite(p, profile=a.ai_profile)[1] for p in cfgs)
+    early_warning_cmd("early-warning")
+    return code
 
 
 if __name__ == "__main__":

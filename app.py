@@ -25,8 +25,8 @@ st.title("Citizen grievance desk")
 st.caption("AIGP26 capstone prototype, use case 8. Synthetic data only. The bot routes complaints and sends "
            "approved acknowledgements; an officer decides every substantive reply.")
 
-tab_use, tab_report, tab_results, tab_audit = st.tabs(
-    ["Register a grievance", "Test report", "All test results", "Audit log"])
+tab_use, tab_ew, tab_report, tab_results, tab_audit = st.tabs(
+    ["Register a grievance", "Early warning", "Test report", "All test results", "Audit log"])
 
 # ------------------------------------------------------------------ register a grievance
 with tab_use:
@@ -106,6 +106,52 @@ with tab_use:
         if saved and saved[0] == out["ticket"]:
             st.success(f"Decision saved for ticket {saved[0]}: {saved[1]}"
                        + (" (officer overrode the bot)." if saved[1] == "reroute" else "."))
+
+
+# ------------------------------------------------------------------ early warning
+@st.cache_data(show_spinner=False)
+def get_early_warning(stamp):
+    return ui.run_early_warning()
+
+
+with tab_ew:
+    st.write("Groups many complaints into district-level alerts. Synthetic demo: 500 complaints from 62 invented "
+             "villages over 28 days. An alert recommends field verification; it never triggers action by itself.")
+    if st.button("Recalculate alerts"):
+        st.session_state["ew_stamp"] = st.session_state.get("ew_stamp", 0) + 1
+    with st.spinner("Grouping complaints"):
+        ew_cfg, ew_items, ew_groups, ew_cards, ew_findings = get_early_warning(st.session_state.get("ew_stamp", 0))
+    rules = ew_cfg.get("alert_rules", {})
+    st.caption(f"Alert date {ew_cfg['as_of']}. Last {ew_cfg['window_days']} days compared with the {ew_cfg['window_days']} "
+               f"days before. An issue in a block alerts when it has at least {rules.get('min_complaints')} complaints "
+               f"and rose by at least {rules.get('min_rise_pct')}%. Village counts below {ew_cfg.get('suppress_below')} "
+               "are hidden. Thresholds: config/early_warning.yaml.")
+    if not ew_cards:
+        st.success("No emerging issues in this period.")
+    for a, lines, notes in ew_cards:
+        box = st.error if a["priority"] == "High" else st.warning
+        box("  \n".join([f"**{lines[0]}**"] + lines[1:]))
+        for n_ in notes:
+            st.caption(n_)
+        with st.expander(f"Details: {a['issue_name']}, {a['block']}"):
+            c1, c2 = st.columns([1, 2])
+            c1.dataframe(pd.DataFrame(ui.village_rows(a)), hide_index=True)
+            c2.write("Complaints per day, previous and last window")
+            c2.bar_chart(pd.DataFrame(ui.daily_rows(a, ew_cfg)).set_index("Date"))
+    st.subheader("All issues by block")
+    st.dataframe(pd.DataFrame(ui.trend_rows(ew_groups)), hide_index=True)
+    st.subheader("Early-warning checks")
+    st.dataframe(pd.DataFrame(ui.check_rows(ew_findings)), hide_index=True)
+    out_dir = ew_cfg["output_dir"]
+    d1, d2, d3 = st.columns(3)
+    with open(ew_cfg["dataset"], "rb") as fh:
+        d1.download_button("Download complaints (CSV)", fh.read(), file_name="early_warning_complaints.csv")
+    with open(f"{out_dir}/issue_trends.csv", "rb") as fh:
+        d2.download_button("Download issue trends (CSV)", fh.read(), file_name="issue_trends.csv")
+    import os as _os
+    if _os.path.exists(f"{out_dir}/early_warning.xlsx"):
+        with open(f"{out_dir}/early_warning.xlsx", "rb") as fh:
+            d3.download_button("Download workbook (Excel)", fh.read(), file_name="early_warning.xlsx")
 
 
 # ------------------------------------------------------------------ test report / results
