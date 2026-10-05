@@ -238,22 +238,74 @@ def login_page():
 
 
 # ====================================================================== complaints (officers)
-def complaints_view(scope):
+def complaint_cards(recs, router, show_assignee, slot):
+    """One small card per complaint; 'Open' shows the full details."""
+    for r in recs:
+        c = P.card(r, router.depts)
+        with st.container(border=True):
+            top, btn = st.columns([5, 1])
+            flags = " · ".join(x for x in ("Sensitive" if c["sensitive"] else "", "Voice" if c["voice"] else "",
+                                           c["priority"].capitalize() if c["priority"] != "normal" else "") if x)
+            top.markdown(f"**{c['ticket']}** · {c['status']}" + (f" · :red[{flags}]" if flags else ""))
+            top.write(c["summary"])
+            due = f":red[Overdue, due {c['due']}]" if c["overdue"] else f"Due {c['due']}"
+            top.caption(f"{c['place']} · {c['department']} · {due}"
+                        + (f" · Assigned to {c['assigned']}" if show_assignee else ""))
+            if btn.button("Open", key=f"open_{slot}_{c['ticket']}"):
+                st.session_state[f"open_{slot}"] = c["ticket"]
+                st.rerun()
+
+
+def open_complaint(router, back_label, slot):
+    """Full details of the opened complaint; False if nothing is open on this page."""
+    ticket = st.session_state.get(f"open_{slot}")
+    rec = store.get(ticket) if ticket else None
+    if not rec:
+        return False
+    if st.button(f"\u2190 {back_label}"):
+        st.session_state.pop(f"open_{slot}", None)
+        st.rerun()
+    review_panel(rec, router)
+    return True
+
+
+def my_page():
     router = current_router()
     me = OFFICERS[USER]
-    st.title("My complaints" if scope == "mine" else "All complaints")
-    st.caption(f"Logged in as {me['name']}, {me['designation']}")
-    m = P.summary(store)
-    for c, (k, v) in zip(st.columns(len(m)), m.items()):
+    if open_complaint(router, "Back to my complaints", "mine"):
+        return
+    st.title("My complaints")
+    st.caption(f"{me['name']}, {me['designation']}")
+    for c, (k, v) in zip(st.columns(4), P.my_counts(store, USER).items()):
         c.metric(k, v)
-    show = st.radio("Show", ["Needs action", "All"], horizontal=True)
-    recs = P.queue(store, USER, scope, show)
+    show = st.radio("Show", ["Needs action", "All"], horizontal=True, label_visibility="collapsed")
+    recs = P.queue(store, USER, "mine", show)
+    if not recs:
+        st.info("Nothing waiting for you." if show == "Needs action" else "No complaints assigned to you yet.")
+        return
+    complaint_cards(recs, router, show_assignee=False, slot="mine")
+
+
+def all_page():
+    router = current_router()
+    if open_complaint(router, "Back to all complaints", "all"):
+        return
+    st.title("All complaints")
+    for c, (k, v) in zip(st.columns(4), list(P.summary(store).items())[:4]):
+        c.metric(k, v)
+    with st.expander("Who has what (all officers)"):
+        st.dataframe(pd.DataFrame(P.workload(store)), hide_index=True)
+    c1, c2 = st.columns(2)
+    names = {oid: f"{o['name']}, {o['designation']}" for oid, o in OFFICERS.items() if o["role"] != "admin"}
+    who = c1.selectbox("Assigned to", ["All"] + list(names), format_func=lambda k: "All officers" if k == "All" else names[k])
+    show = c2.selectbox("Status", ["Needs action", "All"])
+    recs = P.queue(store, USER, "all", show)
+    if who != "All":
+        recs = [r for r in recs if r.get("assigned_to") == who]
     if not recs:
         st.info("No complaints to show.")
         return
-    st.dataframe(pd.DataFrame(P.queue_rows(recs, router.depts)), hide_index=True)
-    ticket = st.selectbox("Open complaint", [r["ticket"] for r in recs])
-    review_panel(store.get(ticket), router)
+    complaint_cards(recs, router, show_assignee=True, slot="all")
 
 
 def place_text(rec):
@@ -268,10 +320,9 @@ def review_panel(rec, router):
     s = rec.get("suggestion") or {}
     opened = st.session_state.setdefault(f"opened_{rec['ticket']}", time.time())
     st.subheader(rec["ticket"])
-    st.caption(f"Received {rec['created'].replace('T', ' ')[:16]} · "
-               f"{place_text(rec)} · "
-               f"Inform by: {rec.get('notify_by', 'portal')} · Due {dt.date.fromisoformat(rec['due_date']).strftime('%d-%m-%Y')} · "
-               f"Assigned to {P.officer_label(rec['assigned_to'])}")
+    st.markdown(f"**Assigned to:** {P.officer_label(rec['assigned_to'])} · **Status:** {P.STATUS_EN.get(rec['status'], rec['status'])}")
+    st.caption(f"Received {rec['created'].replace('T', ' ')[:16]} · {place_text(rec)} · "
+               f"Inform by: {rec.get('notify_by', 'portal')} · Due {dt.date.fromisoformat(rec['due_date']).strftime('%d-%m-%Y')}")
     if rec.get("audio") and os.path.exists(os.path.join(ui.ROOT, rec["audio"])):
         st.audio(os.path.join(ui.ROOT, rec["audio"]))
     if rec["transcript"] == "pending":
@@ -337,12 +388,6 @@ def review_panel(rec, router):
         st.dataframe(pd.DataFrame([r for r in P.audit_rows(store) if r["Complaint no."] == rec["ticket"]]), hide_index=True)
 
 
-def my_page():
-    complaints_view("mine")
-
-
-def all_page():
-    complaints_view("all")
 
 
 # ====================================================================== analytics
@@ -367,8 +412,9 @@ def analytics_page():
     start = c5.date_input("From", value=df["date"].min().date())
     as_of = c6.date_input("To (report date)", value=base)
     f = A.filter_df(df, zone, state, district, department, start, as_of)
-    for c, (k, v) in zip(st.columns(6), A.kpis(f, as_of).items()):
-        c.metric(k, v)
+    k = A.kpis(f, as_of)
+    for c, key in zip(st.columns(4), ["Complaints", "Pending", "Overdue", "Average days to resolve"]):
+        c.metric(key, k[key])
 
     st.subheader("Where to focus")
     cfg, _, _, cards, _ = ew_cards(len(store.all()), str(as_of))
@@ -377,28 +423,32 @@ def analytics_page():
     for a, lines, notes in cards:
         if a in alerts:
             (st.error if a["priority"] == "High" else st.warning)("  \n".join([f"**{lines[0]}**"] + lines[1:]))
-    st.dataframe(A.focus_areas(f, vil, alerts, as_of), hide_index=True)
+    st.dataframe(A.focus_areas(f, vil, alerts, as_of).head(6), hide_index=True)
 
-    st.subheader("Complaints by department and category")
     g1, g2 = st.columns(2)
+    g1.markdown("**Complaints by department**")
     g1.bar_chart(A.by(f, "Department").set_index("Department"))
-    g2.dataframe(A.by(f, ["Department", "Category"]), hide_index=True)
-    st.subheader("Complaints over time")
-    st.line_chart(A.trend(f))
-    st.subheader("Where complaints come from")
-    l1, l2 = st.columns(2)
-    l1.bar_chart(A.by(f, "zone").rename(columns={"zone": "Zone"}).set_index("Zone"))
-    l2.bar_chart(A.by(f, "state", top=15).rename(columns={"state": "State"}).set_index("State"))
-    st.markdown("**By district**")
-    st.dataframe(A.district_table(f, as_of), hide_index=True)
-    st.markdown("**By city / town**")
-    st.dataframe(A.location_table(f, vil), hide_index=True)
-    st.subheader("Service performance by department")
-    st.dataframe(A.department_performance(f, as_of), hide_index=True)
-    st.subheader("Language and channel")
-    k1, k2 = st.columns(2)
-    k1.bar_chart(A.by(f, "Language").set_index("Language"))
-    k2.bar_chart(A.by(f, "channel").rename(columns={"channel": "Channel"}).set_index("Channel"))
+    g2.markdown("**Complaints over time**")
+    g2.line_chart(A.trend(f))
+    with st.expander("More breakdowns: category, zone, state, district, town, performance, language"):
+        st.markdown("**By category**")
+        st.dataframe(A.by(f, ["Department", "Category"]), hide_index=True)
+        l1, l2 = st.columns(2)
+        l1.markdown("**By zone**")
+        l1.bar_chart(A.by(f, "zone").rename(columns={"zone": "Zone"}).set_index("Zone"))
+        l2.markdown("**By state (top 15)**")
+        l2.bar_chart(A.by(f, "state", top=15).rename(columns={"state": "State"}).set_index("State"))
+        st.markdown("**By district**")
+        st.dataframe(A.district_table(f, as_of), hide_index=True)
+        st.markdown("**By city / town**")
+        st.dataframe(A.location_table(f, vil), hide_index=True)
+        st.markdown("**Service performance by department**")
+        st.dataframe(A.department_performance(f, as_of), hide_index=True)
+        k1, k2 = st.columns(2)
+        k1.markdown("**By language**")
+        k1.bar_chart(A.by(f, "Language").set_index("Language"))
+        k2.markdown("**By channel**")
+        k2.bar_chart(A.by(f, "channel").rename(columns={"channel": "Channel"}).set_index("Channel"))
     d1, d2 = st.columns(2)
     d1.download_button("Download analytics (Excel)", A.excel_report(f, vil, alerts, as_of), file_name="grievance_analytics.xlsx",
                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
@@ -586,32 +636,40 @@ def logout_page():
     st.rerun()
 
 
-# ====================================================================== navigation
+# ====================================================================== navigation (left menu)
+st.markdown("""<style>
+section[data-testid="stSidebar"] {min-width: 230px; max-width: 230px;}
+section[data-testid="stSidebar"] a span {font-size: 0.95rem;}
+</style>""", unsafe_allow_html=True)
 housekeeping()
 lang = st.session_state["lang"]
-citizen = [st.Page(file_page, title=T(lang, "nav_file"), url_path="file", default=True),
-           st.Page(track_page, title=T(lang, "nav_track"), url_path="track")]
+page = lambda fn, title, path, icon, **k: st.Page(fn, title=title, url_path=path, icon=icon, **k)
+citizen = [page(file_page, T(lang, "nav_file"), "file", ":material/edit_note:", default=not USER),
+           page(track_page, T(lang, "nav_track"), "track", ":material/search:")]
 if USER:
-    work = [st.Page(my_page, title="My complaints", url_path="my")]
+    work = [page(my_page, "My complaints", "my", ":material/inbox:", default=True)]
     if ROLE in ("supervisor", "admin"):
-        work.append(st.Page(all_page, title="All complaints", url_path="all"))
-    pages = {"Citizen services": citizen, "Complaints": work,
-             "Analytics": [st.Page(analytics_page, title="Analytics and early warning", url_path="analytics")]}
-    tech = [st.Page(assurance_page, title="Assurance", url_path="assurance")] if ROLE in ("supervisor", "admin") else []
-    if ROLE == "admin":
-        tech += [st.Page(quality_page, title="Quality checks", url_path="quality"),
-                 st.Page(performance_page, title="Model performance", url_path="performance")]
+        work.append(page(all_page, "All complaints", "all", ":material/view_list:"))
+    work.append(page(analytics_page, "Analytics", "analytics", ":material/insights:"))
+    tech = []
     if ROLE in ("supervisor", "admin"):
-        tech += [st.Page(audit_page, title="Audit log", url_path="audit"),
-                 st.Page(notifications_page, title="Notifications", url_path="notifications")]
+        tech.append(page(assurance_page, "Assurance", "assurance", ":material/verified_user:"))
     if ROLE == "admin":
-        tech.append(st.Page(settings_page, title="Settings", url_path="settings"))
-    tech.append(st.Page(logout_page, title="Log out", url_path="logout"))
-    pages["Technical" if ROLE in ("supervisor", "admin") else "Account"] = tech
+        tech += [page(quality_page, "Quality checks", "quality", ":material/fact_check:"),
+                 page(performance_page, "Model performance", "performance", ":material/speed:")]
+    if ROLE in ("supervisor", "admin"):
+        tech += [page(audit_page, "Audit log", "audit", ":material/history:"),
+                 page(notifications_page, "Notifications", "notifications", ":material/notifications:")]
+    if ROLE == "admin":
+        tech.append(page(settings_page, "Settings", "settings", ":material/settings:"))
+    pages = {"Work": work}
+    if tech:
+        pages["Technical"] = tech
+    pages["Citizen services"] = citizen
+    pages["Account"] = [page(logout_page, "Log out", "logout", ":material/logout:")]
+    with st.sidebar:
+        st.caption(f"{OFFICERS[USER]['name']}  \n{OFFICERS[USER]['designation']}")
 else:
-    pages = citizen + [st.Page(login_page, title=T(lang, "nav_officer"), url_path="officer")]
-try:
-    nav = st.navigation(pages, position="top")
-except TypeError:
-    nav = st.navigation(pages)
+    pages = citizen + [page(login_page, T(lang, "nav_officer"), "officer", ":material/login:")]
+nav = st.navigation(pages)
 nav.run()

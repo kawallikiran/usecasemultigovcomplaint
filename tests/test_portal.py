@@ -202,3 +202,44 @@ class TestStreamlitPortal(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestOfficerScreens(unittest.TestCase):
+    def setUp(self):
+        for k in ("AI_PROVIDER", "AI_MODEL", "AI_API_KEY", "AI_BASE_URL"):
+            os.environ.pop(k, None)
+        self.T = P.Text()
+        self.r = GrievanceRouter(load_config(os.path.join(ROOT, "config", "grievance.yaml")))
+        self.store = P.Store(os.path.join(tempfile.mkdtemp(), "c.json"))
+
+    def _file(self, text):
+        from grievdesk import locations as Loc
+        t = Loc.tree()
+        kw = dict(state="Chhattisgarh", district="Raipur", town=t["Chhattisgarh"]["Raipur"][0], notify_by="portal")
+        if "consent" in P.submit.__code__.co_varnames:
+            kw["consent"] = True
+        return P.submit(self.r, self.store, self.T, "en", "text", text=text, **kw)
+
+    def test_card_shows_summary_and_assignee(self):
+        rec = self._file("No drinking water from the handpump for a week.")
+        c = P.card(rec, self.r.depts)
+        self.assertEqual(c["ticket"], rec["ticket"])
+        self.assertIn("Raipur", c["place"])
+        self.assertIn("Devesh Nandrekh", c["assigned"])
+        self.assertFalse(c["overdue"])
+        late = P.card(rec, self.r.depts, today=dt.date(2030, 1, 1))
+        self.assertTrue(late["overdue"])
+
+    def test_counts_and_workload(self):
+        rec = self._file("No drinking water from the handpump for a week.")
+        self.assertEqual(P.my_counts(self.store, "OFF-WAT01")["Waiting for me"], 1)
+        P.approve(self.store, self.T, self.r.depts, rec, "OFF-WAT01", "Repaired.")
+        self.assertEqual(P.my_counts(self.store, "OFF-WAT01")["Approved by me"], 1)
+        w = {x["Officer"]: x for x in P.workload(self.store)}
+        self.assertEqual(w["Devesh Nandrekh"]["Closed"], 1)
+        self.assertNotIn("Sameer Kolvanta", w)            # the administrator holds no complaints
+
+    def test_officer_names_are_the_fictional_set(self):
+        names = {o["name"] for o in P.officers().values()}
+        self.assertEqual(len(names), 13)
+        self.assertIn("Ishani Varoli", names)

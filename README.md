@@ -169,6 +169,13 @@ After submitting, the citizen sees:
 
 **Track complaint** shows the same details, plus the office's reply once approved.
 
+**Screen layout.** A left menu, with icons, holds the pages, grouped as Work, Technical, Citizen services and Account. The content is on the right.
+- **My complaints:** officers land here after logging in. Four small figures appear at the top: waiting for me, overdue, sensitive, and approved by me. Below them is one short card per complaint, giving the number, status, a one-line summary, the place, the department and the due date, with tags for sensitive, voice or high-priority complaints. **Open** shows the full details and the actions, and **Back** returns to the list.
+- **All complaints** (Additional Collector and administrator): every complaint with whoever it is **assigned to**, a filter by officer and status, and a folded "Who has what" table of each officer's open, overdue and closed complaints.
+- **Analytics:** the top shows only four figures, "Where to focus" and two charts. Everything else is folded under "More breakdowns".
+
+**Officer names are fictional.** The names in `data/grievance/officers.csv` were invented for the demo and do not refer to real people.
+
 **Officers** (log in as yourself; password from `OFFICER_PASSWORD` in `.env`, default `officer@123`; change it)
 
 | Who | Sees |

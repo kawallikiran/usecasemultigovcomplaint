@@ -610,3 +610,46 @@ def assurance_figures(store, today=None):
         "open_data_requests": sum(1 for q in reqs if q["status"] == "open"),
         "data_requests": len(reqs),
     }
+
+
+# ------------------------------------------------------------------ officer screens: cards and workload
+def card(rec, depts, today=None):
+    """Short summary of one complaint for the officer's list."""
+    today = (today or dt.date.today()).isoformat()
+    s = rec.get("suggestion") or {}
+    text = rec.get("text") or ("Voice complaint, not yet typed" if rec.get("transcript") == "pending" else "")
+    open_ = rec["status"] not in ("approved",)
+    return {"ticket": rec["ticket"], "summary": text if len(text) <= 90 else text[:87].rstrip() + "...",
+            "place": ", ".join(dict.fromkeys(x for x in (rec.get("town"), rec.get("district"), rec.get("state")) if x)),
+            "department": depts.get(rec.get("department") or "", {}).get("name", "Department not set"),
+            "due": dt.date.fromisoformat(rec["due_date"]).strftime("%d-%m-%Y"),
+            "overdue": open_ and rec.get("due_date", "9999") < today,
+            "status": STATUS_EN.get(rec["status"], rec["status"]),
+            "assigned": officer_label(rec.get("assigned_to")),
+            "sensitive": bool(s.get("sensitive_categories")),
+            "voice": rec.get("channel") == "voice", "priority": rec.get("priority", "normal")}
+
+
+def my_counts(store, officer_id, today=None):
+    today = (today or dt.date.today()).isoformat()
+    mine = [r for r in store.all() if r.get("assigned_to") == officer_id]
+    open_ = [r for r in mine if r["status"] != "approved"]
+    return {"Waiting for me": len(open_), "Overdue": sum(r.get("due_date", "9999") < today for r in open_),
+            "Sensitive": sum(bool((r.get("suggestion") or {}).get("sensitive_categories")) for r in open_),
+            "Approved by me": sum(1 for r in store.all() for h in r.get("history", [])
+                                  if h.get("action") == "approved" and h.get("by") == officer_id)}
+
+
+def workload(store, today=None):
+    """One row per officer: what is with them now."""
+    today = (today or dt.date.today()).isoformat()
+    rows = []
+    for oid, o in officers().items():
+        if o["role"] == "admin":
+            continue
+        mine = [r for r in store.all() if r.get("assigned_to") == oid]
+        open_ = [r for r in mine if r["status"] != "approved"]
+        rows.append({"Officer": f"{o['name']}", "Designation": o["designation"], "Open": len(open_),
+                     "Overdue": sum(r.get("due_date", "9999") < today for r in open_),
+                     "Closed": len(mine) - len(open_)})
+    return sorted(rows, key=lambda r: (-r["Overdue"], -r["Open"]))
