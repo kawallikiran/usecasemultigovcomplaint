@@ -7,6 +7,29 @@ District:  analytics and early warning.  Technical: quality checks, model perfor
 Run locally:   streamlit run app.py
 In Docker:     docker compose up      (then open http://127.0.0.1:8502)
 """
+import os as _os
+import sys as _sys
+
+
+def _relaunch_under_streamlit():
+    """Hosting platforms sometimes start the container with `python app.py`. Streamlit then runs once without a
+    web server and the container exits. Detect that case and start the real server instead."""
+    try:
+        from streamlit import runtime
+        if runtime.exists():
+            return                                   # already running under `streamlit run`
+        from streamlit.web import cli as stcli
+    except ImportError:
+        return
+    port = _os.environ.get("PORT") or _os.environ.get("STREAMLIT_SERVER_PORT") or "8501"
+    _sys.argv = ["streamlit", "run", _os.path.abspath(__file__), "--server.address=0.0.0.0",
+                 f"--server.port={port}", "--server.headless=true"]
+    _sys.exit(stcli.main())
+
+
+if __name__ == "__main__":
+    _relaunch_under_streamlit()
+
 import datetime as dt
 import os
 import re
@@ -14,6 +37,17 @@ import time
 
 import pandas as pd
 import streamlit as st
+
+# Started with "python app.py" (some hosting platforms do this)? Start the Streamlit web server instead of running
+# the page once and exiting. Under "streamlit run" this block does nothing.
+if __name__ == "__main__":
+    from streamlit import runtime as _runtime
+    if not _runtime.exists():
+        import sys
+        from streamlit.web import cli as _stcli
+        sys.argv = ["streamlit", "run", os.path.abspath(__file__), "--server.address=0.0.0.0",
+                    f"--server.port={os.environ.get('PORT', '8501')}", "--server.headless=true"]
+        sys.exit(_stcli.main())
 
 from grievdesk import analytics as A
 from grievdesk import portal as P

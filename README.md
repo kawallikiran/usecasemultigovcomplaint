@@ -144,6 +144,15 @@ On the Test report tab, pick an AI test set and choose **AI service for this run
 
 **Testing without a key:** `docker compose --profile tools run --rm tests` checks all provider formats and the local-model states against a built-in mock server.
 
+## Deploying on a cloud container service (ECS, Snapdeploy and similar)
+
+- **Start command:** `streamlit run app.py --server.address=0.0.0.0 --server.port=$PORT --server.headless=true` (also in the `Procfile`). If the platform starts the container with `python app.py` instead, the app now restarts itself under Streamlit, so the container no longer exits with code 0 and "missing ScriptRunContext" warnings.
+- **Port:** the app listens on the `PORT` environment variable (default 8501). Set the platform's container port and health-check port to the same number.
+- **Health check:** use the path `/_stcore/health` (or `/`). Allow about 30 seconds for start-up.
+- **Memory:** give it at least 1 GB. The bundled local AI model is a separate service and is not needed on the cloud.
+- **Saved data:** complaints, decisions and reports are written to `reports/`. Container storage is temporary, so attach persistent storage (for example EFS) at `/app/reports` or the data is lost when the task restarts.
+- **Secrets:** set `OFFICER_PASSWORD` and any AI or gateway keys as environment variables or secrets on the platform. Do not copy `.env` into the image.
+
 ## Run without Docker
 
 ```bash
